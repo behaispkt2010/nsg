@@ -1,0 +1,36 @@
+1. login with facebook:
+	run cmd: composer require laravel/socialite ~2.0.0
+2. setup realtime notify
+	a. run cmd: composer install ở thư mục gốc của bộ source
+	b. install nodejs https://nodejs.org/en/
+	c. after finish install nodejs go to public/nodejs folder in project, run cmd: npm install
+	d. go to public/redis-server folder and click on redis-server.exe to run redis
+	e. go to public/nodejs folder and open command window and run command: node server.js
+
+	when error Class Predis\Client not found:
+	- add "predis/predis": "^1.1" in composer.json
+	- install composer
+	- if install composer error by php_zip.dll -> php.ini disable extenion php_zip.dll
+	- run cmd: composer require predis/predis
+3. uninstall nodejs
+	sudo yum remove nodejs	
+4. start redis
+	/etc/init.d/redis_6379 start
+5. start node (/public/nodejs/server.js)
+	pm2 start /var/www/html/nongsan/public/nodejs/server.js	
+	pm2 restart/stop ..........
+6. excel
+	"require": {
+        "maatwebsite/excel": "~2.1.0"
+    }
+    'providers' => [
+	    //...
+	    Maatwebsite\Excel\ExcelServiceProvider::class,
+	]
+    
+	 -> composer install
+	 'aliases' => [
+	    //...
+	    'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+	]
+	

@@ -1,0 +1,2 @@
+AddHandler default-handler php
+Options -ExecCGI -Includes

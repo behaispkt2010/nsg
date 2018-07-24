@@ -1,0 +1,67 @@
+
+when add 1 role -> add 1 roleview in Util.php
+
+
+## How to fix stream_socket_enable_crypto() in Mailer
+See: http://stackoverflow.com/questions/30556773/how-to-fix-stream-socket-enable-crypto-ssl-operation-failed-with-code-1
+
+Find out this function inside StreamBuffer.php
+
+   private function _establishSocketConnection()
+
+and paste this two lines inside of this function
+
+   $options['ssl']['verify_peer'] = FALSE;
+   $options['ssl']['verify_peer_name'] = FALSE;
+
+and reload your browser and try to run your project again. For me I put on like this:
+
+   private function _establishSocketConnection ()
+   {
+       $host = $this->_params['host'];
+       
+       if (!empty($this->_params['protocol'])) {
+           $host = $this->_params['protocol'].'://'.$host;
+       }
+       $timeout = 15;
+       if (!empty($this->_params['timeout'])) {
+           $timeout = $this->_params['timeout'];
+       }
+       
+       $options = array();
+       
+       if (!empty($this->_params['sourceIp'])) {
+           $options['socket']['bindto'] = $this->_params['sourceIp'].':0';
+       }
+   
+       $options['ssl']['verify_peer'] = FALSE;
+       $options['ssl']['verify_peer_name'] = FALSE;
+   
+       $this->_stream = @stream_socket_client($host.':'.$this->_params['port'], $errno, $errstr, $timeout, STREAM_CLIENT_CONNECT, stream_context_create($options));
+       if (false === $this->_stream) {
+           throw new Swift_TransportException(
+               'Connection could not be established with host '.$this->_params['host'].
+               ' ['.$errstr.' #'.$errno.']'
+               );
+       }
+       if (!empty($this->_params['blocking'])) {
+           stream_set_blocking($this->_stream, 1);
+       } else {
+           stream_set_blocking($this->_stream, 0);
+       }
+       stream_set_timeout($this->_stream, $timeout);
+       $this->_in = &$this->_stream;
+       $this->_out = &$this->_stream;
+   }
+   
+## Run queue for sending mail
+See: https://scotch.io/tutorials/ultimate-guide-on-sending-email-in-laravel
+
+   php artisan queue:listen
+   
+In production, it is not advisable to use listen because of it's high CPU usage. It is better we use work and pass the --daemon option:
+
+   sudo nohup php artisan queue:work --daemon --tries=3
+Unlock Captcha to access email account
+https://support.google.com/mail/?p=BadCredentials 
+https://accounts.google.com/b/4/DisplayUnlockCaptcha
