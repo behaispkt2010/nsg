@@ -78,6 +78,17 @@
                                         </div>
                                     </div>
                                 </li>
+                                <li>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <label for="name" class="col-md-3 col-xs-12 control-label">Ngày sinh</label>
+
+                                            <div class="col-md-9 col-xs-12 ">
+                                                <input type="text" id="birthday" class="form-control" name="birthday" required value="{{old('birthday')}}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
                             
                             </ul>
                         </div>
@@ -202,7 +213,7 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#date-format').bootstrapMaterialDatePicker
+            $('#birthday').bootstrapMaterialDatePicker
             ({
                 format: 'DD/MM/YYYY',
                 lang: 'vi',

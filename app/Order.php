@@ -44,7 +44,17 @@ class Order extends Model
             ->get();
         return count($orders);
 
-        }
+    }
+    public static function getAllNumOrder($status,$date){
+        $idUser = Auth::user()->id;
+
+        $orders = Order::where('kho_id', $idUser)
+            ->where('deleted', 0)
+            ->whereNotIn('status', $status)
+            ->where(DB::raw("(DATE_FORMAT(updated_at,'%d-%m-%Y'))"), $date)
+            ->get();
+        return count($orders);
+    }
     public static function getNumOrderAdmin($status,$date){
 
         $orders = Order::where('status',$status)
@@ -130,12 +140,12 @@ class Order extends Model
 
         return $data;
     }
-    public static function GetRelateProvince ($provinceName) {
-        $province = Province::where('name', $provinceName)->get();
-        foreach ($province as $itemProvince) {
-            $provinceID = $itemProvince->provinceid;
-        }
-        $district = District::where('provinceid',$provinceID)->get();
+    public static function GetRelateProvince ($provinceID) {
+        // $province = Province::where('provinceid', $provinceName)->get();
+        // foreach ($province as $itemProvince) {
+        //     $provinceID = $itemProvince->provinceid;
+        // }
+        $district = District::where('provinceid', $provinceID)->get();
         return $district;
     }
 

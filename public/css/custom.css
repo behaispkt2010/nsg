@@ -2788,7 +2788,7 @@ a.btn-danger {
 }
 
 .btn-success {
-    background: #26B99A;
+    background: #0aaf5f !important;
     border: 1px solid #169F85;
 }
 
@@ -5832,7 +5832,8 @@ tr.shown td.details-control {
 }
 
 .navbar.nav_title {
-    background: #006950;
+    background: #0f9d58;
+    /*background: #006950;*/
     text-align: center;
 }
 
@@ -6983,10 +6984,11 @@ div.dataTables_wrapper div.dataTables_processing {
     position: absolute;
     top: 0;
     left: 0;
-    background-image: url('../images/loginbg.jpg');
+    background-image: url('../images/background.jpg');
+    background-size: cover;
     width: 100%;
     height: 100%;
-    opacity: 0.5;
+    /*opacity: 0.5;*/
     z-index: -1;
 }
 
@@ -7089,7 +7091,7 @@ table.dtp-picker-days thead {
 
 .sologen {
     text-align: center;
-    background-color: #0f9d58;
+    background-color: #314396;
     color: #ffffff;
     font-size: 17px;
     border-top-right-radius: 5px;
@@ -7163,7 +7165,7 @@ table.dtp-picker-days thead {
 }
 
 .style_format {
-    font-size: 20px;
+    font-size: 15px;
 }
 .bg_red {
     background-color: red;
@@ -7200,6 +7202,12 @@ table.dtp-picker-days thead {
 
 .limitcharacterWithImg {
     width: 80%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.limitcharacterBank {
+    width: 58%;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -7318,4 +7326,8 @@ table.dtp-picker-days thead {
 }
 .btn-print-detail {
     margin-left: 30px !important;
+}
+.imgforgetpass {
+    width: 100px;
+    padding: 30px 0;
 }

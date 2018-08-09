@@ -39,6 +39,30 @@ class OrderController extends Controller
             echo "<option value='$DistrictByProvince->name'>$DistrictByProvince->name</option>";
         }*/
     }
+    public function AjaxLoadInfoAddress(Request $request) {
+        $id      = $request->get('id');
+        $type    = $request->get('type');
+        $valueID = $request->get('valueID');
+        
+        if($type == 'district') {
+            $arrDistrictByProvince = Order::GetRelateProvince($id);
+            echo '<option value="">Chọn Huyện/Thị trấn</option>';
+            foreach($arrDistrictByProvince as $item) { 
+                $select  = '';
+                if($item->districtid == $valueID) $select = 'selected';
+                echo '<option class="" '.$select.' value="'.$item->districtid.'">'.$item->name.'</option>';
+            }
+        }
+        /*elseif($type == 'village') {
+            $arrVillageByDistrict = Village::GetRelateDistrict($id);
+            echo '<option value="">Chọn Phường/Xã</option>';
+            foreach($arrVillageByDistrict as $item) { 
+                $select  = '';
+                if($item->villageid == $valueID) $select = 'selected';
+                echo '<option class=""'. $select .' value="'.$item->villageid.'">'.$item->name.'</option>';
+            }
+        }*/
+    }
     public function getOrderByStatus($id){
         $idUser = Auth::user()->id;
         if(Auth::user()->hasRole('kho')) {

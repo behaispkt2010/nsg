@@ -1,9 +1,19 @@
 @extends('layouts.app')
 
+@section('add_styles')
+<!-- Bootstrap -->
+<!-- <link href="{{asset('plugin/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet"> -->
+<!-- Font Awesome -->
+<!-- <link href="{{asset('plugin/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-material-design.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('css/icon.css')}}"> -->
+<!-- Ionicons -->
+
+@endsection('add_styles')
 @section('content')
 <div class="container">
     <div class="">
-        <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-12 ">
+        <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-12">
             <div class="panel panel-default">
                 @if (count($errors) > 0)
                     <div class="alert alert-danger">
@@ -145,7 +155,11 @@
 </div>
 @endsection
 @section('add_scripts')
+    <script src="{{asset('js/selectize.js')}}"></script>
+    <script src="{{asset('js/material.js')}}"></script>
     <script type="text/javascript">
+        
+        $("#t").selectize({});
         function InvalidEmail(textbox) {
             if (textbox.value == '') {
                 textbox.setCustomValidity('Vui lòng nhập địa chỉ email');

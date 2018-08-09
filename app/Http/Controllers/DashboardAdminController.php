@@ -35,7 +35,8 @@ class DashboardAdminController extends Controller
         $i = 0;
         foreach($orders as $key => $order ){
             $barLabels[$i] = $order->updated_at->format('d-m-Y');
-            $barDatas1[$i] = Order::getNumOrder(8,$order->updated_at->format('d-m-Y'));
+            // get All order has status #10
+            $barDatas1[$i] = Order::getAllNumOrder(10,$order->updated_at->format('d-m-Y')); 
             $barDatas2[$i] = Order::getNumOrder(10,$order->updated_at->format('d-m-Y'));
 
             $lineLabels[$i]= $order->updated_at->format('d-m-Y');

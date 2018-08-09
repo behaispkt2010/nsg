@@ -9,7 +9,7 @@
         <div class="col-md-3 col-xs-6 col-ms-6  text-center">Đơn Hàng<br><span class="value-das">{!! $countOrder !!}</span></div>
         <div class="col-md-3 col-xs-6 col-ms-6 text-center">Giao Dịch<br><span class="value-das">{!! \App\Util::FormatMoney($totalPrice)  !!} </span></div>
         <div class="col-md-3 col-xs-6 col-ms-6 text-center">NCC<br><span class="value-das">{!! $chukho !!}</span></div>
-        <div class="col-md-3 col-xs-6 col-ms-6 text-center">TB Đơn Hàng<br><span class="value-das">@if(!empty($countOrderFinish)){!! \App\Util::FormatMoney($totalPrice/$countOrderFinish) !!}  @else 0 VNĐ @endif</span></div>
+        <div class="col-md-3 col-xs-6 col-ms-6 text-center">TB Đơn Hàng<br><span class="value-das ">@if(!empty($countOrderFinish)){!! \App\Util::FormatMoney($totalPrice/$countOrderFinish) !!}  @else 0 VNĐ @endif</span></div>
 
     </div>
     <div class="row">

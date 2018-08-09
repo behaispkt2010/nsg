@@ -1,7 +1,8 @@
 <div class="col-md-3 left_col menu_fixed">
     <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;">
-            <a href="{{url('/')}}" class="site_title"><img src="{{url('/')}}/images/logo-w.png" alt=""></a>
+            <!-- <a href="{{url('/')}}" class="site_title"><img src="{{url('/')}}/images/logo-w.png" alt=""></a> -->
+            <a href="{{url('/')}}" class="site_title">Mạng lưới kho nông sản</a>
             <div class="btn-close-mn visible-xs"><i class="fa fa-close"></i></div>
         </div>
 

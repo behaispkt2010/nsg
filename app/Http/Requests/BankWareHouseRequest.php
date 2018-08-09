@@ -24,7 +24,6 @@ class BankWareHouseRequest extends FormRequest
     public function rules()
     {
         return [
-            'card_number' => 'required',
             'card_name' => 'required',
         ];
     }

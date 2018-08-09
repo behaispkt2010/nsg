@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class BankWareHouse extends Model
 {
-    protected $fillable = ['ware_id','bank', 'province','card_number','card_name','check', 'deleted'];
+    protected $fillable = ['ware_id','bank','province','card_number','card_name','check','type_pay','deleted'];
 
     public static function getBankOfWareHouse($warehouseID) {
         $bank = BankWareHouse::select('bank_ware_houses.card_name as cardName', 'bank_ware_houses.card_number as cardNumber', 'bank.name as bankName','province.name as provinceName')

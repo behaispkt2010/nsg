@@ -8,7 +8,7 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-    <link rel='shortcut icon' type='image/x-icon' href='{{asset('frontend/images/logo.png')}}'/>
+    <link rel='shortcut icon' type='image/x-icon' href='{{asset("frontend/images/logo.png")}}'/>
     <!-- Font Awesome -->
     <link rel="stylesheet" type="text/css" href="{{asset('css/icon.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/font-awesome.min.css')}}">

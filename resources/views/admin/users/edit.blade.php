@@ -2,11 +2,15 @@
 @section('title', 'User')
 @section('pageHeader','user')
 @section('detailHeader','user')
+@section('add_styles')
+    <link href="{{asset('css/bootstrap-material-datetimepicker.css')}}" rel="stylesheet">
+@endsection
 @section('new-btn')
     <a href="{{route('users.create')}}" data-placement="top" title="" data-original-title="Tạo mới" class="btn btn-warning btn-fab">
         <i class="fa fa-paper-plane material-icons new-btn" aria-hidden="true"></i>
     </a>
 @endsection
+
 @section('content')
     <br>
     <div class="row">
@@ -63,6 +67,17 @@
 
                                                             <div class="col-md-9 col-xs-12 ">
                                                                 <input type="number"  class="form-control" disabled  name="phone_number" value="@if(!empty($user->phone_number)){{$user->phone_number}}@else{{old('phone_number')}}@endif"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <label for="name" class="col-md-3 col-xs-12 control-label">Ngày sinh</label>
+
+                                                            <div class="col-md-9 col-xs-12 ">
+                                                                <input type="text" id="birthday" class="form-control" disabled  name="birthday" value="@if(!empty($user->birthday)){{$user->birthday}}@else{{old('birthday')}}@endif"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -197,13 +212,23 @@
 
     @section('add_scripts')
 
-
+    <script type="text/javascript" src="{{asset('/js/bootstrap-material-datetimepicker.js')}}"></script>
     <script src="{{asset('js/selectize.js')}}"></script>
     <!-- Select2 -->
     <script>
         $('select').selectize({
             create: true,
             sortField: 'text'
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#birthday').bootstrapMaterialDatePicker
+            ({
+                format: 'DD/MM/YYYY',
+                lang: 'vi',
+                time: false,
+            });
         });
     </script>
     <script>

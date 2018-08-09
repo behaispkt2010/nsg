@@ -81,6 +81,11 @@ class Util extends Model
     public static $viewProduct = ['admin','editor'];
     public static $viewDashboard = ['admin','editor'];
 
+
+    // type_pay of COM and WHO
+    public static $cash = 1;  // tra tien mat
+    public static $bank = 2;  // thanh toan qua ngan hang
+
     public static function saveFile($file, $type)
     {
         $today = date("Y-m-d_H-i-s");
@@ -412,11 +417,11 @@ class Util extends Model
             if(is_int($money)){ 
                 return $money.' '.$unit[$i]; 
             } else { 
-                return number_format($money,2).' <span class="unit ">'.$unit[$i] .'</span>'; 
+                return number_format($money,2).' <span class="unit style_format">'.$unit[$i] .'</span>'; 
             }
         }
         else {
-            return number_format($strMoney).'<span class="unit "> VNĐ </span>';
+            return number_format($strMoney).'<span class="unit style_format"> VNĐ </span>';
         }
     }
     public static function DayJoinGroup($created) {

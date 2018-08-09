@@ -81,6 +81,16 @@
                                 <li>
                                     <div class="form-group">
                                         <div class="row">
+                                            <label for="name" class="col-md-3 col-xs-12 control-label">Ngày sinh</label>
+                                            <div class="col-md-9 col-xs-12">
+                                                <input type="text" id="birthday" class="form-control" name="birthday" value="{{ old('birthday') }}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <div class="row">
                                             <label for="name" class="col-md-3 col-xs-12 control-label" style="margin-top: 16px;">Loại Chủ kho</label>
 
                                             <div class="col-md-9 col-xs-12 ">
@@ -245,6 +255,12 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('#date-format').bootstrapMaterialDatePicker
+            ({
+                format: 'DD/MM/YYYY',
+                lang: 'vi',
+                time: false,
+            });
+            $('#birthday').bootstrapMaterialDatePicker
             ({
                 format: 'DD/MM/YYYY',
                 lang: 'vi',

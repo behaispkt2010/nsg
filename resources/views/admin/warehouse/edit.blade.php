@@ -72,6 +72,17 @@
                                         </div>
                                     </div>
                                 </li>
+                                <li>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <label for="name" class="col-md-3 col-xs-12 control-label">Ngày sinh</label>
+
+                                            <div class="col-md-9 col-xs-12 ">
+                                                <input type="text" id="birthday" disabled class="form-control" name="birthday" value="{{$userInfo->birthday}}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
 
                                 <li>
                                     <div class="form-group">
@@ -146,7 +157,7 @@
                                             <label for="code" class="col-md-3 col-xs-12 control-label">Địa chỉ</label>
 
                                             <div class="col-md-9 col-xs-12 ">
-                                                <input type="text"  class="form-control" disabled name="address" value="{{$wareHouse->address}}"/>
+                                                <input type="text"  class="form-control" disabled name="address" value="{{$wareHouse->address}}" placeholder="Số nhà, Đường, Xã ( Phường )" />
                                             </div>
                                         </div>
                                     </div>
@@ -155,14 +166,33 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <label for="name" class="col-md-3 col-sm-3 control-label">Tỉnh/TP</label>
+                                            <input type="hidden" class="provinceID" name="provinceID" value="@if(!empty($wareHouse->province)) {{$wareHouse->province}} @endif">
+
+                                            <input type="hidden" class="districtID" name="districtID" value="@if(!empty($wareHouse->district)) {{$wareHouse->district}} @endif">
 
                                             <div class="col-md-9 col-xs-12">
                                                 <div class="form-group">
-                                                    <select id="province" class="form-control" required name="province" >
+                                                    <select id="province" class="form-control select2_single" required name="province" >
                                                         <option value="0">Chọn khu vực</option>
                                                         @foreach($province as $item)
-                                                            <option value="{{$item->provinceid}}" @if($wareHouse->province == $item->provinceid) selected @endif>{{$item->name}}</option>
+                                                            <option value="{{$item->provinceid}}" @if(!empty($wareHouse->province) && $wareHouse->province == $item->provinceid) selected @endif>{{$item->name}}</option>
                                                         @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <label for="name" class="col-md-3 col-sm-3 control-label">Quận/Huyện</label>
+
+                                            <div class="col-md-9 col-xs-12">
+                                                <div class="form-group">
+                                                    <select id="district" class="form-control" required name="district" >
+                                                        <option value="0">Chọn phường xã</option>
+                                                        
                                                     </select>
                                                 </div>
                                             </div>
@@ -209,8 +239,8 @@
                                             <div class="col-md-9 col-xs-12 ">
                                                 <div class="form-group">
                                                     <select name="user_test" id="user_test" class="form-control" @if (Auth::user()->hasRole('kho')) disabled @endif>
-                                                        <option value="1" @if ($wareHouse->user_test == 1)selected="selected" @endif>Trả Phí</option>
-                                                        <option value="2" @if ($wareHouse->user_test == 2)selected="selected" @endif>Dùng thử</option>
+                                                        <option value="1" @if ($wareHouse->user_test == 1)selected="selected" @endif>Premium</option>
+                                                        <option value="2" @if ($wareHouse->user_test == 2)selected="selected" @endif>Cơ bản</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -286,15 +316,28 @@
 
                                         <div class="row">
 
-                                            <label for="code" class="col-md-9 col-xs-12 control-label">   <span class="stt-num">{{$i}}</span> {{$itemBankWareHouse->card_name}}: {{$itemBankWareHouse->card_number}}</label>
+                                            <label for="code" class="col-md-9 col-xs-12 control-label">   
+                                            <div class="row col-md-12">
+                                                <div class="stt-num col-md-1">{{$i}}</div> 
+                                                <div class="col-md-7 limitcharacterBank">{{$itemBankWareHouse->card_name}} </div>
+                                                @if($itemBankWareHouse->type_pay == \App\Util::$bank)
+                                                <div class="col-md-4">: {{$itemBankWareHouse->card_number}}</div>
+                                                @endif
+                                            </div>
+                                            </label>
 
                                             <div class="col-md-3 col-xs-12 ">
-                                                <div class="togglebutton" style="padding-top: 10px;">
+                                                <div class="togglebutton" style="padding-top: 7px;">
+                                                    @if($itemBankWareHouse->type_pay == \App\Util::$bank)
+                                                    <i class="fa fa-credit-card" aria-hidden="true"></i>
+                                                    @elseif($itemBankWareHouse->type_pay == \App\Util::$cash)
+                                                    <i class="fa fa-usd text-right" aria-hidden="true"></i>
+                                                    @endif
                                                     <i data-toggle="modal"
                                                        data-target=".modal-bank-edit"
                                                        class="fa fa-pencil edit_bank" data-id="{{$itemBankWareHouse->id}}"
                                                        data-bank="{{$itemBankWareHouse->bank}}" data-province="{{$itemBankWareHouse->province}}"
-                                                       data-card_number="{{$itemBankWareHouse->card_number}}"data-check="{{$itemBankWareHouse->check}}"  data-card_name="{{$itemBankWareHouse->card_name}}" class="fa fa-pencil" {{--style="margin-right: 5px"--}}></i> &nbsp;&nbsp;
+                                                       data-card_number="{{$itemBankWareHouse->card_number}}"data-check="{{$itemBankWareHouse->check}}"  data-card_name="{{$itemBankWareHouse->card_name}}" class="fa fa-pencil" style="cursor: pointer;"></i> 
                                                     <label style="margin-bottom: -1px;">
                                                         <input style="display: none" name="bankHas"  type="checkbox" @if($itemBankWareHouse->check==1) checked @endif disabled>
                                                         <input type="hidden" name="bankcheck" value="{{ $itemBankWareHouse->check }}">
@@ -890,22 +933,43 @@
                     <div class="frm-add">
                         <div class="row">
                             <div class="form-group">
-                            <label for="name" class="col-md-4 col-sm-4 control-label">Tên ngân hàng</label>
-                            <div class="col-md-8 col-sm-8">
-                                <select  data-placeholder="Ngân hàng" class="form-control bank" name="bank">
-                                    @foreach($bank as $itemBank)
-                                    <option value="{{$itemBank->id}}">{{$itemBank->name}}</option>
-                                        @endforeach
-                                </select>
+                                <label for="name" class="col-md-4 col-sm-4 control-label">Hình thức thanh toán</label>
+                                <div class="col-md-8 col-sm-8">
+                                    <select data-placeholder="Chọn" class="form-control type_pay" name="type_pay">
+                                        <option value="{{\App\Util::$bank}}">Chuyển khoản ngân hàng</option>
+                                        <option value="{{\App\Util::$cash}}">Tiền mặt</option>
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                            <label  class="col-md-4 col-sm-4 control-label">Chủ tài khoản</label>
 
+                            <div class="col-md-8 col-sm-8">
+                                <input type="text" class="ng-valid ng-dirty ng-touched form-control card_name" required name="card_name">
                             </div>
                                 </div>
                         </div>
                         <div class="row">
                             <div class="form-group">
-                            <label for="name" class="col-md-4 col-sm-4 control-label">Tỉnh/thành phố</label>
+                                <label for="name" class="col-md-4 col-sm-4 control-label">Tên ngân hàng</label>
+                                <div class="col-md-8 col-sm-8">
+                                    <select data-placeholder="Lựa chọn" class="form-control bank" name="bank">
+                                        @foreach($bank as $itemBank)
+                                        <option value="{{$itemBank->id}}">{{$itemBank->name}}</option>
+                                            @endforeach
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                            <label for="name" class="col-md-4 col-sm-4 control-label">Chi Nhánh</label>
                             <div class="col-md-8 col-sm-8">
-                                <select class="form-control province" name="province">
+                                <select data-placeholder="Lựa chọn" class="form-control province" name="province">
                                     @foreach($province as $itemProvince)
                                         <option value="{{$itemProvince->provinceid}}">{{$itemProvince->name}}</option>
                                     @endforeach
@@ -917,19 +981,11 @@
                             <div class="form-group">
                             <label  class="col-md-4 col-sm-4 control-label">Số tài khoản</label>
                             <div class="col-md-8 col-sm-8">
-                                <input type="text" class="ng-valid ng-dirty ng-touched form-control"required  name="card_number">
+                                <input type="text" class="ng-valid ng-dirty ng-touched form-control card_number" required  name="card_number">
                             </div>
                                 </div>
                         </div>
-                        <div class="row">
-                            <div class="form-group">
-                            <label  class="col-md-4 col-sm-4 control-label">Chủ tài khoản</label>
-
-                            <div class="col-md-8 col-sm-8">
-                                <input type="text" class="ng-valid ng-dirty ng-touched form-control card_name" required name="card_name">
-                            </div>
-                                </div>
-                        </div>
+                        
                         <div class="row">
 
                             <div class="form-group">
@@ -995,7 +1051,7 @@
                             <div class="form-group">
                                 <label  class="col-md-4 col-sm-4 control-label">Số tài khoản</label>
                                 <div class="col-md-8 col-sm-8">
-                                    <input type="text" class="ng-valid ng-dirty ng-touched form-control" required value="" name="card_number">
+                                    <input type="text" class="ng-valid ng-dirty ng-touched form-control card_number" required value="" name="card_number">
                                 </div>
                             </div>
                         </div>
@@ -1065,9 +1121,10 @@
     <!-- Select2 -->
     <script src="{{asset('js/selectize.js')}}"></script>
     <!-- #province, #category_warehouse_id, #user_test, -->
-    <script>
-        $('#time_upgrade_bonus, #province, #category_warehouse_id, #user_test, #time_upgrade_level, #time_confirm_kho, #time_confirm_kho_bonus, #time_quangcao, #time_quangcao_bonus, #time_request_upgrade_level, #time_request_quangcao, #month_required, #time_request_confirm_kho, .bank, .province').selectize({create: true,});
+    <script> 
+        $('#time_upgrade_bonus, #category_warehouse_id, #user_test, #time_upgrade_level, #time_confirm_kho, #time_confirm_kho_bonus, #time_quangcao, #time_quangcao_bonus, #time_request_upgrade_level, #time_request_quangcao, #month_required, #time_request_confirm_kho, .bank, .province, .type_pay').selectize({create: true,});
     </script>
+    
     <script type="text/javascript">
         $(document).ready(function () {
             $('#date-format').bootstrapMaterialDatePicker
@@ -1076,6 +1133,33 @@
                 lang: 'vi',
                 time: false,
             });
+            $('#birthday').bootstrapMaterialDatePicker
+            ({
+                format: 'DD/MM/YYYY',
+                lang: 'vi',
+                time: false,
+            });
+
+            $('.type_pay').on('change', function(){
+                var type_pay = ($(this).val());
+                if(type_pay == 1) {
+                    var bank = $(".bank")[0].selectize;
+                    bank.clear();   
+                    bank.disable(); 
+                    var province = $(".province")[0].selectize;
+                    province.clear();   
+                    province.disable();
+                    $('.card_number').val("");
+                    $('.card_number').prop('disabled', true);
+                } else {
+                    $('.bank')[0].selectize.enable();
+                    $('.province')[0].selectize.enable();
+                    $('.card_number').prop('disabled', false);
+                }
+            });
+            
+            var category_warehouse_id = $("#category_warehouse_id")[0].selectize;
+            category_warehouse_id.disable();
         });
     </script>
     <script>
@@ -1083,19 +1167,15 @@
             $(this).parent().parent().find('input').removeAttr('disabled');
             $(this).parent().parent().find('.btn-update').css('display','inline-block');
             $('#inputFile').removeAttr('disabled');
+            
+            var category_warehouse_id = $("#category_warehouse_id")[0].selectize;
+            category_warehouse_id.enable();
         })
         $('.info-kho .fa-edit').click(function(){
             $('#inputFile').removeAttr('disabled');
-            /*$('#category_warehouse_id').prop('disabled', false);
-            $("#category_warehouse_id").trigger("chosen:updated");
-            $('#category_warehouse_id').selectmenu('refresh');
-            $('#province').prop('disabled', false);
-            $('#province').selectmenu('refresh');*/
+            
         })
         $('button.btn-update').click(function(){
-//            alert("dsds");
-//            $(this).closest().find('input').attr('disabled');
-//            $('button.btn-update').css('display','none');
         })
     </script>
     <script>
@@ -1109,8 +1189,6 @@
     </script>
     <script>
         function CheckBankExist(){
-            //console.log($('tr[id*=output_newrow]').length)
-            //var testme = false;
             var count = 0;
             $('input[type="hidden"][name="bankcheck"]').each(function() {
                 if ($(this).val() == 1) {
@@ -1119,15 +1197,6 @@
             });
             return count;
         }
-        /*$(".checkBank").on('click', function () {
-            var ware_id = $('input[name="id"]').val();
-            var checkbankEx = CheckBankExist();
-            if(checkbankEx >= 1){
-                alert('Đã có tài khoản đang được sử dụng');
-                $('.modal-bank input[name="check"]').prop('checked', false);
-                $('.modal-bank-edit input[name="check"]').prop('checked', false);
-            }
-        });*/
     </script>
     <script>
         $('#update_info').on('click', function (e) {
@@ -1235,12 +1304,14 @@
             var province = $('.modal-bank select[name="province"] :selected').val();
             var card_number = $('.modal-bank input[name="card_number"]').val();
             var card_name = $('.modal-bank input[name="card_name"]').val();
+            // console.log(bank);
+            // console.log(province);
+            // console.log(card_number);
             var check = 0;
             if($('.modal-bank input[name="check"]').is(':checked'))
-              var check = 1;
+                var check = 1;
             var _token = $('input[name="_token"]').val();
             $('.loading').css('display','block');
-//            alert(check);
             $.ajax({
                 type: "POST",
                 url: '{{ url('/') }}/admin/warehouse/AjaxBank',
@@ -1352,6 +1423,7 @@
             var user_id = $('input[name="user_id"]').val();
             var name_company = $('.info-kho input[name="name_company"]').val();
             var province = $('#province').val();
+            var district = $('#district').val();
             var address = $('.info-kho input[name="address"]').val();
             var mst = $('.info-kho input[name="mst"]').val();
             var ndd = $('.info-kho input[name="ndd"]').val();
@@ -1360,7 +1432,6 @@
             var image_kho = document.getElementsByName("image_kho");
             var fanpage_fb = $('.info-kho input[name="fanpage_fb"]').val();
             var file_image_kho = image_kho[0].files[0];
-            //console.log(file_image_kho);
             var user_test = $('#user_test').val();
             var _token = $('input[name="_token"]').val();
             
@@ -1372,6 +1443,7 @@
             data1.append('mst', mst);
             data1.append('image_kho', file_image_kho);
             data1.append('province', province);
+            data1.append('district', district);
             data1.append('ndd', ndd);
             data1.append('fanpage_fb', fanpage_fb);
             data1.append('mst', mst);
@@ -1386,7 +1458,7 @@
                 contentType: false,       // The content type used when sending data to the server.
                 cache: false,             // To unable request pages to be cached
                 processData:false,
-                url: '{{ url('/') }}/warehouse/AjaxDetail',
+                url: '{{ url("/") }}/warehouse/AjaxDetail',
                 data: data1,
                 success: function( msg ) {
                     $('.loading').css('display','none');
@@ -1882,6 +1954,42 @@
             $('.modal-confirmlevel select[name="levelkhoUpgrade"]').val(_self.data('level'));
             $('.modal-confirmlevel select[name="time_upgrade_level"]').val(_self.data('timerequest'));
             $('.modal-confirmlevel select[name="time_upgrade_bonus"]').val(_self.data('timebonus'));
+        });
+    </script>
+    <script type="text/javascript">
+        // get update district, provinde
+        $(function(){
+            var districtID = $('.districtID').val();
+            var provinceID = $('.provinceID').val();
+            var _token = $('input[name="_token"]').val();
+            if(provinceID){
+                $.ajax({
+                    type:'POST',
+                    url:'{{ url("/") }}/admin/orders/AjaxLoadInfoAddress',
+                    data: {id: provinceID, type: 'district', valueID: districtID , _token: _token},
+                    success:function(html){
+                        $('#district').selectize()[0].selectize.destroy();
+                        $('#district').html(html);
+                        $('#district').selectize();
+                    }
+                }); 
+            } else {
+                $('#district').html('<option value="">Chọn Huyện/Thị trấn</option>');
+            }
+            /*if(districtID){
+                $.ajax({
+                    type:'POST',
+                    url:'{{ url("/") }}/admin/orders/AjaxLoadInfoAddress',
+                    data: {id: districtID, type: 'village', valueID: villageID , _token: _token},
+                    success:function(html){
+                        $('#x').selectize()[0].selectize.destroy();
+                        $('#x').html(html);
+                        $('#x').selectize();
+                    }
+                }); 
+            } else {
+                $('#x').html('<option value="">Chọn Phường/Xã</option>'); 
+            }*/
         });
     </script>
 

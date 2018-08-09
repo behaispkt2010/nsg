@@ -1752,7 +1752,7 @@ fieldset[disabled] .form-group .form-control {
 }
 .form-group .help-block {
   position: absolute;
-  display: none;
+  /*display: none;*/
 }
 .form-group.is-focused .form-control {
   outline: none;
@@ -3429,6 +3429,10 @@ hr.on-light {
   font-weight: bold;
   background: transparent;
   border: 0;
+}
+.selectize-input.disabled {
+  background-color: #fafafa;
+  opacity: 0.5;
 }
 .selectize-control.single .selectize-dropdown,
 .selectize-control.multi .selectize-dropdown {

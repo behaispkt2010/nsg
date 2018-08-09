@@ -676,6 +676,7 @@ class WarehouseController extends Controller
             $today                    = date("Y-m-d_H-i-s");
             $dataUser['name']         = $request->get('name');
             $dataUser['email']        = $request->get('email');
+            $dataUser['birthday']     = $request->get('birthday');
             $dataUser['phone_number'] = $request->get('phone_number');
             $dataUser['password']     = bcrypt($request->get('password'));
             $dataUser['myIntroCode']  = $myIntroCode;

@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
     <div class="">
-        <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-12 ">
+        <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-12">
             <div class="panel panel-default">
 
                 @if (count($errors) > 0)
@@ -78,12 +78,12 @@
                                     Đăng nhập
                                 </button>
                             </div>
-                            Hoặc
+                            <!-- Hoặc
                             <div class="col-md-12 text-center">
                                 <a href="{{ url('/login/facebook') }}" class="" >
                                     <i class="fa fa-facebook-square login_fb" aria-hidden="true"></i>
                                 </a>
-                            </div>
+                            </div> -->
                             <div class="col-md-12 text-center">
                                 <a class="" href="{{ url('/password/reset') }}">
                                     Quên mật khẩu?
@@ -98,11 +98,6 @@
     </div>
 </div>
 
-{{--<div id="bg">--}}
-    {{--<div class="visible top" style="background-image: url(https://5sao.ghn.vn/content/ontime/img/login/bg01.jpg?v=3.9.0.4);background-position: 50% 50%;"></div>--}}
-    {{--<div class="" style="background-image: url(https://5sao.ghn.vn/content/ontime/img/login/bg02.jpg?v=3.9.0.4); background-position: 50% 50%;"></div>--}}
-    {{--<div class="visible" style="background-image: url(https://5sao.ghn.vn/content/ontime/img/login/bg03.jpg?v=3.9.0.4); background-position: 50% 50%;"></div>--}}
-{{--</div>--}}
 @endsection
 @section('add_scripts')
     <script type="text/javascript">

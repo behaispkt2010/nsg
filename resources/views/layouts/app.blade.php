@@ -12,6 +12,9 @@
 
     @include('partial.styles')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" type="text/css" href="{{asset('css/icon.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/font-awesome.min.css')}}">
     <!-- Styles -->
     <script src="{{asset('plugin/jquery/dist/jquery.min.js')}}"></script>
     <script type="text/javascript">
@@ -44,7 +47,7 @@
             {{--<br>--}}
         @yield('content')
             <div class="h-end text-center">
-                <label><span style="color: white">Sản phẩm của </span><span style="color: green">Nông sản tự nhiên</span></label>
+                <label><span style="color: white">Sản phẩm của </span><span style="color: green">NOSAGO</span></label>
             </div>
         </div>
 

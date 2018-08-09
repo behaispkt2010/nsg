@@ -393,7 +393,7 @@
                                 <select id="t" class="form-control" name="t">
                                     <option value="0">Chọn khu vực</option>
                                     @foreach($province as $item)
-                                        <option value="{{$item->name}}">{{$item->name}}</option>
+                                        <option value="{{$item->provinceid}}">{{$item->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -643,18 +643,19 @@
         var name = $('.modal-kh input[name="name"]').val();
         var phone_number = $('.modal-kh input[name="phone_number"]').val();
         var t = $('.modal-kh select[name="t"] :selected').val();
+        var provinceName = $('.modal-kh select[name="t"] :selected').html();
         var q = $('.modal-kh select[name="q"] :selected').val();
+        var districstName = $('.modal-kh select[name="q"] :selected').html();
         var email = $('.modal-kh input[name="email"]').val();
-        var address = $('.modal-kh input[name="address"]').val() +', '+ q+', '+t;
+        var address = $('.modal-kh input[name="address"]').val() +', '+ districstName +', '+ provinceName;
+        var addressDB = $('.modal-kh input[name="address"]').val();
         var _token = $('input[name="_token"]').val();
         $('.loading').css('display','block');
-//            alert(check);
         $.ajax({
             type: "POST",
             url: '{!! url("/") !!}/admin/users/AjaxCreateCustomer',
-            data: {name: name,t: t, phone_number: phone_number, email: email,address: address,_token: _token},
+            data: {name: name,t: t,q: q, phone_number: phone_number, email: email, address: addressDB,_token: _token},
             success: function( msg ) {
-                //console.log(msg);
                 $('.loading').css('display','none');
                 //show notify
                 new PNotify({
@@ -897,7 +898,7 @@
         }
     });
 
-    $select_city = $('#q').selectize({valueField: 'name',
+    $select_city = $('#q').selectize({valueField: 'districtid',
     labelField: 'name',
     searchField: ['name']});
 

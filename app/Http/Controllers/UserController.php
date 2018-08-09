@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
+    
 
     public function AjaxChangeImage(Request $request){
         $res      = $request->all();
@@ -27,25 +28,24 @@ class UserController extends Controller
         return \Response::json($response);
     }
 
-public function AjaxCreateCustomer(UserRequest $request)
-{
-    $user             = new User();
-    $data             = $request->all();
-    $t                = $request->get('t');
-    $pro              = Province::where('name',$t)->first();
-    $data['province'] = $pro->provinceid;
-    if(empty($request->get('password'))){
-        $data['password'] = "123456";
-    }
-    $data['image'] = "/images/user_default.png";
-    $user          = User::create($data);
-    $user->attachRole(3);
-    $response = array(
-        'status'      => 'success',
-        'msg'         => 'Setting created successfully',
-        'customer_id' => $user->id
-    );
-    return \Response::json($response);
+    public function AjaxCreateCustomer(UserRequest $request)
+    {
+        $user             = new User();
+        $data             = $request->all();
+        $data['province'] = $request->get('t');
+        $data['district'] = $request->get('q');
+        if(empty($request->get('password'))){
+            $data['password'] = "123456";
+        }
+        $data['image'] = "/images/user_default.png";
+        $user          = User::create($data);
+        $user->attachRole(3);
+        $response = array(
+            'status'      => 'success',
+            'msg'         => 'Setting created successfully',
+            'customer_id' => $user->id
+        );
+        return \Response::json($response);
     }
 
     public function AjaxGetDataCustomer(Request $request){

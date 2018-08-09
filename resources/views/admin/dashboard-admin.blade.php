@@ -62,6 +62,69 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h2>Tổng quan lượt xem</h2>
+                        </div>
+                        <div class="col-md-8" style="float: right; font-size: 13px;">
+                            
+                            <!-- <div id="reportrange2" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc;border-radius: 4px;">
+                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                <span id="date-filter2"></span> <b class="caret"></b>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="row">
+                        Số lượt xem thông tin cá nhân: {{ \App\WareHouse::getViewByWID(Auth::user()->id) }}
+                    </div>
+                    <!-- <canvas id="mybarChart"></canvas> -->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h2> Top các sản phẩm được xem nhiều nhất </h2>
+                        </div>
+                        
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="content_view col-md-8 col-sm-8 col-xs-12">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Số lượt xem</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(\App\Product::getViewProduct(Auth::user()->id) as $itemGetView)
+                                <tr>
+                                    <td class="title_product">{{ $itemGetView->title }}</td>
+                                    <td class="view_product">{{ $itemGetView->count_view }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <canvas id="mybarChart"></canvas> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div>
@@ -101,7 +164,7 @@
                 </div>
             </div>
         </div>    
-    </div>
+    </div> -->
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel" style="min-height: 550px;">
@@ -344,7 +407,8 @@
                                     pointHoverBorderWidth: 2,
                                     data: lineDatas,
 
-                                }, {
+                                }
+                                /*, {
                                     label: "Lợi Nhuận",
                                     fill: false,
                                     backgroundColor: "#FF9800",
@@ -356,7 +420,8 @@
                                     pointBorderWidth: 1,
                                     pointHoverRadius: 5,
                                     data: lineDatasProfit,
-                                }]
+                                }*/
+                                ]
                             },
                             options: {
                                 scales: {

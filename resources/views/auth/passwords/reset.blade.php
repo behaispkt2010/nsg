@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-5 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading sologen" style="background-color: #0f9d58;">Khôi phục mật khẩu</div>
 
