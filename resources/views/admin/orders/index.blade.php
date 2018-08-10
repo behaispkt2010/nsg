@@ -41,9 +41,9 @@
                             <li class="show-menu @if($select == 99 )  active @endif"><a href="{!! url('/') !!}/admin/orders">Tất cả</a><span
                                         style="background-color: #9C27B0"
                                         class="ng-binding">{{$allOrders}}</span></li>
-                            <li class="show-menu li-0 @if($select == 0 )  active @endif"><a href="{!! url('/') !!}/admin/orders/getOrderByStatus/0">Mới tạo</a><span
+                            <!-- <li class="show-menu li-0 @if($select == 0 )  active @endif"><a href="{!! url('/') !!}/admin/orders/getOrderByStatus/0">Mới tạo</a><span
                                         style="background-color: #8bc34a"
-                                        class="ng-binding">{{\App\ProductOrder::countOrderByStatus(0)}}</span></li>
+                                        class="ng-binding">{{\App\ProductOrder::countOrderByStatus(0)}}</span></li> -->
                             @foreach($arrOrderByStatus as $item)
                             <li class="show-menu li-{{$item->id}} @if($select == $item->id )  active @endif"><a href="{!! url('/') !!}/admin/orders/getOrderByStatus/{{$item->id}}">{{$item->name}}</a><span
                                         style="background-color:{{$item->color}}"
@@ -84,7 +84,7 @@
                         <div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12">
                             <div class="form-group label-floating">
 
-                                <label class="control-label" for="addon2">Số điện thoại | Tên khách hàng</label>
+                                <label class="control-label" for="addon2">Mã đơn hàng | Số điện thoại | Tên khách hàng</label>
 
                                 <div class="input-group text-center">
                                     <input type="text" id="addon2" class="form-control" name="q" value="{{Request::get('q')}}">

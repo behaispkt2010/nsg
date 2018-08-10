@@ -6077,8 +6077,8 @@ ul.tab-fill li:hover {
 }
 
 .fix-padlr.cl-center {
-    padding-right: 20px;
-    margin-top: 35px;
+    padding-right: 0px;
+    margin-top: 0px;
 }
 
 .img-car {
@@ -7272,7 +7272,7 @@ table.dtp-picker-days thead {
     background-color: #fff !important;
 }
 .print-btn {
-    position: relative;
+    position: absolute;
     padding: 0;
     width: 100%;
     display: inline-block;
@@ -7285,12 +7285,12 @@ table.dtp-picker-days thead {
 }
 .fix-title-print {
     position: absolute;
-    bottom: 62px;
+    bottom: 46px;
     border: solid 1px #53d68b;
     margin: 0 auto;
     width: auto;
     border-radius: 5px;
-    right: -10px;
+    right: -17px;
     padding: 5px;
     color: #53d68b;
     font-weight: 400;
@@ -7330,4 +7330,13 @@ table.dtp-picker-days thead {
 .imgforgetpass {
     width: 100px;
     padding: 30px 0;
+}
+.f18 {
+    font-size: 18px;
+}
+.iconPrint{
+    height: 40px !important;
+    min-width: 40px !important;
+    width: 40px !important;
+    right: 45px !important;
 }

@@ -75,7 +75,7 @@ class OrderController extends Controller
             ->leftJoin('users','orders.customer_id','=','users.id')
             ->where('status', $id)
             ->paginate(6);
-        $arrOrderByStatus = OrderStatus::get();
+        $arrOrderByStatus = OrderStatus::where('deleted', '0')->get();
         $data = [
             'arrAllOrders'     => $arrAllOrders,
             'arrOrderByStatus' => $arrOrderByStatus,
@@ -97,15 +97,16 @@ class OrderController extends Controller
                     ->where('orders.deleted', 0)
                     ->where('users.name', 'LIKE', '%' . $q . '%')
                     ->orwhere('users.phone_number', 'LIKE', '%' . $q . '%')
+                    ->orwhere('orders.order_code', 'LIKE', '%' . $q . '%')
                     ->orderBy('id','DESC')
                     ->paginate(9);
-            }
-            else {
+            } else {
                 $arrAllOrders = Order::select('orders.*', 'users.address', 'users.province', 'users.name', 'users.phone_number')
                     ->leftJoin('users', 'orders.customer_id', '=', 'users.id')
                     ->where('orders.deleted', 0)
                     ->where('users.name', 'LIKE', '%' . $q . '%')
                     ->orwhere('users.phone_number', 'LIKE', '%' . $q . '%')
+                    ->orwhere('orders.order_code', 'LIKE', '%' . $q . '%')
                     ->orderBy('id','DESC')
                     ->paginate(9);
             }
@@ -128,7 +129,7 @@ class OrderController extends Controller
         }
         // dd($arrAllOrders);
             $AllOrders        = Order::count();
-            $arrOrderByStatus = OrderStatus::get();
+            $arrOrderByStatus = OrderStatus::where('deleted', '0')->get();
             $data = [
                 'arrAllOrders'     => $arrAllOrders,
                 'arrOrderByStatus' => $arrOrderByStatus,
@@ -166,7 +167,7 @@ class OrderController extends Controller
         else {
             $products = Product::where('status',1)->get();
         }
-        $order_status = OrderStatus::get();
+        $order_status = OrderStatus::where('deleted', '0')->get();
         $data = [
             'customer'     => $customer,
             'province'     => $province,
@@ -218,6 +219,11 @@ class OrderController extends Controller
             $order->author_id                    = Auth::user()->id;
             $order->save();
             $strOrderID                          = $order->id;
+            // update order_code
+            $arrWareHouse                         = User::find($order->customer_id);
+            $strProvinceCode                     = \App\Util::StringExplodeProvince($arrWareHouse->province);
+            $data['order_code']                  = $strProvinceCode . '-' . $order->kho_id . '-' . $strOrderID;
+            $order->update($data);
             // insert history
             $historyUpdateStatusOrder            = new HistoryUpdateStatusOrder();
             $historyUpdateStatusOrder->order_id  = $strOrderID;
@@ -296,7 +302,7 @@ class OrderController extends Controller
         $productOrder = ProductOrder::select('product_orders.*', 'products.code', 'products.title', 'products.price_out')
             ->leftJoin('products', 'product_orders.id_product', 'products.id')
             ->where('product_orders.order_id', $order->id)->get();
-        $orderStatus  = OrderStatus::get();
+        $orderStatus  = OrderStatus::where('deleted', '0')->get();
         $historyOrder = HistoryUpdateStatusOrder::select('history_update_status_order.*','order_status.*','users.name as username','users.id as userid')
             ->leftJoin('order_status','history_update_status_order.status','=','order_status.id')
             ->leftJoin('users','users.id','=','history_update_status_order.author_id')
@@ -340,7 +346,7 @@ class OrderController extends Controller
         else {
             $products = Product::where('status',1)->get();
         }
-        $order_status     = OrderStatus::get();
+        $order_status     = OrderStatus::where('deleted', '0')->get();
         $arrCustomerOrder = User::find($arrOrder->customer_id);
         $arrProductOrders = ProductOrder::leftJoin('products','products.id','=','product_orders.id_product')
             ->where('order_id','=',$id)->get();

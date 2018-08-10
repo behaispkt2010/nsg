@@ -210,7 +210,6 @@
                                 <div class="form-group">
                                     <label> Tình trạng đơn hàng</label>
                                     <select id="select-tracking" name="status" class="form-control" data-placeholder="Chọn tình trạng đơn hàng">
-                                        <option value="0"> Mới tạo</option>
                                         @foreach($order_status as $itemOrder_status)
                                             <option value="{{$itemOrder_status->id}}" @if(!empty($arrOrder->status) && ($arrOrder->status == $itemOrder_status->id)) selected='selected' @endif>{{$itemOrder_status->name}}</option>
                                         @endforeach

@@ -235,7 +235,7 @@ class Product extends Model
     public static function getViewProduct ($user_id) {
         $productView = Product::where('kho', $user_id)
                         ->where('products.deleted', 0)
-                        ->orderBy('count_view',"DESC")->take(10)->get();
+                        ->orderBy('count_view',"DESC")->take(5)->get();
         return $productView;             
     }
 }

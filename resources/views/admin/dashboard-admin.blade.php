@@ -63,7 +63,7 @@
     </div>
     <div class="row">
         <div class="col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel">
+            <div class="x_panel" style="height: 326px;">
                 <div class="x_title">
                     <div class="row">
                         <div class="col-md-4">
@@ -82,7 +82,7 @@
                 </div>
                 <div class="x_content">
                     <div class="row">
-                        Số lượt xem thông tin cá nhân: {{ \App\WareHouse::getViewByWID(Auth::user()->id) }}
+                        Số lượt xem thông tin cá nhân: <strong class="f18">{{ \App\WareHouse::getViewByWID(Auth::user()->id) }}</strong>
                     </div>
                     <!-- <canvas id="mybarChart"></canvas> -->
                 </div>
@@ -101,19 +101,19 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <div class="content_view col-md-8 col-sm-8 col-xs-12">
-                        <table class="table table-hover">
+                    <div class="content_view col-md-12 col-sm-12 col-xs-12">
+                        <table class="table table-striped table-hover ">
                             <thead>
                                 <tr>
                                     <th>Tên sản phẩm</th>
-                                    <th>Số lượt xem</th>
+                                    <th class="text-right">Số lượt xem</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach(\App\Product::getViewProduct(Auth::user()->id) as $itemGetView)
                                 <tr>
                                     <td class="title_product">{{ $itemGetView->title }}</td>
-                                    <td class="view_product">{{ $itemGetView->count_view }}</td>
+                                    <td class="view_product text-right">{{ $itemGetView->count_view }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -396,7 +396,7 @@
                                 datasets: [{
                                     label: "Doanh Thu",
                                     fill: false,
-                                    backgroundColor: "rgba(76, 175, 80, 0.68)",
+                                    backgroundColor: "#314396",
                                     borderColor: "rgba(38, 185, 154, 0.7)",
                                     pointBorderColor: "rgba(38, 185, 154, 0.7)",
                                     pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
@@ -474,11 +474,11 @@
                                 labels: barLabels,
                                 datasets: [{
                                     label: 'Thành công',
-                                    backgroundColor: "#4caf50",
+                                    backgroundColor: "#314396",
                                     data: barDatas1
                                 }, {
                                     label: 'Bị lỗi',
-                                    backgroundColor: "#9F0801",
+                                    backgroundColor: "#0aaf5f",
                                     data: barDatas2
                                 }]
                             },

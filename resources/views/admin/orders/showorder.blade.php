@@ -8,15 +8,15 @@
 
         <div class="print-info"></div>
         <div class="print-btn">
-            <a href="{!! url('/') !!}/report/orders/idv/{{ $order->id }}" target="_blank" class="btn btn-warning btn-fab floatright btn-print-detail" title="In phiếu xuất kho">
+            <!-- <a href="{!! url('/') !!}/report/orders/idv/{{ $order->id }}" target="_blank" class="btn btn-warning btn-fab floatright btn-print-detail" title="In phiếu xuất kho">
                 <i class="fa fa-print material-icons print-btn" aria-hidden="true"></i>
                 <div class="fix-title-print">In phiếu xuất</div>
             </a> &nbsp;&nbsp;&nbsp;&nbsp;
             <a href="{!! url('/') !!}/report/orders/rv/{{ $order->id }}" target="_blank" class="btn btn-warning btn-fab floatright btn-print-detail" title="In phiếu thu">
                 <i class="fa fa-print material-icons print-btn" aria-hidden="true"></i>
                 <div class="fix-title-print">In phiếu thu</div>
-            </a> &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="{!! url('/') !!}/report/orders/{{ $order->id }}" target="_blank" class="btn btn-warning btn-fab floatright btn-print-detail" title="In đơn hàng {{ \App\Util::OrderCode($order->id) }}">
+            </a> &nbsp;&nbsp;&nbsp;&nbsp; -->
+            <a href="{!! url('/') !!}/report/orders/{{ $order->id }}" target="_blank" class="btn btn-success btn-fab iconPrint floatright btn-print-detail" title="In đơn hàng {{ \App\Util::OrderCode($order->id) }}">
                 <i class="fa fa-print material-icons print-btn" aria-hidden="true"></i>
                 <div class="fix-title-print">In đơn hàng</div>
             </a>
@@ -63,7 +63,7 @@
                                 </td>
                                 <td></td>
                                 <td>Tổng: </td>
-                                <td><span class="total">  {!! \App\Util::FormatMoney($total)!!} </span></td>
+                                <td><strong class="total">  {!! \App\Util::FormatMoney($total)!!} </strong></td>
                             </tr>
                             </tbody>
                         </table>
@@ -75,7 +75,8 @@
                             </div>
                             <div class="col-md-8">
                                 <p>
-                                    @if(($order->type_pay == 1)) Đã thanh toán đầy đủ @elseif($order->type_pay == 2) Đã đặt cọc @if(!empty($order->received_pay)){{number_format($order->received_pay)}} VNĐ @endif @else Chưa thanh toán @endif
+                                    @if(($order->type_pay == 1)) Đã thanh toán đầy đủ @elseif($order->type_pay == 2) Đã đặt cọc @if(!empty($order->received_pay)){!! \App\Util::FormatMoney($order->received_pay)!!} @endif , còn nợ @if(!empty($order->remain_pay)) {!! \App\Util::FormatMoney($order->remain_pay)!!} @endif
+                                    @else Chưa thanh toán @endif
                                 </p>
                             </div>
                         </div>
