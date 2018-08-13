@@ -106,13 +106,13 @@
                             <div class="col-md-4 col-sm-4 col-xs-12 profile_details product-detail">
 
                                 <div class="well box_1" style="@if($itemProduct->inventory_num <= '10') {{'background-color: #ffb100 !important;'}} @endif">
-                                    <div class="img-product-view">
+                                    <!-- <div class="img-product-view">
                                         <img src="{{url('/')}}{{$itemProduct->image}}" alt="" class="img-circle img-responsive"
                                              data-pin-nopin="true">
-                                    </div>
+                                    </div> -->
                                     <div id="update-product"  class="col-sm-12 input-product" data-toggle="modal"
                                          data-target=".modal-product" data-title="{{$itemProduct->title}} ({{\App\Util::ProductCode($itemProduct->id)}})" data-id="{{$itemProduct->id}}">
-                                        <p style="font-size: 16px;" class="cod limitcharacterWithImg">{{$itemProduct->title}}</p>
+                                        <p style="font-size: 16px;" class="cod limitcharacter">{{$itemProduct->title}}</p>
                                         <h2 class="cod limitcharacterWithImg">{{\App\Util::ProductCode($itemProduct->id)}}
                                         </h2>
                                         <div class="col-xs-12 " style="padding-left: 0px;">
@@ -123,7 +123,7 @@
                                                 <li class="limitcharacter"><span class="box-money"><span class="label-box">Bán ra:</span>{{number_format($itemProduct->price_out)}} VNĐ</span></li>
                                                 <li class="limitcharacter"><span class="label-box">Bán tối thiểu:</span>{{$itemProduct->min_gram}} Kg </li>
                                                 <li class="limitcharacter"><span class="label-box">Danh mục:</span>{{\App\CategoryProduct::getNameCateById($itemProduct->category)}}</li>
-                                                <li class="limitcharacter"><span class="label-box">Cập nhật:</span>{{$itemProduct->updated_at->format('d/m/Y')}}</li>
+                                                <!-- <li class="limitcharacter"><span class="label-box">Cập nhật:</span>{{$itemProduct->updated_at->format('d/m/Y')}}</li> -->
                                             </ul>
                                         </div>
 

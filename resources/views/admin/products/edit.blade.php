@@ -73,33 +73,35 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
                                                 <label for="ex4">Giá thu vào</label>
                                                 <input type="number" class="form-control" name="price_in" required
                                                        value="@if(!empty($product->price_in)){{$product->price_in}}@else{{old('price_in')}}@endif">
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
                                                 <label for="ex4">Giá bán ra</label>
                                                 <input type="number" class="form-control" name="price_out" required
                                                        value="@if(!empty($product->price_out)){{$product->price_out}}@else{{old('price_out')}}@endif">
                                             </div>
-                                            <div class="col-md-4">
+                                            <!-- <div class="col-md-4">
                                                 <label for="ex4">Giá khuyến mãi</label>
                                                 <input type="number" class="form-control" name="price_sale"
                                                        value="@if(!empty($product->price_sale)){{$product->price_sale}}@else{{old('price_sale')}}@endif">
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="ex4">Giá tính theo bao nhiêu Kg</label>
-                                        <input type="number" id="ex4" class="form-control" name="gram" required
-                                               value="@if(!empty($product->gram)){{$product->gram}}@else{{old('gram')}}@endif">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="ex4">Bán tối thiểu (Kg)</label>
-                                        <input type="number" id="ex4" class="form-control" name="min_gram" required
-                                               value="@if(!empty($product->min_gram)){{$product->min_gram}}@else{{old('min_gram')}}@endif">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="ex4">Giá tính theo bao nhiêu Kg</label>
+                                                <input type="number" id="ex4" class="form-control" name="gram" required value="@if(!empty($product->gram)){{$product->gram}}@else{{old('gram')}}@endif">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="ex4">Bán tối thiểu (Kg)</label>
+                                                <input type="number" id="ex4" class="form-control" name="min_gram" required value="@if(!empty($product->min_gram)){{$product->min_gram}}@else{{old('min_gram')}}@endif">
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-group">
 
@@ -295,8 +297,7 @@
                                                             đổi</label>--}}
 
                                                         <div class="col-md-8">
-                                                            <input type="text" readonly="" class="form-control"
-                                                                   placeholder="Chọn hình ảnh">
+                                                            <input type="text" readonly="" class="form-control" placeholder="Chọn hình ảnh">
                                                             <input type="file" name="image" id="inputFile">
                                                         </div>
                                                     </div>
@@ -315,8 +316,6 @@
                                                         </figure>
                                                         <span></span></label>
                                                 @endif
-
-
                                         </div>
                                     </div>
                                 </div>
@@ -324,9 +323,6 @@
                             <div class="x_panel">
                                 <div class="wrapper-content mt20">
                                     <div class="pd-all-20 border-top-title-main">
-
-
-
                                             <label class="mb5">Hình chi tiết</label>
                                             <br>
                                             @if(!empty($detailImage))
@@ -347,12 +343,10 @@
 
                                             <input type="button" id="add_more" class="upload btn btn-info btn-raised btn-xs"
                                                    value="Thêm nhiều hình"/>
-
-
-
                                     </div>
                                 </div>
                             </div>
+                            <i>Tips: Hình ảnh sẽ đẹp hơn khi có kích thước nhỏ hơn 2Mb và là hình chữ nhật nằm ngang</i>
                         </div>
 
                     </form>

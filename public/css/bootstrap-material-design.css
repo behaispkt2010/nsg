@@ -1921,7 +1921,7 @@ label.control-label {
 .form-group label {
   font-size: 15px;
   line-height: 1.42857143;
-  color: #BDBDBD;
+  color: #000;
   font-weight: 400;
 }
 .form-group label.control-label {
