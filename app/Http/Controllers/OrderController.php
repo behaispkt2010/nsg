@@ -39,6 +39,16 @@ class OrderController extends Controller
             echo "<option value='$DistrictByProvince->name'>$DistrictByProvince->name</option>";
         }*/
     }
+    public function AjaxGetDistrictByProvinceID(Request $request){
+        $id = $request->get('id');
+        $arrDistrictByProvince = Order::GetRelateProvince($id);
+        echo '<option value="">Chọn Huyện/Thị trấn</option>';
+        foreach($arrDistrictByProvince as $item) { 
+            echo '<option class="stlDistrict" value="'.$item->districtid.'">'.$item->name.'</option>';
+            // echo '<div class="option" data-selectable="" data-value="'.$item->name.'">'.$item->name.'</div>';
+        }
+        // return \Response::json($arrDistrictByProvince);
+    }
     public function AjaxLoadInfoAddress(Request $request) {
         $id      = $request->get('id');
         $type    = $request->get('type');
@@ -165,7 +175,7 @@ class OrderController extends Controller
                 ->get();
         }
         else {
-            $products = Product::where('status',1)->get();
+            $products = Product::where('status', 1)->get();
         }
         $order_status = OrderStatus::where('deleted', '0')->get();
         $data = [

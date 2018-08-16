@@ -86,8 +86,9 @@ class DashboardAdminController extends Controller
         $profit         = $totalPrice - $totalPriceIn;
         $arrOrderRemain = Order::select('users.*','orders.*','orders.id as orderID')
             ->leftjoin('users','users.id','=','orders.customer_id')
-            ->where('orders.kho_id',$idUser)
-            ->where('orders.remain_pay','!=',0)
+            ->where('orders.kho_id', $idUser)
+            ->where('orders.type_pay', 2)
+            ->where('orders.remain_pay','!=', 0)
             ->paginate(10);
         $data = [
             'numOrder'       => $numOrder,

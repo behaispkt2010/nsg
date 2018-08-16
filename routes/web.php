@@ -110,6 +110,7 @@ Route::group(['prefix' => 'admin','middleware' => ['auth', 'authorize']], functi
     Route::resource('orders', 'OrderController');
     Route::get('orders/getOrderByStatus/{id}', 'OrderController@getOrderByStatus');
     Route::post('orders/AjaxGetDistrictByProvince', 'OrderController@AjaxGetDistrictByProvince');
+    Route::post('orders/AjaxGetDistrictByProvinceID', 'OrderController@AjaxGetDistrictByProvinceID');
     Route::post('orders/AjaxLoadInfoAddress', 'OrderController@AjaxLoadInfoAddress');
     //ql kho
     Route::resource('inventory', 'InventoryController');

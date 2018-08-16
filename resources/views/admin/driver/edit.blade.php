@@ -18,8 +18,12 @@
                             <div class="x_panel">
                                 <div class="form-group">
                                     <label>Phương thức vận chuyển</label>
-                                    <input type="text" name="type_driver" class="form-control" id="type_driver" required 
-                                            value="@if(!empty($driver->type_driver)){{$driver->type_driver}}@else{{old('type_driver')}}@endif">
+                                    <select id="type_driver" name="type_driver" class="form-control type_driver" data-placeholder="Tên | số điện thoại">
+                                        @foreach($transport as $item)
+                                            <option value="{{$item->name}}" @if(!empty($driver->type_driver) && ($driver->type_driver == $item->name)) selected='selected' @endif>{{$item->name}}</option>
+                                        @endforeach 
+                                    </select>
+                                    
                                 </div>
                                 <div class="form-group">
                                     <label>Tên tài xế</label>
@@ -46,5 +50,13 @@
                         
                     </form>
     </div>
+
+@endsection
+
+@section('add_scripts')
+<script src="{{asset('js/selectize.js')}}"></script>
+<script>
+    $('#type_driver').selectize({});
+</script>
 
 @endsection

@@ -75,31 +75,29 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label for="ex4">Giá thu vào</label>
-                                                <input type="number" class="form-control" name="price_in" required
-                                                       value="@if(!empty($product->price_in)){{$product->price_in}}@else{{old('price_in')}}@endif">
+                                                <input type="text" class="form-control" name="price_in" required id="price_in" value="@if(!empty($product->price_in)){{$product->price_in}}@else{{old('price_in')}}@endif">
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="ex4">Giá bán ra</label>
-                                                <input type="number" class="form-control" name="price_out" required
-                                                       value="@if(!empty($product->price_out)){{$product->price_out}}@else{{old('price_out')}}@endif">
+                                                <input type="text" class="form-control" name="price_out" required id="price_out" value="@if(!empty($product->price_out)){{$product->price_out}}@else{{old('price_out')}}@endif">
                                             </div>
-                                            <!-- <div class="col-md-4">
+                                            <div class="col-md-4" style="display: none;">
                                                 <label for="ex4">Giá khuyến mãi</label>
-                                                <input type="number" class="form-control" name="price_sale"
-                                                       value="@if(!empty($product->price_sale)){{$product->price_sale}}@else{{old('price_sale')}}@endif">
-                                            </div> -->
+                                                <input type="text" class="form-control" name="price_sale"
+                                                       value="0">
+                                            </div>
                                         </div>
                                     </div>
-
+                                    
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label for="ex4">Giá tính theo bao nhiêu Kg</label>
-                                                <input type="number" id="ex4" class="form-control" name="gram" required value="@if(!empty($product->gram)){{$product->gram}}@else{{old('gram')}}@endif">
+                                                <input type="text" id="ex4" class="form-control" name="gram" required id="gram" value="@if(!empty($product->gram)){{$product->gram}}@else{{old('gram')}}@endif">
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="ex4">Bán tối thiểu (Kg)</label>
-                                                <input type="number" id="ex4" class="form-control" name="min_gram" required value="@if(!empty($product->min_gram)){{$product->min_gram}}@else{{old('min_gram')}}@endif">
+                                                <input type="text" id="ex4" class="form-control" name="min_gram" id="min_gram" required value="@if(!empty($product->min_gram)){{$product->min_gram}}@else{{old('min_gram')}}@endif">
                                             </div>
                                         </div>
                                     </div>
@@ -379,7 +377,15 @@
             $('#tags_1').tagsInput({
                 width: 'auto'
             });
+            
         });
+        jQuery(document).ready(function () { 
+            // $('#price_in').number(true, 0);
+            // $('#price_out').number(true, 0);
+            // $('#gram').number(true, 0);
+            // $('#min_gram').number(true, 0);
+        });
+
     </script>
     <script src="{{asset('js/selectize.js')}}"></script>
     <!-- Select2 -->

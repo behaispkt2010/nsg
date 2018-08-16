@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\DriverRequest;
 use App\Driver;
 use App\User;
+use App\Transport;
 use Yajra\Datatables\Datatables;
 
 use App\Http\Requests;
@@ -19,6 +20,7 @@ class DriverController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function AjaxCreateTransport(DriverRequest $request) {
+        $data['kho'] = Auth::user()->id;
         $data     = $request->all();
         $driver   = Driver::create($data);
         $response = array(
@@ -94,7 +96,11 @@ class DriverController extends Controller
      */
     public function create()
     {
-        return view('admin.driver.edit');
+        $transport = Transport::where('deleted', 0)->get();
+        $data = [
+            'transport' => $transport
+        ];
+        return view('admin.driver.edit', $data);
     }
 
     /**
@@ -136,7 +142,9 @@ class DriverController extends Controller
     public function edit($id)
     {
         $driver = Driver::find($id);
+        $transport = Transport::where('deleted', 0)->get();
         $data   = [
+            'transport' => $transport,
             'id'     => $id,
             'driver' => $driver,
         ];

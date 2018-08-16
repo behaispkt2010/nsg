@@ -306,7 +306,7 @@
                     <div class="col-md-6 col-sm-12 col-xs-12 profile_details product-detail">
 
                         <div class="well box1 " style="min-height: 440px; position: relative">
-                            <h4 class="text-center">Tài khoản ngân hàng </h4>
+                            <h4 class="text-center">Cài đặt thanh toán</h4>
                             <ul class="list-unstyled list_bank">
                                 <?php $i=0 ;?>
                                 @foreach($bankWareHouse as $itemBankWareHouse)
@@ -321,7 +321,7 @@
                                                 <div class="stt-num col-md-1">{{$i}}</div> 
                                                 <div class="col-md-7 limitcharacterBank">{{$itemBankWareHouse->card_name}} </div>
                                                 @if($itemBankWareHouse->type_pay == \App\Util::$bank)
-                                                <div class="col-md-4">: {{$itemBankWareHouse->card_number}}</div>
+                                                <div class="col-md-4"> {{$itemBankWareHouse->card_number}}</div>
                                                 @endif
                                             </div>
                                             </label>
@@ -1122,7 +1122,7 @@
     <script src="{{asset('js/selectize.js')}}"></script>
     <!-- #province, #category_warehouse_id, #user_test, -->
     <script> 
-        $('#time_upgrade_bonus, #category_warehouse_id, #user_test, #time_upgrade_level, #time_confirm_kho, #time_confirm_kho_bonus, #time_quangcao, #time_quangcao_bonus, #time_request_upgrade_level, #time_request_quangcao, #month_required, #time_request_confirm_kho, .bank, .province, .type_pay').selectize({create: true,});
+        $('#time_upgrade_bonus, #category_warehouse_id, #user_test, #time_upgrade_level, #time_confirm_kho, #time_confirm_kho_bonus, #time_quangcao, #time_quangcao_bonus, #time_request_upgrade_level, #time_request_quangcao, #month_required, #time_request_confirm_kho, .bank, .province, .type_pay, .select2_single').selectize({create: true,});
     </script>
     
     <script type="text/javascript">
@@ -1957,10 +1957,30 @@
         });
     </script>
     <script type="text/javascript">
+        $('#province').on('change',function(){
+            var countryID = $(this).val();
+            var _token = $('input[name="_token"]').val();
+
+            if(countryID){
+                $.ajax({
+                    type:'POST',
+                    url:'{{ url("/") }}/admin/orders/AjaxGetDistrictByProvinceID',
+                    data: {id: countryID, _token: _token},
+                    success:function(html){
+                        $('#district').selectize()[0].selectize.destroy();
+                        $('#district').html(html);
+                        $('#district').selectize(); 
+                    }
+                }); 
+            } else {
+                $('#district').html('<option value="">Chọn Huyện/Thị trấn</option>');
+            }
+        });
         // get update district, provinde
         $(function(){
             var districtID = $('.districtID').val();
             var provinceID = $('.provinceID').val();
+            console.log(provinceID);
             var _token = $('input[name="_token"]').val();
             if(provinceID){
                 $.ajax({

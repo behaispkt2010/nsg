@@ -835,7 +835,7 @@ a:focus {
     text-overflow: ellipsis;
     overflow: hidden;
     font-weight: 400;
-    font-size: 22px;
+    font-size: 18px;
     width: 100%;
     color: #ECF0F1 !important;
     margin-left: 0 !important;
@@ -4333,7 +4333,7 @@ form:after {
 }
 
 #password {
-    background-position: 10px -53px !important;
+    /*background-position: 10px -53px !important;*/
 }
 
 .login_content form div a {

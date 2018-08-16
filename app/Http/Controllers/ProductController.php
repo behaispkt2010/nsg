@@ -222,7 +222,12 @@ class ProductController extends Controller
                 $data['slug'] =  $data['slug'].'-'.$today;
             }
             $data['price_sale']      = $request->get('price_sale');
+
             $product1                = Product::create($data);
+            
+            $data['code']            = Util::ProductCode($product1->id);
+            $product1->update($data);
+
             $dataPrice['product_id'] = $product1->id;
             $dataPrice['price_in']   = $request->get('price_in');
             $dataPrice['price_out']  = $request->get('price_out');
