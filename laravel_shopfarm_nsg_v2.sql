@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50625
 File Encoding         : 65001
 
-Date: 2018-08-17 00:49:26
+Date: 2018-09-25 21:41:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -124,7 +124,7 @@ CREATE TABLE `bank_ware_houses` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of bank_ware_houses
@@ -132,8 +132,55 @@ CREATE TABLE `bank_ware_houses` (
 INSERT INTO `bank_ware_houses` VALUES ('1', '6', null, '0', '30', '1', '711A35996611', 'TRAN VAN BE A', '1', '0', '0', '2017-09-04 03:25:00', '2017-09-18 23:13:33');
 INSERT INTO `bank_ware_houses` VALUES ('2', '6', null, '0', '20', '1', '09093293203', 'TRAN VAN BE HAI', '2', '1', '0', '2017-09-04 15:16:10', '2017-09-18 23:13:42');
 INSERT INTO `bank_ware_houses` VALUES ('3', '14', null, '0', '16', '31', '1003383783', 'TRAN TY', '1', '1', '0', '2017-10-10 18:40:02', '2017-10-10 18:40:02');
-INSERT INTO `bank_ware_houses` VALUES ('4', '4', null, '0', '16', '87', '38388383833332', 'TRAN BO', '2', '1', '0', '2017-10-10 18:41:11', '2018-08-07 00:51:59');
-INSERT INTO `bank_ware_houses` VALUES ('5', '4', null, '0', '29', '92', '82828227171681', 'TRAN BO', '1', '0', '0', '2017-10-10 18:41:33', '2017-10-10 18:41:33');
+INSERT INTO `bank_ware_houses` VALUES ('8', '4', null, '0', '30', '1', '1009292222', 'TRAN VAN BE HAI', '2', '1', '0', '2018-09-05 22:29:23', '2018-09-05 22:29:23');
+INSERT INTO `bank_ware_houses` VALUES ('9', '4', null, '0', '0', '0', '', 'TRAN VAN BE HAI', '1', '1', '0', '2018-09-05 22:29:58', '2018-09-10 22:46:37');
+INSERT INTO `bank_ware_houses` VALUES ('10', '4', null, '0', '3', '79', '02910291011', 'TRAN TEST', '2', '1', '0', '2018-09-10 22:47:11', '2018-09-10 22:47:11');
+
+-- ----------------------------
+-- Table structure for car_marker
+-- ----------------------------
+DROP TABLE IF EXISTS `car_marker`;
+CREATE TABLE `car_marker` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `deleted` int(11) DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of car_marker
+-- ----------------------------
+INSERT INTO `car_marker` VALUES ('1', 'Toyota', '0', null, null);
+INSERT INTO `car_marker` VALUES ('2', 'Honda', '0', null, null);
+INSERT INTO `car_marker` VALUES ('3', 'Isuzu', '0', null, null);
+INSERT INTO `car_marker` VALUES ('4', 'Hyundai', '0', null, null);
+INSERT INTO `car_marker` VALUES ('5', 'Audi', '0', null, null);
+INSERT INTO `car_marker` VALUES ('6', 'BMW', '0', null, null);
+INSERT INTO `car_marker` VALUES ('7', 'Chevrolet', '0', null, null);
+INSERT INTO `car_marker` VALUES ('8', 'Ford', '0', null, null);
+INSERT INTO `car_marker` VALUES ('9', 'Infiniti', '0', null, null);
+INSERT INTO `car_marker` VALUES ('10', 'Jaguar', '0', null, null);
+INSERT INTO `car_marker` VALUES ('11', 'KIA', '0', null, null);
+INSERT INTO `car_marker` VALUES ('12', 'Land Rover', '0', null, null);
+INSERT INTO `car_marker` VALUES ('13', 'Lexus', '0', null, null);
+INSERT INTO `car_marker` VALUES ('14', 'Maserati', '0', null, null);
+INSERT INTO `car_marker` VALUES ('15', 'Mazda', '0', null, null);
+INSERT INTO `car_marker` VALUES ('16', 'Mercedes-Benz', '0', null, null);
+INSERT INTO `car_marker` VALUES ('17', 'MINI', '0', null, null);
+INSERT INTO `car_marker` VALUES ('18', 'Mitsubishi', '0', null, null);
+INSERT INTO `car_marker` VALUES ('19', 'Nissan', '0', null, null);
+INSERT INTO `car_marker` VALUES ('20', 'Peugeot', '0', null, null);
+INSERT INTO `car_marker` VALUES ('21', 'Porsche', '0', null, null);
+INSERT INTO `car_marker` VALUES ('22', 'Renault', '0', null, null);
+INSERT INTO `car_marker` VALUES ('23', 'Ssangyong', '0', null, null);
+INSERT INTO `car_marker` VALUES ('24', 'Subara', '0', null, null);
+INSERT INTO `car_marker` VALUES ('25', 'Suzuki', '0', null, null);
+INSERT INTO `car_marker` VALUES ('26', 'UAZ', '0', null, null);
+INSERT INTO `car_marker` VALUES ('27', 'Volkswagen', '0', null, null);
+INSERT INTO `car_marker` VALUES ('28', 'Volvo', '0', null, null);
+INSERT INTO `car_marker` VALUES ('29', 'Test Type', '1', '2018-09-23 16:37:42', '2018-09-23 16:41:21');
 
 -- ----------------------------
 -- Table structure for categories
@@ -225,6 +272,24 @@ INSERT INTO `category_warehouse` VALUES ('1', 'Công ty Cổ phần', '0', null,
 INSERT INTO `category_warehouse` VALUES ('2', 'Công Ty TNHH', '0', null, null);
 INSERT INTO `category_warehouse` VALUES ('3', 'Cơ sở kinh doanh', '0', null, null);
 INSERT INTO `category_warehouse` VALUES ('4', 'Hộ cá thể', '0', null, null);
+
+-- ----------------------------
+-- Table structure for cate_payment
+-- ----------------------------
+DROP TABLE IF EXISTS `cate_payment`;
+CREATE TABLE `cate_payment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `deleted` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of cate_payment
+-- ----------------------------
+INSERT INTO `cate_payment` VALUES ('1', 'Bán hàng', '0');
+INSERT INTO `cate_payment` VALUES ('2', 'Môi giới', '0');
+INSERT INTO `cate_payment` VALUES ('3', 'POS', '0');
 
 -- ----------------------------
 -- Table structure for company
@@ -1099,23 +1164,35 @@ CREATE TABLE `driver` (
   `phone_driver` text COLLATE utf8_unicode_ci NOT NULL,
   `phone_driver2` text COLLATE utf8_unicode_ci,
   `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `province` int(11) DEFAULT NULL,
+  `district` int(11) DEFAULT NULL,
+  `identity` int(11) DEFAULT NULL,
+  `image_identity` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `carmarker` int(11) DEFAULT NULL,
+  `image_car` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `kho` int(100) NOT NULL,
   `number_license_driver` text COLLATE utf8_unicode_ci NOT NULL,
   `deleted` int(10) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of driver
 -- ----------------------------
-INSERT INTO `driver` VALUES ('1', 'Xe tải', 'Trần Văn A', '0969696969', null, null, '75', '59A-19191', '0', null, null);
-INSERT INTO `driver` VALUES ('3', 'Xe đạp', 'Phạm Lỗ Lỗ', '01666666655', null, null, '76', '31A-99123', '0', '2017-05-29 22:37:53', '2017-05-29 22:37:53');
-INSERT INTO `driver` VALUES ('4', ' Xe khách', 'Phàm Phú', '085854855', null, null, '78', '93A-22331', '0', '2017-05-30 00:09:24', '2017-05-30 00:09:24');
-INSERT INTO `driver` VALUES ('5', 'Xe oto', 'Xàm xí', '093933839', null, null, '75', '93A26262', '0', '2017-06-16 00:08:52', '2017-06-16 00:08:52');
-INSERT INTO `driver` VALUES ('7', ' Xe thồ chở đi cho bá chấy bù chét', ' Bọ Hung', ' 098178118', null, null, '0', '98A0099', '0', '2017-06-16 01:55:50', '2017-06-16 01:55:50');
-INSERT INTO `driver` VALUES ('8', 'Xe cont 40\"', 'test ', '039393993', null, null, '78', '838383', '0', '2018-08-16 23:32:07', '2018-08-16 23:32:07');
+INSERT INTO `driver` VALUES ('1', '2', 'Trần Văn A', '0969696969', null, null, null, null, null, null, null, null, null, '75', '59A-19191', '0', null, null);
+INSERT INTO `driver` VALUES ('3', '5', 'Phạm Lỗ Lỗ', '01666666655', null, null, null, null, null, null, null, null, null, '76', '31A-99123', '0', '2017-05-29 22:37:53', '2017-05-29 22:37:53');
+INSERT INTO `driver` VALUES ('4', '6', 'Phàm Phú', '085854855', null, null, null, null, null, null, null, null, null, '78', '93A-22331', '0', '2017-05-30 00:09:24', '2017-05-30 00:09:24');
+INSERT INTO `driver` VALUES ('5', '3', 'Xàm xí', '093933839', null, null, null, null, null, null, null, null, null, '75', '93A26262', '0', '2017-06-16 00:08:52', '2017-06-16 00:08:52');
+INSERT INTO `driver` VALUES ('7', '4', ' Bọ Hung', ' 098178118', null, null, null, null, null, null, null, null, null, '0', '98A0099', '0', '2017-06-16 01:55:50', '2017-06-16 01:55:50');
+INSERT INTO `driver` VALUES ('8', '7', 'test ', '039393993', null, null, null, null, null, null, null, null, null, '78', '838383', '0', '2018-08-16 23:32:07', '2018-08-16 23:32:07');
+INSERT INTO `driver` VALUES ('9', '1', 'Trần Hoàng Anh', '0929292929', null, null, null, null, null, null, null, null, null, '78', '77c1-12345', '0', '2018-09-05 23:35:25', '2018-09-05 23:35:25');
+INSERT INTO `driver` VALUES ('10', '8', 'Trần Bá', '0983737373', null, null, null, null, null, null, null, null, null, '78', '63c-12121', '0', '2018-09-22 13:54:50', '2018-09-22 13:54:50');
+INSERT INTO `driver` VALUES ('11', '2', 'Trần Văn Bé Hai', '0969857777', '', 'behaispkt2010@gmail.com', '312152610', '79', '760', null, null, null, null, '78', '59v-1234', '0', '2018-09-22 15:04:23', '2018-09-22 15:04:23');
+INSERT INTO `driver` VALUES ('12', '3', 'Hai xe ôm', '0969875777', '34534534534', 'behaispkt2010@gmail.com', '3543232423', '79', '760', null, '/uploads/images/2018-09/web-2018-09-22_15-47-39-chuoi.jpg', '3', null, '78', '35223677', '0', '2018-09-22 15:47:39', '2018-09-22 15:47:39');
+INSERT INTO `driver` VALUES ('13', '8', 'Linh xe ôm yp', '09698757712', '', 'behaispkt2010@gmail.com', '217 Đường Trần Hưng Đạo', '79', '760', '2147483647', '/uploads/images/2018-09/web-2018-09-22_16-21-44-mit.jpg', '4', '/uploads/images/2018-09/web-2018-09-22_16-21-44-chuoi.jpg', '78', '46c2-44123', '0', '2018-09-22 16:06:43', '2018-09-22 16:21:44');
 
 -- ----------------------------
 -- Table structure for help_content
@@ -1236,7 +1313,7 @@ CREATE TABLE `history_update_status_order` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of history_update_status_order
@@ -1260,6 +1337,132 @@ INSERT INTO `history_update_status_order` VALUES ('16', '13', '2', '78', '0', '2
 INSERT INTO `history_update_status_order` VALUES ('17', '14', '2', '78', '0', '2018-08-13 21:43:00', '2018-08-13 21:43:00');
 INSERT INTO `history_update_status_order` VALUES ('18', '15', '2', '78', '0', '2018-08-13 21:54:04', '2018-08-13 21:54:04');
 INSERT INTO `history_update_status_order` VALUES ('19', '15', '2', '78', '0', '2018-08-15 21:09:52', '2018-08-15 21:09:52');
+INSERT INTO `history_update_status_order` VALUES ('20', '16', '2', '78', '0', '2018-08-18 15:45:39', '2018-08-18 15:45:39');
+INSERT INTO `history_update_status_order` VALUES ('21', '16', '2', '78', '0', '2018-08-19 11:14:39', '2018-08-19 11:14:39');
+INSERT INTO `history_update_status_order` VALUES ('22', '16', '2', '78', '0', '2018-08-19 14:07:20', '2018-08-19 14:07:20');
+INSERT INTO `history_update_status_order` VALUES ('23', '16', '2', '78', '0', '2018-08-19 14:08:52', '2018-08-19 14:08:52');
+INSERT INTO `history_update_status_order` VALUES ('24', '16', '2', '78', '0', '2018-08-19 14:12:42', '2018-08-19 14:12:42');
+INSERT INTO `history_update_status_order` VALUES ('25', '16', '2', '78', '0', '2018-08-19 14:18:32', '2018-08-19 14:18:32');
+INSERT INTO `history_update_status_order` VALUES ('26', '16', '2', '78', '0', '2018-08-19 14:40:16', '2018-08-19 14:40:16');
+INSERT INTO `history_update_status_order` VALUES ('27', '16', '2', '78', '0', '2018-08-19 14:51:17', '2018-08-19 14:51:17');
+INSERT INTO `history_update_status_order` VALUES ('28', '16', '2', '78', '0', '2018-08-19 15:14:15', '2018-08-19 15:14:15');
+INSERT INTO `history_update_status_order` VALUES ('29', '16', '2', '78', '0', '2018-08-19 15:15:38', '2018-08-19 15:15:38');
+INSERT INTO `history_update_status_order` VALUES ('30', '16', '2', '78', '0', '2018-08-19 15:16:01', '2018-08-19 15:16:01');
+INSERT INTO `history_update_status_order` VALUES ('31', '16', '2', '78', '0', '2018-08-19 16:31:23', '2018-08-19 16:31:23');
+INSERT INTO `history_update_status_order` VALUES ('32', '16', '10', '78', '0', '2018-08-19 21:14:08', '2018-08-19 21:14:08');
+INSERT INTO `history_update_status_order` VALUES ('33', '17', '2', '78', '0', '2018-08-26 17:14:58', '2018-08-26 17:14:58');
+INSERT INTO `history_update_status_order` VALUES ('34', '1', '1', '78', '0', '2018-09-05 23:43:53', '2018-09-05 23:43:53');
+INSERT INTO `history_update_status_order` VALUES ('35', '2', '1', '78', '0', '2018-09-05 23:54:20', '2018-09-05 23:54:20');
+INSERT INTO `history_update_status_order` VALUES ('36', '3', '2', '78', '0', '2018-09-22 11:14:47', '2018-09-22 11:14:47');
+INSERT INTO `history_update_status_order` VALUES ('37', '3', '9', '78', '0', '2018-09-22 11:20:10', '2018-09-22 11:20:10');
+INSERT INTO `history_update_status_order` VALUES ('38', '4', '2', '78', '0', '2018-09-23 14:38:44', '2018-09-23 14:38:44');
+INSERT INTO `history_update_status_order` VALUES ('39', '4', '9', '78', '0', '2018-09-23 14:40:11', '2018-09-23 14:40:11');
+INSERT INTO `history_update_status_order` VALUES ('40', '4', '9', '78', '0', '2018-09-23 14:41:34', '2018-09-23 14:41:34');
+
+-- ----------------------------
+-- Table structure for input_output
+-- ----------------------------
+DROP TABLE IF EXISTS `input_output`;
+CREATE TABLE `input_output` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) DEFAULT NULL,
+  `code` varchar(255) COLLATE utf8_unicode_ci DEFAULT '0',
+  `id_product` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `cate` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `quantity` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `note` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `addpress` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `provinceid` int(11) DEFAULT NULL,
+  `districtid` int(11) DEFAULT NULL,
+  `id_kho` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `author_id` int(11) NOT NULL,
+  `deleted` int(11) DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of input_output
+-- ----------------------------
+INSERT INTO `input_output` VALUES ('1', '0', 'QKH-78-1', '1', 'issue', '1', '', 'test', '1', ' tets', ' 33221312', 'botran1test@gmail.com', ' tổ 1', '1', '1', '78', '78', '0', '2018-09-13 23:53:12', '2018-09-13 23:53:12');
+INSERT INTO `input_output` VALUES ('2', '1', 'QKH-78-2', '1', 'receipt', '', '', 'test', '2', ' tets ', ' 33221312 ', 'botran@gmail.com', ' tổ 1 ', '1', '2', '78', '78', '0', '2018-09-15 04:11:23', '2018-09-15 04:12:51');
+INSERT INTO `input_output` VALUES ('3', '0', 'QKH-78-3', '2', 'issue', '1', '', 'test', '2', ' tets', ' 33221312', 'botran@gmail.com', ' tổ 1', '1', '8', '78', '78', '0', '2018-09-15 04:16:19', '2018-09-15 04:16:19');
+INSERT INTO `input_output` VALUES ('4', '0', 'QKH-78-4', '2', 'receipt', '1', '', 'tesst', '2', ' tets ', ' 33221312 ', 'test122321@gmail.com', ' tổ 1 ', '8', '74', '78', '78', '0', '2018-09-15 04:17:07', '2018-09-15 04:17:23');
+
+-- ----------------------------
+-- Table structure for input_output_detail
+-- ----------------------------
+DROP TABLE IF EXISTS `input_output_detail`;
+CREATE TABLE `input_output_detail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_io` int(11) NOT NULL,
+  `idproduct` int(11) NOT NULL,
+  `nameproduct` varchar(255) COLLATE utf8_unicode_ci DEFAULT '0',
+  `quantity` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `deleted` int(11) DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of input_output_detail
+-- ----------------------------
+INSERT INTO `input_output_detail` VALUES ('1', '1', '1', 'Trái chuối', '10', '0', '2018-09-13 23:53:12', '2018-09-13 23:53:12');
+INSERT INTO `input_output_detail` VALUES ('3', '2', '1', 'Trái chuối', '20', '0', '2018-09-15 04:12:51', '2018-09-15 04:12:51');
+INSERT INTO `input_output_detail` VALUES ('4', '3', '2', 'Trái mít', '85', '0', '2018-09-15 04:16:19', '2018-09-15 04:16:19');
+INSERT INTO `input_output_detail` VALUES ('6', '4', '2', 'Trái mít', '100', '0', '2018-09-15 04:17:23', '2018-09-15 04:17:23');
+
+-- ----------------------------
+-- Table structure for inventory
+-- ----------------------------
+DROP TABLE IF EXISTS `inventory`;
+CREATE TABLE `inventory` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_product` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `status` int(11) NOT NULL,
+  `id_kho` int(11) NOT NULL DEFAULT '0',
+  `note` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `author_id` int(11) NOT NULL,
+  `deleted` int(11) DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of inventory
+-- ----------------------------
+INSERT INTO `inventory` VALUES ('1', '1', 'QLK-78-1', '1', '78', 'e', '78', '0', '2018-09-06 00:36:08', '2018-09-06 00:36:08');
+
+-- ----------------------------
+-- Table structure for inventory_detail
+-- ----------------------------
+DROP TABLE IF EXISTS `inventory_detail`;
+CREATE TABLE `inventory_detail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idinventory` int(11) NOT NULL,
+  `idproduct` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `nameproduct` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `inventory_num` int(11) NOT NULL,
+  `inventory_real` int(11) NOT NULL,
+  `deleted` int(11) DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of inventory_detail
+-- ----------------------------
+INSERT INTO `inventory_detail` VALUES ('2', '1', '1', 'Trái chuối', '180', '175', '0', '2018-09-06 00:38:06', '2018-09-06 00:38:06');
 
 -- ----------------------------
 -- Table structure for location_gps
@@ -1450,7 +1653,7 @@ CREATE TABLE `notification` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=152 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of notification
@@ -1571,8 +1774,28 @@ INSERT INTO `notification` VALUES ('126', 'newproductSuccess', 'Sản phẩm m�
 INSERT INTO `notification` VALUES ('127', 'newproductSuccess', 'Sản phẩm mới', 'Sản phẩm TTGV-78-12 đã được duyệt.', '78', '1', '/admin/products/12/edit', '1', '12', '0', '2018-07-14 14:54:11', '2018-08-02 00:02:33');
 INSERT INTO `notification` VALUES ('128', 'newproductSuccess', 'Sản phẩm mới', 'Sản phẩm TTGV-78-9 đã được duyệt.', '78', '1', '/admin/products/9/edit', '1', '9', '0', '2018-07-14 14:54:34', '2018-08-02 00:02:33');
 INSERT INTO `notification` VALUES ('129', 'newproductSuccess', 'Sản phẩm mới', 'Sản phẩm TTGV-78-13 đã được duyệt.', '78', '1', '/admin/products/13/edit', '1', '13', '0', '2018-07-14 15:06:43', '2018-08-02 00:02:33');
-INSERT INTO `notification` VALUES ('130', 'newproduct', 'Sản phẩm mới', 'Chủ kho KHO-CBA-78 vừa đăng sản phẩm mới.', '1', '78', '/admin/products/25/edit', '0', '25', '0', '2018-08-15 23:56:08', '2018-08-15 23:56:08');
-INSERT INTO `notification` VALUES ('131', 'newproduct', 'Sản phẩm mới', 'Chủ kho KHO-CBA-78 vừa đăng sản phẩm mới.', '1', '78', '/admin/products/26/edit', '0', '26', '0', '2018-08-15 23:57:36', '2018-08-15 23:57:36');
+INSERT INTO `notification` VALUES ('130', 'newproduct', 'Sản phẩm mới', 'Chủ kho KHO-CBA-78 vừa đăng sản phẩm mới.', '1', '78', '/admin/products/25/edit', '1', '25', '0', '2018-08-15 23:56:08', '2018-08-18 12:01:22');
+INSERT INTO `notification` VALUES ('131', 'newproduct', 'Sản phẩm mới', 'Chủ kho KHO-CBA-78 vừa đăng sản phẩm mới.', '1', '78', '/admin/products/26/edit', '1', '26', '0', '2018-08-15 23:57:36', '2018-08-18 12:01:22');
+INSERT INTO `notification` VALUES ('132', 'newproductSuccess', 'Sản phẩm mới', 'Sản phẩm TTCN-78-26 đã được duyệt.', '78', '1', '/admin/products/26/edit', '1', '26', '0', '2018-08-18 15:44:49', '2018-08-18 15:49:41');
+INSERT INTO `notification` VALUES ('133', 'orderreturn', 'Đơn hàng bị hủy', 'Mã ĐH: HCM-78-16 của Cô chủ nhỏ bé bé xinh xinh đẹp gái sắp trả về kho', '78', '78', '/admin/orders/16/edit', '1', '16', '0', '2018-08-19 21:14:08', '2018-08-19 21:15:39');
+INSERT INTO `notification` VALUES ('134', 'orderreturn', 'Đơn hàng  bị hủy', 'Mã ĐH: HCM-78-16 của Chủ KhoTrần Bo được Khách Hàng Cô chủ nhỏ bé bé xinh xinh đẹp gái mua  bị hủy', '1', '78', '/admin/orders/16/edit', '1', '16', '0', '2018-08-19 21:14:09', '2018-08-19 21:16:55');
+INSERT INTO `notification` VALUES ('135', 'orderreturn', 'Đơn hàng  bị hủy', 'Mã ĐH: HCM-78-16 của Chủ KhoTrần Bo được Khách Hàng Cô chủ nhỏ bé bé xinh xinh đẹp gái mua  bị hủy', '110', '78', '/admin/orders/16/edit', '0', '16', '0', '2018-08-19 21:14:09', '2018-08-19 21:14:09');
+INSERT INTO `notification` VALUES ('136', 'newproduct', 'Sản phẩm mới', 'Chủ kho KHO-CBA-78 vừa đăng sản phẩm mới.', '1', '78', '/admin/products/1/edit', '1', '1', '0', '2018-09-05 23:11:16', '2018-09-05 23:13:30');
+INSERT INTO `notification` VALUES ('137', 'newproduct', 'Sản phẩm mới', 'Chủ kho KHO-CBA-78 vừa đăng sản phẩm mới.', '110', '78', '/admin/products/1/edit', '0', '1', '0', '2018-09-05 23:11:17', '2018-09-05 23:11:17');
+INSERT INTO `notification` VALUES ('138', 'newproduct', 'Sản phẩm mới', 'Chủ kho KHO-CBA-78 vừa đăng sản phẩm mới.', '1', '78', '/admin/products/2/edit', '1', '2', '0', '2018-09-05 23:13:01', '2018-09-05 23:13:05');
+INSERT INTO `notification` VALUES ('139', 'newproduct', 'Sản phẩm mới', 'Chủ kho KHO-CBA-78 vừa đăng sản phẩm mới.', '110', '78', '/admin/products/2/edit', '0', '2', '0', '2018-09-05 23:13:01', '2018-09-05 23:13:01');
+INSERT INTO `notification` VALUES ('140', 'newproductSuccess', 'Sản phẩm mới', 'Sản phẩm TTCN-78-2 đã được duyệt.', '78', '1', '/admin/products/2/edit', '1', '2', '0', '2018-09-05 23:13:18', '2018-09-05 23:20:56');
+INSERT INTO `notification` VALUES ('141', 'newproductSuccess', 'Sản phẩm mới', 'Sản phẩm TTCN-78-1 đã được duyệt.', '78', '1', '/admin/products/1/edit', '1', '1', '0', '2018-09-05 23:13:38', '2018-09-05 23:20:56');
+INSERT INTO `notification` VALUES ('142', 'ordernew', 'Đơn hàng mới', 'Mã ĐH: BTR-78-1 của testusercode', '1', '78', '/admin/orders/1/edit', '1', '1', '0', '2018-09-05 23:43:53', '2018-09-06 21:28:06');
+INSERT INTO `notification` VALUES ('143', 'ordernew', 'Đơn hàng mới', 'Mã ĐH: BTR-78-1 của testusercode', '110', '78', '/admin/orders/1/edit', '0', '1', '0', '2018-09-05 23:43:53', '2018-09-05 23:43:53');
+INSERT INTO `notification` VALUES ('144', 'ordernew', 'Đơn hàng mới', 'Mã ĐH: HGI-78-2 của test15111', '1', '78', '/admin/orders/2/edit', '1', '2', '0', '2018-09-05 23:54:20', '2018-09-06 21:28:06');
+INSERT INTO `notification` VALUES ('145', 'ordernew', 'Đơn hàng mới', 'Mã ĐH: HGI-78-2 của test15111', '110', '78', '/admin/orders/2/edit', '0', '2', '0', '2018-09-05 23:54:20', '2018-09-05 23:54:20');
+INSERT INTO `notification` VALUES ('146', 'orderreturn', 'Đơn hàng đã hoàn thành', 'Mã ĐH: BTR-78-3 của testfinal đã hoàn thành', '78', '78', '/admin/orders/3/edit', '1', '3', '0', '2018-09-22 11:20:10', '2018-09-22 11:47:03');
+INSERT INTO `notification` VALUES ('147', 'orderreturn', 'Đơn hàng đã hoàn thành', 'Mã ĐH: BTR-78-3 của Chủ KhoTrần Bo được Khách Hàng testfinal mua đã hoàn thành', '1', '78', '/admin/orders/3/edit', '1', '3', '0', '2018-09-22 11:20:10', '2018-09-22 13:35:27');
+INSERT INTO `notification` VALUES ('148', 'orderreturn', 'Đơn hàng đã hoàn thành', 'Mã ĐH: BTR-78-3 của Chủ KhoTrần Bo được Khách Hàng testfinal mua đã hoàn thành', '110', '78', '/admin/orders/3/edit', '0', '3', '0', '2018-09-22 11:20:10', '2018-09-22 11:20:10');
+INSERT INTO `notification` VALUES ('149', 'orderreturn', 'Đơn hàng đã hoàn thành', 'Mã ĐH: HCM-78-4 của test customer đã hoàn thành', '78', '78', '/admin/orders/4/edit', '1', '4', '0', '2018-09-23 14:40:11', '2018-09-23 14:40:32');
+INSERT INTO `notification` VALUES ('150', 'orderreturn', 'Đơn hàng đã hoàn thành', 'Mã ĐH: HCM-78-4 của Chủ KhoTrần Bo được Khách Hàng test customer mua đã hoàn thành', '1', '78', '/admin/orders/4/edit', '0', '4', '0', '2018-09-23 14:40:12', '2018-09-23 14:40:12');
+INSERT INTO `notification` VALUES ('151', 'orderreturn', 'Đơn hàng đã hoàn thành', 'Mã ĐH: HCM-78-4 của Chủ KhoTrần Bo được Khách Hàng test customer mua đã hoàn thành', '110', '78', '/admin/orders/4/edit', '0', '4', '0', '2018-09-23 14:40:12', '2018-09-23 14:40:12');
 
 -- ----------------------------
 -- Table structure for orders
@@ -1590,27 +1813,28 @@ CREATE TABLE `orders` (
   `type_pay` int(11) NOT NULL,
   `received_pay` int(11) NOT NULL,
   `remain_pay` int(11) NOT NULL,
-  `type_driver` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `id_driver` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `name_driver` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `phone_driver` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `number_license_driver` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `discount` int(255) DEFAULT NULL COMMENT 'Giảm giá',
+  `tax` int(255) DEFAULT NULL COMMENT 'Thuế',
+  `transport_pay` int(255) DEFAULT NULL COMMENT 'Phí vận chuyển',
   `author_id` int(11) NOT NULL,
   `deleted` int(10) NOT NULL,
   `kho_id` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
-INSERT INTO `orders` VALUES ('10', 'PTH-78-10', '01/06/2018', '1', '87', '0', 'a', '0', '1', '0', '0', 'Xe đạp', 'Phạm Lỗ Lỗ', '01666666655', '31A-99123', '1', '0', '78', '2018-06-01 22:29:34', '2018-06-01 22:29:34');
-INSERT INTO `orders` VALUES ('11', 'PTH-78-11', '03/06/2018', '1', '87', '0', 'avc', '0', '1', '0', '0', ' Xe khách', 'Phàm Phú', '085854855', '93A-22331', '1', '0', '78', '2018-06-03 16:14:04', '2018-06-03 16:14:04');
-INSERT INTO `orders` VALUES ('12', 'HNO-78-12', '17/08/2018', '2', '79', '0', 'test', '0', '1', '0', '0', ' Xe khách', 'Phàm Phú', '085854855', '93A-22331', '78', '0', '78', '2018-08-10 23:32:52', '2018-08-10 23:32:52');
-INSERT INTO `orders` VALUES ('13', 'XX-78-13', '17/08/2018', '2', '125', '0', '', '0', '2', '10000', '10000', ' Xe khách', 'Phàm Phú', '085854855', '93A-22331', '78', '0', '78', '2018-08-10 23:36:46', '2018-08-10 23:36:47');
-INSERT INTO `orders` VALUES ('14', 'HCM-78-14', '15/08/2018', '2', '80', '0', 'test', '0', '1', '0', '0', ' Xe khách', 'Phàm Phú', '085854855', '93A-22331', '78', '0', '78', '2018-08-13 21:43:00', '2018-08-13 21:43:00');
-INSERT INTO `orders` VALUES ('15', 'HCM-78-15', '15/08/2018', '2', '80', '0', 'tét', '0', '1', '120000', '40000', ' Xe khách', 'Phàm Phú', '085854855', '93A-22331', '78', '0', '78', '2018-08-13 21:54:02', '2018-08-15 21:09:52');
+INSERT INTO `orders` VALUES ('1', 'BTR-78-1', '05/09/2018', '1', '130', '0', 'test', '0', '2', '100000', '20000', '1', 'Trần Hoàng Anh', '0929292929', '77c1-12345', '0', '0', '0', '78', '0', '78', '2018-09-05 23:43:53', '2018-09-05 23:43:53');
+INSERT INTO `orders` VALUES ('2', 'HGI-78-2', '05/09/2018', '9', '133', '0', 'test', '0', '1', '0', '0', '2', 'Trần Hoàng Anh', '0929292929', '77c1-12345', '75000', '10000', '30000', '78', '0', '78', '2018-09-05 23:54:20', '2018-09-05 23:54:20');
+INSERT INTO `orders` VALUES ('3', 'BTR-78-3', '22/09/2018', '9', '142', '0', 'test', '0', '1', '0', '0', '4', 'test ', '039393993', '838383', '10000', '10000', '20000', '78', '0', '78', '2018-09-22 11:14:47', '2018-09-22 11:20:10');
+INSERT INTO `orders` VALUES ('4', 'HCM-78-4', '23/09/2018', '9', '140', '0', 'tesst', '0', '2', '48000', '200000', '13', 'Hai xe ôm', '0969875777', '35223677', '10000', '5000', '3000', '78', '0', '78', '2018-09-23 14:38:44', '2018-09-23 14:41:34');
 
 -- ----------------------------
 -- Table structure for orders_old
@@ -1669,7 +1893,7 @@ INSERT INTO `order_status` VALUES ('5', 'Đang đóng gói', '/images/package2.p
 INSERT INTO `order_status` VALUES ('6', 'Đã xuất kho', '/images/stroller.png', '#8BC34A', '1');
 INSERT INTO `order_status` VALUES ('7', 'Vận chuyển', '/images/delivery.png', '#CDDC39', '0');
 INSERT INTO `order_status` VALUES ('8', 'Đã giao xong', '/images/package3.png', '#64DD17', '0');
-INSERT INTO `order_status` VALUES ('9', 'Hoàn thành', '/images/package4.png', '#FF9800', '0');
+INSERT INTO `order_status` VALUES ('9', 'Hoàn thành', '/images/package4.png', '#59b75c', '0');
 INSERT INTO `order_status` VALUES ('10', 'Hủy', '/images/route.png', '#DD2C00', '0');
 
 -- ----------------------------
@@ -1714,6 +1938,34 @@ CREATE TABLE `password_resets` (
 INSERT INTO `password_resets` VALUES ('behaispkt2010@gmail.com', '1d8fe653efab1f34c5499fdec6d2fae3a45b82aceac17111cb8cda2087475891', '2018-08-15 21:30:15');
 
 -- ----------------------------
+-- Table structure for payment
+-- ----------------------------
+DROP TABLE IF EXISTS `payment`;
+CREATE TABLE `payment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `cate` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `status` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
+  `type_pay` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `type_pay_detail` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `period_pay` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `time_pay` text COLLATE utf8_unicode_ci NOT NULL,
+  `note` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `author_id` int(11) NOT NULL,
+  `deleted` int(255) DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of payment
+-- ----------------------------
+INSERT INTO `payment` VALUES ('1', 'SQU-78-1', 'payment', '2', '2', '1100000', '1', '9', '2', '13/09/2018', 'test', '78', '0', '2018-09-13 23:48:25', '2018-09-13 23:48:25');
+
+-- ----------------------------
 -- Table structure for permissions
 -- ----------------------------
 DROP TABLE IF EXISTS `permissions`;
@@ -1728,7 +1980,7 @@ CREATE TABLE `permissions` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `permissions_name_unique` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of permissions
@@ -1782,6 +2034,10 @@ INSERT INTO `permissions` VALUES ('46', 'help-menu-edit', 'Chỉnh sửa thông 
 INSERT INTO `permissions` VALUES ('47', 'pricing', 'Thông tin giá cả', '', 'admin/pricing', '0', '2017-12-06 20:54:16', '2017-12-06 20:54:16');
 INSERT INTO `permissions` VALUES ('48', 'document', 'Tài liệu', '', '/admin/document', '0', '2017-12-07 00:57:56', '2017-12-07 00:57:56');
 INSERT INTO `permissions` VALUES ('49', 'websitelink', 'Liên kết website', '', 'admin/websitelink', '0', '2017-12-07 01:19:28', '2017-12-07 01:27:29');
+INSERT INTO `permissions` VALUES ('50', 'warehousing', 'Nhập | Xuất kho', '', 'admin/warehousing', '0', '2018-08-27 23:10:52', '2018-08-27 23:10:52');
+INSERT INTO `permissions` VALUES ('51', 'payment', 'Quản lí Phiếu thu chi', '', 'admin/payment', '0', '2018-09-06 21:50:21', '2018-09-09 09:46:27');
+INSERT INTO `permissions` VALUES ('52', 'payment-create', 'Tạo mới phiếu thu chi', '', 'admin/payment/create', '0', '2018-09-06 21:52:26', '2018-09-09 09:46:52');
+INSERT INTO `permissions` VALUES ('53', 'payment-edit', 'Chỉnh sửa phiếu thu chi', '', 'admin/payment/{payment}/edit', '0', '2018-09-06 21:54:03', '2018-09-09 09:47:39');
 
 -- ----------------------------
 -- Table structure for permission_role
@@ -1885,6 +2141,7 @@ INSERT INTO `permission_role` VALUES ('27', '2', '0');
 INSERT INTO `permission_role` VALUES ('27', '4', '0');
 INSERT INTO `permission_role` VALUES ('28', '1', '0');
 INSERT INTO `permission_role` VALUES ('28', '2', '0');
+INSERT INTO `permission_role` VALUES ('28', '4', '0');
 INSERT INTO `permission_role` VALUES ('28', '7', '0');
 INSERT INTO `permission_role` VALUES ('29', '1', '0');
 INSERT INTO `permission_role` VALUES ('29', '2', '0');
@@ -1941,6 +2198,14 @@ INSERT INTO `permission_role` VALUES ('48', '1', '0');
 INSERT INTO `permission_role` VALUES ('48', '2', '0');
 INSERT INTO `permission_role` VALUES ('49', '1', '0');
 INSERT INTO `permission_role` VALUES ('49', '2', '0');
+INSERT INTO `permission_role` VALUES ('50', '1', '0');
+INSERT INTO `permission_role` VALUES ('50', '4', '0');
+INSERT INTO `permission_role` VALUES ('51', '1', '0');
+INSERT INTO `permission_role` VALUES ('51', '4', '0');
+INSERT INTO `permission_role` VALUES ('52', '1', '0');
+INSERT INTO `permission_role` VALUES ('52', '4', '0');
+INSERT INTO `permission_role` VALUES ('53', '1', '0');
+INSERT INTO `permission_role` VALUES ('53', '4', '0');
 
 -- ----------------------------
 -- Table structure for pricings
@@ -1996,36 +2261,14 @@ CREATE TABLE `products` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of products
 -- ----------------------------
-INSERT INTO `products` VALUES ('1', 'trái sơri', 'trai-sori', '', '999', '50000', '60000', '0', '20', '0', '1', '3', '78', '<p>tr&aacute;i sơri</p>\r\n', '', '1', '', '/uploads/images/2017-06/web-2017-06-20_21-58-42-sori.jpg', '1', '1', '0', '2017-06-20 21:58:42', '2017-10-26 17:06:20');
-INSERT INTO `products` VALUES ('2', 'Trái dưa hấu', 'trai-dua-hau', '', '800', '12100', '15000', '0', '10', '0', '1898', '3', '76', '<p>Tr&aacute;i dưa hấu</p>\r\n', '', '6', '', '/uploads/images/2017-06/web-2017-06-21_21-15-00-duahau.jpg', '1', '1', '0', '2017-06-21 21:15:00', '2017-11-07 16:09:08');
-INSERT INTO `products` VALUES ('3', 'Trái chuối', 'trai-chuoi', '', '892', '11600', '19500', '0', '20', '0', '988', '12', '75', '<p>Tr&aacute;i chuối</p>\r\n', '', '0', '', '/uploads/images/2017-06/web-2017-06-21_22-10-17-chuoi.jpg', '1', '1', '0', '2017-06-21 22:10:17', '2017-10-11 21:32:10');
-INSERT INTO `products` VALUES ('4', 'Cây lâu năm cần bán', 'cay-lau-nam-can-ban', '', '100', '100000', '110000', '140000', '10', '0', '0', '12', '78', '<p>C&acirc;y l&acirc;u năm cần b&aacute;n</p>\r\n', '', '6', '', '/uploads/images/2017-08/web-2017-08-20_23-22-07-dieu2.jpg', '78', '1', '0', '2017-08-20 23:22:07', '2018-08-10 23:32:52');
-INSERT INTO `products` VALUES ('5', 'tập tành mua bán', 'tap-tanh-mua-ban', '', '16000', '12000', '15000', '0', '10', '0', '609', '4', '108', '<p>tập t&agrave;nh mua b&aacute;n</p>\r\n', '', '0', '', '/uploads/images/2017-10/web-2017-10-13_15-17-06-chuoi.jpg', '108', '1', '0', '2017-10-13 15:17:07', '2017-10-13 22:15:20');
-INSERT INTO `products` VALUES ('6', 'sản phẩm cần duyệt', 'san-pham-can-duyet', '', '20000', '10000', '15000', '0', '10', '0', '890', '3', '78', '<p>sản phẩm cần duyệt</p>\r\n', 'sản phẩm cần duyệt', '0', 'sản phẩm cần duyệt', '/uploads/images/2017-11/web-2017-11-09_16-42-40-tinhnang3.png', '78', '0', '0', '2017-11-09 16:42:40', '2017-11-09 16:42:40');
-INSERT INTO `products` VALUES ('7', 'test lần 2', 'test-lan-2', '', '1900', '11000', '17000', '0', '10', '0', '290', '4', '78', '<p>test lần 2</p>\r\n', 'test lần 2', '0', 'test lần 2', '/uploads/images/2017-11/web-2017-11-09_17-18-07-tinhnang3.png', '78', '0', '0', '2017-11-09 17:18:07', '2017-11-09 17:18:07');
-INSERT INTO `products` VALUES ('8', 'test lần 3', 'test-lan-3', '', '2000', '12000', '20000', '0', '10', '0', '789', '0', '78', '<p>test lần 3</p>\r\n', 'test lần 2', '0', 'test lần 2', '/uploads/images/2017-11/web-2017-11-09_17-19-40-banner-front.jpg', '78', '0', '0', '2017-11-09 17:19:40', '2017-11-09 17:19:40');
-INSERT INTO `products` VALUES ('9', 'menu_notify ', 'menu_notify', '', '19000', '17000', '21000', '0', '10', '0', '702', '4', '78', '<p>menu_notify</p>\r\n', 'menu_notify', '0', 'menu_notify', '/uploads/images/2017-11/web-2017-11-09_17-23-37-tinhnang1.png', '78', '1', '0', '2017-11-09 17:23:37', '2018-07-14 14:54:34');
-INSERT INTO `products` VALUES ('10', 'notify_count', 'notify_count', '', '20000', '11000', '20000', '0', '10', '0', '0', '3', '78', '<p>notify_count</p>\r\n', 'notify_count', '0', 'notify_count', '/uploads/images/2017-11/web-2017-11-09_17-25-50-dichvu2.png', '78', '1', '0', '2017-11-09 17:25:50', '2018-08-10 23:36:47');
-INSERT INTO `products` VALUES ('11', 'test real time notify', 'test-real-time-notify', '', '1900', '10000', '15000', '0', '10', '0', '290', '4', '78', '<p>test real time notify</p>\r\n', 'test real time notify', '0', 'test real time notify', '/uploads/images/2017-11/web-2017-11-16_09-48-29-2.png', '78', '0', '0', '2017-11-16 09:48:29', '2017-11-16 09:48:29');
-INSERT INTO `products` VALUES ('12', 'tesst real time', 'tesst-real-time', '', '109', '10000', '12000', '0', '10', '0', '2901', '4', '78', '<p>tesst real time</p>\r\n', 'tesst real time', '0', 'tesst real time', '/uploads/images/2017-11/web-2017-11-16_14-24-18-2.png', '78', '1', '0', '2017-11-16 14:24:18', '2018-07-14 14:54:10');
-INSERT INTO `products` VALUES ('13', 'test real time pusher', 'test-real-time-pusher', '', '799', '19000', '21000', '0', '10', '0', '929', '4', '78', '<p>test real time pusher</p>\r\n', 'test real time pusher', '0', 'test real time pusher', '/uploads/images/2017-11/web-2017-11-16_14-48-35-4.png', '78', '1', '0', '2017-11-16 14:48:35', '2018-07-14 15:06:43');
-INSERT INTO `products` VALUES ('14', 'Hình thức thanh toán', 'hinh-thuc-thanh-toan', '', '179', '12000', '13000', '0', '9', '0', '199', '12', '78', '<p>H&igrave;nh thức thanh to&aacute;n</p>\r\n', 'Hình thức thanh toán', '0', 'Hình thức thanh toán', '/uploads/images/2017-11/web-2017-11-16_14-57-51-nho1.jpg', '78', '1', '0', '2017-11-16 14:57:51', '2018-07-14 14:06:03');
-INSERT INTO `products` VALUES ('15', '\"predis/predis\": \"^1.1\"', 'predis/predis:-^1.1', '', '189', '12000', '14000', '0', '10', '0', '290', '3', '78', '<p>&quot;predis/predis&quot;: &quot;^1.1&quot;</p>\r\n', '\"predis/predis\": \"^1.1\"', '0', '\"predis/predis\": \"^1.1\"', '/uploads/images/2017-11/web-2017-11-16_15-29-53-tieu1.jpg', '78', '1', '0', '2017-11-16 15:29:53', '2018-07-14 11:38:57');
-INSERT INTO `products` VALUES ('16', 'test final reatimea', 'test-final-reatimea', '', '9000', '12000', '14000', '19000', '10', '0', '1', '4', '78', '<p>test final reatimea</p>\r\n', 'test final reatimea', '0', 'test final reatimea', '/uploads/images/2017-11/web-2017-11-16_15-37-20-dieu1.jpg', '78', '1', '0', '2017-11-16 15:37:20', '2018-01-02 12:21:44');
-INSERT INTO `products` VALUES ('17', 'test redis 4000', 'test-redis-4000', '', '1901', '11000', '12000', '0', '20', '0', '2901', '4', '78', '<p>test redis 4000</p>\r\n', 'test redis 4000', '0', 'test redis 4000', '/uploads/images/2017-11/web-2017-11-16_16-00-47-tieu2.jpg', '78', '1', '0', '2017-11-16 16:00:47', '2017-12-01 10:14:12');
-INSERT INTO `products` VALUES ('18', 'test redis 4000 lan 1', 'test-redis-4000-lan-1', '', '8901', '10000', '12000', '0', '10', '0', '9291', '4', '78', '<p>test redis 4000 lan 1</p>\r\n', 'test redis 4000 lan 1', '0', 'test redis 4000 lan 1', '/uploads/images/2017-11/web-2017-11-16_16-02-13-sori.jpg', '78', '1', '0', '2017-11-16 16:02:13', '2017-12-01 09:52:58');
-INSERT INTO `products` VALUES ('19', 'test realtime notify lần 2', 'test-realtime-notify-lan-2', '', '1000', '12000', '16000', '0', '9', '0', '1', '12', '78', '<p>test realtime notify lần 2</p>\r\n', 'test realtime notify lần 2', '0', 'test realtime notify lần 2', '/uploads/images/2017-11/web-2017-11-16_16-11-03-xoai.jpg', '78', '1', '0', '2017-11-16 16:11:03', '2018-01-02 12:21:44');
-INSERT INTO `products` VALUES ('20', 'real time append ', 'real-time-append', '', '19029', '19000', '22000', '0', '10', '0', '9391', '4', '78', '<p>real time append&nbsp;</p>\r\n', 'real time append ', '0', 'real time append ', '/uploads/images/2017-11/web-2017-11-16_16-13-59-dieu1.jpg', '78', '1', '0', '2017-11-16 16:13:59', '2018-08-13 21:43:00');
-INSERT INTO `products` VALUES ('21', 'test .after()', 'test-.after()', '', '230', '11000', '20000', '0', '5', '0', '3902', '12', '78', '<p>test .after()</p>\r\n', 'test .after()', '0', 'test .after()', '/uploads/images/2017-11/web-2017-11-16_16-26-13-sau1.jpg', '78', '1', '0', '2017-11-16 16:26:13', '2017-12-01 09:27:59');
-INSERT INTO `products` VALUES ('22', 'http://dev210.vng.com.vn/manage_hdd_tape ', 'http://dev210.vng.com.vn/manage_hdd_tape', '', '20000', '23000', '30000', '0', '10', '0', '2321', '13', '78', '<p><a href=\"http://dev210.vng.com.vn/manage_hdd_tape\" rel=\"noreferrer noopener\" tabindex=\"-1\" target=\"_blank\">http://dev210.vng.com.vn/manage_hdd_tape</a></p>\r\n', 'http://dev210.vng.com.vn/manage_hdd_tape', '0', 'http://dev210.vng.com.vn/manage_hdd_tape', '/uploads/images/2017-11/web-2017-11-16_16-31-32-sori1.jpg', '78', '1', '0', '2017-11-16 16:31:32', '2017-11-22 23:00:50');
-INSERT INTO `products` VALUES ('23', 'test test test test test test test test ', 'test-test-test-test-test-test-test-test', '', '810', '19000', '20000', '0', '10', '0', '1005', '4', '78', '<p>test test test test test test test test&nbsp;</p>\r\n', 'test test test test test test test test ', '0', 'test test test test test test test test ', '/uploads/images/2017-11/web-2017-11-21_17-53-00-traicay.jpg', '78', '1', '0', '2017-11-21 17:53:00', '2018-08-15 21:13:23');
-INSERT INTO `products` VALUES ('25', 'product', 'product', '', '11500', '10000', '12000', '0', '20', '0', '2931', '3', '78', 'product', 'product', '0', 'product', '/uploads/images/2018-08/web-2018-08-15_23-56-07-1111.jpg', '78', '0', '0', '2018-08-15 23:56:07', '2018-08-15 23:56:07');
-INSERT INTO `products` VALUES ('26', 'product1', 'product1', 'TTCN-78-26', '11500', '10000', '12000', '0', '20', '0', '8332', '12', '78', 'product1', 'product1', '0', 'product1', '/uploads/images/2018-08/web-2018-08-15_23-57-35-1111.jpg', '78', '0', '0', '2018-08-15 23:57:35', '2018-08-15 23:57:36');
+INSERT INTO `products` VALUES ('1', 'Trái chuối', 'trai-chuoi-2018-09-05_23-13-38', 'TTCN-78-1', '11000', '10000', '12000', '0', '10', '0', '190', '12', '78', 'Tr&aacute;i chuối', 'Trái chuối', '0', 'Trái chuối', '/uploads/images/2018-09/web-2018-09-05_23-11-16-chuoi.jpg', '1', '1', '0', '2018-09-05 23:11:16', '2018-09-22 11:14:47');
+INSERT INTO `products` VALUES ('2', 'Trái mít', 'trai-mit-2018-09-05_23-13-18', 'TTCN-78-2', '24000', '20000', '25000', '0', '10', '0', '290', '12', '78', 'Tr&aacute;i m&iacute;t', 'Trái mít', '0', 'Trái mít', '/uploads/images/2018-09/web-2018-09-05_23-12-59-mit.jpg', '1', '1', '0', '2018-09-05 23:13:01', '2018-09-23 14:38:44');
+INSERT INTO `products` VALUES ('3', 'Trái nhãn', 'trai-nhan', 'TTLT-76-3', '11000', '10000', '12000', '0', '10', '0', '2424', '3', '76', 'Tr&aacute;i nh&atilde;n', 'Trái nhãn', '0', 'Trái nhãn', '/uploads/images/2018-09/web-2018-09-05_23-20-33-nhan.jpg', '1', '1', '0', '2018-09-05 23:20:34', '2018-09-05 23:20:35');
 
 -- ----------------------------
 -- Table structure for product_orders
@@ -2043,21 +2286,15 @@ CREATE TABLE `product_orders` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `price_in` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of product_orders
 -- ----------------------------
-INSERT INTO `product_orders` VALUES ('3', '1', '1', '120000', '2', 'trái sơri', '0', '2017-08-10 16:12:12', '2017-08-10 16:12:12', '50000');
-INSERT INTO `product_orders` VALUES ('4', '2', '1', '60000', '1', 'trái sơri', '0', '2017-09-29 09:42:15', '2017-09-29 09:46:09', '50000');
-INSERT INTO `product_orders` VALUES ('5', '3', '3', '39000', '2', 'Trái chuối', '0', '2017-10-11 21:32:10', '2017-10-11 21:32:10', '11600');
-INSERT INTO `product_orders` VALUES ('6', '4', '4', '110000', '1', 'Cây lâu năm cần bán', '0', '2017-10-22 22:50:25', '2017-10-22 22:50:25', '100000');
-INSERT INTO `product_orders` VALUES ('7', '5', '10', '20000', '1', 'Cây lâu năm cần bán', '0', '2018-01-02 11:53:49', '2018-01-02 15:00:39', '11000');
-INSERT INTO `product_orders` VALUES ('8', '5', '16', '14000', '1', 'test final reatimea', '0', '2018-01-02 11:53:49', '2018-01-02 11:53:49', '12000');
-INSERT INTO `product_orders` VALUES ('9', '12', '4', '110000', '1', 'Cây lâu năm cần bán', '0', '2018-08-10 23:32:52', '2018-08-10 23:32:52', '100000');
-INSERT INTO `product_orders` VALUES ('10', '13', '10', '20000', '1', 'notify_count', '0', '2018-08-10 23:36:47', '2018-08-10 23:36:47', '11000');
-INSERT INTO `product_orders` VALUES ('11', '14', '20', '22000', '1', 'real time append ', '0', '2018-08-13 21:43:00', '2018-08-13 21:43:00', '19000');
-INSERT INTO `product_orders` VALUES ('12', '15', '23', '100000', '5', 'test test test test test test test test ', '0', '2018-08-13 21:54:04', '2018-08-13 21:54:04', '18000');
+INSERT INTO `product_orders` VALUES ('1', '1', '1', '120000', '10', 'Trái chuối', '0', '2018-09-05 23:43:53', '2018-09-05 23:43:53', '10000');
+INSERT INTO `product_orders` VALUES ('2', '2', '2', '375000', '15', 'Trái mít', '0', '2018-09-05 23:54:20', '2018-09-05 23:54:20', '20000');
+INSERT INTO `product_orders` VALUES ('3', '3', '1', '120000', '10', 'Trái chuối', '0', '2018-09-22 11:14:47', '2018-09-22 11:14:47', '10000');
+INSERT INTO `product_orders` VALUES ('4', '4', '2', '250000', '10', 'Trái mít', '0', '2018-09-23 14:38:44', '2018-09-23 14:38:44', '20000');
 
 -- ----------------------------
 -- Table structure for product_update_prices
@@ -2075,7 +2312,7 @@ CREATE TABLE `product_update_prices` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of product_update_prices
@@ -2112,6 +2349,14 @@ INSERT INTO `product_update_prices` VALUES ('29', '23', '18000', '20000', '0', '
 INSERT INTO `product_update_prices` VALUES ('30', '23', '19000', '0', '0', '1000', 'test ', '0', '2018-08-15 21:13:22', '2018-08-15 21:13:22');
 INSERT INTO `product_update_prices` VALUES ('31', '25', '10000', '12000', '0', '2931', 'create', '0', '2018-08-15 23:56:08', '2018-08-15 23:56:08');
 INSERT INTO `product_update_prices` VALUES ('32', '26', '10000', '12000', '0', '8332', 'create', '0', '2018-08-15 23:57:36', '2018-08-15 23:57:36');
+INSERT INTO `product_update_prices` VALUES ('33', '26', '10000', '12000', '0', '0', 'create', '0', '2018-08-18 15:44:50', '2018-08-18 15:44:50');
+INSERT INTO `product_update_prices` VALUES ('34', '26', '12000', '0', '0', '1000', 'tét', '0', '2018-08-19 15:06:19', '2018-08-19 15:06:19');
+INSERT INTO `product_update_prices` VALUES ('35', '26', '10000', '0', '0', '190', 'teeest', '0', '2018-08-19 15:16:55', '2018-08-19 15:16:55');
+INSERT INTO `product_update_prices` VALUES ('36', '1', '10000', '12000', '0', '190', 'create', '0', '2018-09-05 23:11:16', '2018-09-05 23:11:16');
+INSERT INTO `product_update_prices` VALUES ('37', '2', '20000', '25000', '0', '300', 'create', '0', '2018-09-05 23:13:01', '2018-09-05 23:13:01');
+INSERT INTO `product_update_prices` VALUES ('38', '2', '20000', '25000', '0', '0', 'create', '0', '2018-09-05 23:13:19', '2018-09-05 23:13:19');
+INSERT INTO `product_update_prices` VALUES ('39', '1', '10000', '12000', '0', '0', 'create', '0', '2018-09-05 23:13:39', '2018-09-05 23:13:39');
+INSERT INTO `product_update_prices` VALUES ('40', '3', '10000', '12000', '0', '2424', 'create', '0', '2018-09-05 23:20:35', '2018-09-05 23:20:35');
 
 -- ----------------------------
 -- Table structure for province
@@ -2296,6 +2541,22 @@ INSERT INTO `role_user` VALUES ('120', '3', '0');
 INSERT INTO `role_user` VALUES ('125', '3', '0');
 INSERT INTO `role_user` VALUES ('126', '3', '0');
 INSERT INTO `role_user` VALUES ('127', '3', '0');
+INSERT INTO `role_user` VALUES ('130', '3', '0');
+INSERT INTO `role_user` VALUES ('131', '3', '0');
+INSERT INTO `role_user` VALUES ('133', '3', '0');
+INSERT INTO `role_user` VALUES ('134', '3', '0');
+INSERT INTO `role_user` VALUES ('135', '3', '0');
+INSERT INTO `role_user` VALUES ('136', '3', '0');
+INSERT INTO `role_user` VALUES ('137', '3', '0');
+INSERT INTO `role_user` VALUES ('138', '3', '0');
+INSERT INTO `role_user` VALUES ('139', '3', '0');
+INSERT INTO `role_user` VALUES ('140', '3', '0');
+INSERT INTO `role_user` VALUES ('141', '3', '0');
+INSERT INTO `role_user` VALUES ('142', '3', '0');
+INSERT INTO `role_user` VALUES ('143', '3', '0');
+INSERT INTO `role_user` VALUES ('144', '3', '0');
+INSERT INTO `role_user` VALUES ('145', '3', '0');
+INSERT INTO `role_user` VALUES ('146', '3', '0');
 
 -- ----------------------------
 -- Table structure for settings
@@ -2337,22 +2598,26 @@ DROP TABLE IF EXISTS `transports`;
 CREATE TABLE `transports` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `deleted` int(11) DEFAULT NULL,
+  `deleted` int(11) DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of transports
 -- ----------------------------
-INSERT INTO `transports` VALUES ('1', 'Xe máy', '0');
-INSERT INTO `transports` VALUES ('2', 'Xe ba gác', '0');
-INSERT INTO `transports` VALUES ('3', 'Xe tải 1 tấn', '0');
-INSERT INTO `transports` VALUES ('4', 'Xe tải 3.5 tấn', '0');
-INSERT INTO `transports` VALUES ('5', 'Xe tải 8 tấn', '0');
-INSERT INTO `transports` VALUES ('6', 'xe cont 20\"', '0');
-INSERT INTO `transports` VALUES ('7', 'Xe cont 40\"', '0');
-INSERT INTO `transports` VALUES ('8', 'Xe cont lạnh', '0');
-INSERT INTO `transports` VALUES ('9', 'Khác', '0');
+INSERT INTO `transports` VALUES ('1', 'Xe máy', '0', null, null);
+INSERT INTO `transports` VALUES ('2', 'Xe ba gác', '0', null, null);
+INSERT INTO `transports` VALUES ('3', 'Xe tải 1 tấn', '0', null, null);
+INSERT INTO `transports` VALUES ('4', 'Xe tải 3.5 tấn', '0', null, null);
+INSERT INTO `transports` VALUES ('5', 'Xe tải 8 tấn', '0', null, null);
+INSERT INTO `transports` VALUES ('6', 'Xe cont 20\"', '0', null, '2018-09-23 15:20:54');
+INSERT INTO `transports` VALUES ('7', 'Xe cont 40\"', '0', null, null);
+INSERT INTO `transports` VALUES ('8', 'Xe cont lạnh', '0', null, '2018-09-25 21:15:51');
+INSERT INTO `transports` VALUES ('9', 'Khác', '0', null, null);
+INSERT INTO `transports` VALUES ('10', 'Xe test', '1', '2018-09-23 15:18:28', '2018-09-23 15:42:18');
+INSERT INTO `transports` VALUES ('11', 'Test 1', '1', '2018-09-23 15:42:57', '2018-09-23 15:43:21');
 
 -- ----------------------------
 -- Table structure for users
@@ -2373,6 +2638,11 @@ CREATE TABLE `users` (
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `myIntroCode` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   `introCode` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `tagType` text COLLATE utf8_unicode_ci,
+  `note` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `invoice_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `invoice_tax` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `invoice_address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `idwho` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `deleted` int(10) NOT NULL,
@@ -2380,49 +2650,68 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=147 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', null, '', 'admin', '/images/user_default.png', 'đà năng', null, '89', '0', '0999999999', 'admin@gmail.com', '$2y$10$3Qc3K.iEJ0KaBIZqUBf/FufouPVU.ZIgLFlAZeLiB1l2SxmJxN4Ei', '8dusdjewi', null, null, 'WYI5IP55WWxbg3BOTfaAvI1I6oPh7P6HNzze66rBLDP3fuHMzhEuZ8d8W3QG', '0', '2017-02-03 16:25:09', '2018-08-01 23:51:29');
-INSERT INTO `users` VALUES ('2', null, '', 'editor', '/images/user_default.png', '', null, '0', '0', '', 'editor@gmail.com', '$2y$10$ntQ8.DWlxjXQTHdrj5Hq8.NghMS7j.yGrxBzD8M8xqyhZABv8/j4a', '', null, null, 'GTo6I8XJehnArcaJHxZsuIKsmPncVZU6IHxiVZkoNzm3l4qcjzS8U3wOKmas', '0', '2017-02-03 16:25:09', '2017-08-23 21:57:19');
-INSERT INTO `users` VALUES ('3', null, '', 'user', '/images/user_default.png', '', null, '0', '0', '', 'user@gmail.com', '$2y$10$UyhCaKSueoyFg5fSzYdxpuZTLfE5frh8Bsjmro5O3FFl9YYnqxnEG', '', null, null, 'g7wWOUfKecKOOShyQ2qNGx5J9b1YnVGY8nSAyTzskU6ewMgXKS1ZURy3kBx2', '0', '2017-02-03 16:25:10', '2017-08-23 21:56:27');
-INSERT INTO `users` VALUES ('4', null, '', 'kho', '/images/user_default.png', '1282382392', null, '0', '0', '010191911', 'kho@gmail.com', '$2y$10$CK.QYvo2xZjs6WXsRFkP/.G3xb24MtMgdb4lsXcS6FYi2DWKb9Yiy', '', null, null, null, '0', '2017-02-03 16:25:10', '2017-02-07 19:24:23');
-INSERT INTO `users` VALUES ('74', null, '', 'Nguyễn Văn Tín', '/images/user_default.png', '', null, '0', '0', '0969696969', 'tintin162126@gmail.com', '$2y$10$b6cxLdVZhosaj/sm6RsPmuwS.fWEWKzCfnRUiRTWCGOkKhRecQB.e', '6cEVu0p2', null, null, 'N3EjsIbJjN1Zqfnk28KzAD8arxMQ5s3JRWgXu44zTt2fIuC3SlICQd8J4I9T', '0', '2017-06-12 12:47:51', '2017-06-13 13:37:11');
-INSERT INTO `users` VALUES ('75', null, '', 'Nguyễn Văn Dũng', '/images/user_default.png', '', null, '0', '0', '09787787878', 'dung@gmail.com', '$2y$10$luPNYKj.uHc1oS7sEaOULuwi.B6sSbd8zS1gWOtmFGYQ677DjXN2K', 'Nq8MwXMn', null, null, 'Xr4GnLJJqLYWTjIfP4uUVE0ZlZqEZBAqbhKbBkYW9aKFUWhCV5XD9PaZcUqk', '0', '2017-06-13 13:28:29', '2017-06-13 13:38:58');
-INSERT INTO `users` VALUES ('76', null, '', 'Nguyễn Văn An', '/images/user_default.png', '', null, '0', '0', '0885857858', 'an@gmail.com', '$2y$10$LBAwmSFDGMpGyBXU.fQ7..N5Bwx8roRKjLg5EP.LQd2QgLU/K2ywO', 'DhuEJ4DZ', null, null, null, '0', '2017-06-13 13:38:54', '2017-06-13 13:38:54');
-INSERT INTO `users` VALUES ('77', null, '', 'Trần Dũng', '/images/user_default.png', 'ấp 1, xã Phù Cát, Phù Mỹ, Bình Định', null, '52', '0', '0959595959', 'dungtran@gmail.com', '$2y$10$dUQqxQnVJJLYLQbhSaXNiOCuNYkv4068nQ4cPnHEHYGHkNHC/pora', null, null, null, null, '0', '2017-06-13 14:05:04', '2017-06-13 14:05:04');
-INSERT INTO `users` VALUES ('78', null, '', 'Trần Bo', '/images/user_default.png', '23322222', '13/06/2014', '83', '0', '232332', 'botran@gmail.com', '$2y$10$s90kHAv1ccGIcH8jbaNJS.CF2hjlJqrBkRSbnIk25JjTL8mN/Tfxi', 's0szcXLt', null, null, 'Lk4HHHvjHFtQ1660sqJNkR2fPqFJehc3LjFbLUdSvnAlqObXydnVk6MdnLyV', '0', '2017-06-13 14:10:32', '2018-08-08 23:12:12');
-INSERT INTO `users` VALUES ('79', null, '', 'Kawasaki', '/images/user_default.png', 'đường Tokyo, Long Biên, Hà Nội', null, '1', '0', '09887885888', 'kawasaki@gmail.com', '$2y$10$20H.hvBVuU9O4vDDrGstveFS7R37LoUdJ2n0YrQxY/y7VQdOfCjBC', null, null, null, null, '0', '2017-06-13 14:28:45', '2017-06-13 14:28:45');
-INSERT INTO `users` VALUES ('80', null, '', 'Cô chủ nhỏ bé bé xinh xinh đẹp gái', '/images/user_default.png', '666/30/17 đường 3/2 Phường 15 , Quận 11, Hồ Chí Minh', null, '79', '0', '098262722828', 'cobe@gmaiil.com', '$2y$10$wa6Qulg.uyPKf0d9UzsJ4O1thZhTkkJ9MmpUPPrjQR1b4syX/KyLy', null, null, null, null, '0', '2017-06-16 00:54:08', '2017-06-16 00:54:08');
-INSERT INTO `users` VALUES ('85', null, '', 'test2', '/images/2.png', '323443433443', null, '95', '0', '43243443', 'test2@gmail.com', '$2y$10$8kEADePUZwgw/ba60eVJaO76CjIjHzg6.9WjwzCuugmBbmv2Z5UYy', 's1VAyjYf', null, null, 'eIl5WJGs915RMYK7FMEYYag56nXbxkI8suyUq3UN65DbIW17f5mz47xfxKQu', '0', '2017-08-14 22:12:40', '2017-09-07 23:28:49');
-INSERT INTO `users` VALUES ('86', null, '', 'Cty XNK Nam Bo', '/images/user_default.png', '', null, '96', '0', '0987662626', 'a@gmail.com', '$2y$10$JiEE/fqm2FrL.QtFzVJ9kuI2w/u4iAyMqSjwLK0qEXFukqnL3Y.b.', 'UmNwCXQq', null, null, null, '0', '2017-08-18 00:56:12', '2017-08-18 00:56:12');
-INSERT INTO `users` VALUES ('87', null, '', 'haitvb@vng.com.vn', '/images/user_default.png', '09393939 duong trường giang', null, '25', '0', '039393933', 'haitvb@vng.com.vn', '$2y$10$T2iQ/ZrJxfFPoYJhsVVCi.fHmWoYHp2/HglmjttIOyMfrQg4na5ru', 'ZUlcd6Vb', '', null, 'raNrVqpPRjV0mxv1FUFJTevwSjB6XolCKuldFabhpC1Ld5DKXan8BJNnbYA7', '0', '2017-08-23 22:20:00', '2017-10-11 21:33:47');
-INSERT INTO `users` VALUES ('88', null, '', 'testkho', '/images/user_default.png', '', null, '0', '0', '0324934932', 'testkho@gmail.com', '$2y$10$LDZtD73qAMGekwVeTS0ZxOH/gVRyMj4KWXC6SPN71UMxJNinKoRt.', 'SbD1mD26', null, null, null, '0', '2017-08-30 22:44:19', '2017-08-30 22:44:19');
-INSERT INTO `users` VALUES ('89', null, '', 'testkho1', '/images/user_default.png', '', null, '0', '0', '85564468', 'testkho1@gmail.com', '$2y$10$l5RKu4BpZmLz5o13T7bL5uBpKkEmpI7iih0p6.OrFchcCb8gfT4H6', 'CGo9lTjC', null, null, 'oFULQZuTtA84Lrq2QqiDOXbmZ6tDjFWXbYkK7R6UPH1K6jQsJPOE4E7dAKcl', '0', '2017-08-30 22:45:10', '2017-09-04 15:33:13');
-INSERT INTO `users` VALUES ('90', null, '', 'haitvbtest1', '/images/user_default.png', '', null, '0', '0', '09292929292', 'haitvbtest1@gmail.com', '$2y$10$36/wH5auYm3JuVW65ApFEey9mtkL8.73iGIg4oEu8cozsUe7VuvwO', 'h2pPdqIQ', null, null, '7oj8OCW6uLTBS6nlWo3mPYmCnAIt9yZRW3mEJyo4uUhiiftVKwmz7pLBhPzp', '0', '2017-10-09 19:34:23', '2017-10-09 19:38:00');
-INSERT INTO `users` VALUES ('92', null, '', 'haitvbtest2', '/images/user_default.png', '', null, '0', '0', '099393932', 'haitvbtest2@gmail.com', '12345!@#$%Q', 'EgMwEwJM', null, null, null, '0', '2017-10-09 19:37:41', '2017-10-09 19:37:41');
-INSERT INTO `users` VALUES ('93', null, '', 'haitvbtest3', '/images/user_default.png', '', null, '0', '0', '09744848474', 'haitvbtest3@gmail.com', '$2y$10$88qtPjQHKL9PqutOJBxWI./aDU29CyvXh1emNc7TqIFXRMBEQwAPi', 'grd5c006', null, null, 'GYv5iCtE39nMyb5GBktscrkDFM1cjoN8A2kMB5QkmfTcWEtFsfK7Ikx4gvLf', '0', '2017-10-09 19:42:38', '2017-10-09 19:43:06');
-INSERT INTO `users` VALUES ('95', null, '', 'haitvbtestproduction', '/images/user_default.png', '', null, '0', '0', '098348484', 'behaispkt20101@gmail.com', '$2y$10$N2EoFG4.PmbPoXfpU0QYY./LgccxDFVEyKt5RIvVPZHbLWqLQoWk6', 'zCL1aofG', null, null, 'NClDevcPHuKHqUMYkTlucHu4mTtoODFKiicXa4AvmKD7GcCUELNo985AKEaz', '0', '2017-10-09 19:46:01', '2017-10-09 20:05:01');
-INSERT INTO `users` VALUES ('96', null, '', 'haitvbtest4', '/images/user_default.png', '', null, '10', '0', '', 'haitvbtest4@gmail.com', '12345!@#$%Q', '1j6ya62k', '', null, 'Lsymkq2k2lIlQlPmyGUZV2ZFVRFj1J62pe2g1GaBqIQ9FVunrFyvzNtoXu2b', '0', '2017-10-09 19:51:54', '2017-10-09 19:52:03');
-INSERT INTO `users` VALUES ('97', null, '', 'haitvbtest5', '/images/user_default.png', '', null, '19', '0', '', 'haitvbtest5@gmail.com', '12345!@#$%Q', 'WrTUqw4v', '', null, '1l07kXzVUUI5O5e8k3nbLcPaSm1JXfwRcbosLJRyYEyby7Pr6TPmvU7K53Z7', '0', '2017-10-09 19:53:36', '2017-10-09 19:53:42');
-INSERT INTO `users` VALUES ('99', null, '', 'haitvbtest7', '/images/user_default.png', 'HAGL', null, '95', '0', '93834438349', 'haitvbtest7@gmail.com', '$2y$10$MyLETSObO9YC1ovg.kF33uekkgEuLVGjGN8GZc8Y/KTpYr6ghKyaC', '3zT782ow', null, null, 'ULPLwIK5yE6d80KJjaLVdt85ltvITCgfNqDU9nCrOcfrd75mqaEjFP2E7nLi', '0', '2017-10-09 19:57:13', '2017-10-09 20:04:18');
-INSERT INTO `users` VALUES ('100', null, '', 'testworklow', '/images/user_default.png', 'từ khách hàng lên nhân viên => chủ kho', null, '1', '0', '0969875777', 'testworklow@gmail.com', '$2y$10$vHjXC4xaqY4uRXMUvyXwve1cZPvWoB4C9B7n/gIFk628DFEE47.X2', 'EOsHB1Ns', '', null, 'TOvb2yfTLprY9im42XjJbomnyOe4O2CyLlx1v6I5Jrk6kviJH09l1MUOprIl', '0', '2017-10-09 22:38:03', '2017-11-02 22:01:14');
-INSERT INTO `users` VALUES ('101', null, '', 'testworklow1', '/images/user_default.png', '', null, '10', '0', '094948483', 'testworklow1@gmail.com', '$2y$10$jgJ0MHNYIYWPHeAtbroY7e1QFUTlaw0bfQiNlnhwNiPF4tgXFI71S', 'O6oyCKkj', '', null, 'c7vSU9SMCHQGiVTz32Hl57kllThB0BHzZmPXZ33nVsnlS2BsVezQ1BJZPlGL', '0', '2017-10-09 23:01:07', '2017-10-10 00:10:01');
-INSERT INTO `users` VALUES ('102', null, '', 'testworklow2', '/images/user_default.png', '', null, '0', '0', '02393932', 'testworklow2@gmail.com', '$2y$10$3xNI3doZMtZW.6.W81gN7Oi5F.kM5/ljp3Uzh6rvWLWKwkTYZmvie', 'bdqWFjho', null, null, null, '0', '2017-10-09 23:55:16', '2017-10-09 23:55:16');
-INSERT INTO `users` VALUES ('103', null, '', 'testworklow3', '/images/user_default.png', '', null, '0', '0', '43534534534', 'testworklow3@gmail.com', '$2y$10$erqtUg1LbpCHZVjaVGDk9u9Eq2YJrPhicp/sczYBcUQiyMomWxbIe', 'C3v3Sdug', null, null, null, '0', '2017-10-10 00:06:57', '2017-10-10 00:06:57');
-INSERT INTO `users` VALUES ('104', null, '', 'testworklow4', '/images/user_default.png', '', null, '24', '0', '344343434', 'testworklow4@gmail.com', '$2y$10$949DCb0ZVqtK3an4v.yyceMLIij2N6sKl8kK8x.iy0.5buiR68x7W', 'OCW3qbMI', '', null, 'gtcgT26huakr7TqzDBcqzveHhnXO0gqR1pVOgCRZWgDUePmXImm7HSYsxahj', '0', '2017-10-10 00:10:43', '2017-10-10 00:16:29');
-INSERT INTO `users` VALUES ('105', null, '', 'testworklow5', '/images/user_default.png', '', null, '0', '0', '534534543534', 'testworklow5@gmail.com', '$2y$10$nkjmKcQixwlBjERJDSBpfuVq5XkxmoHyB9pTIjuIebkmt9HTnSgM6', 'dfgQOMjS', null, null, 'gxVDSCOIgTp1SLCOVcgfTVrvHbeSnZFgPfmXIm0NIE3RM344ar4oaer8WIpi', '0', '2017-10-10 00:16:15', '2017-10-10 00:21:09');
-INSERT INTO `users` VALUES ('106', null, '', 'testworklow6', '/images/user_default.png', '', null, '22', '0', '3432423423', 'testworklow6@gmail.com', '$2y$10$3ea8ODoSl08eEDZrc1PJHucvdqYq.M7etfgx5IkmBXf0lwughqWJa', 'IiSWRyuI', '', null, null, '0', '2017-10-10 00:21:54', '2017-10-10 00:23:12');
-INSERT INTO `users` VALUES ('107', null, '', 'testworklow7', '/images/user_default.png', '', null, '22', '0', '3453534', 'testworklow7@gmail.com', '$2y$10$WL7/7qo4/DUb0Xpiw5R4ZOp1DGEVtt7xoFvzXiwq85jIg9p19TrIW', 'qLrDBz6Q', null, null, null, '0', '2017-10-10 00:24:07', '2017-10-10 00:24:07');
-INSERT INTO `users` VALUES ('108', null, '', 'haitest1', '/images/user_default.png', '', null, '0', '0', '09876543223', 'haitest1@gmail.com', '$2y$10$kqi5V71dHhV3mz9OTyVssOuYZq9xttmah/NWptNZugfKdxuSSbG0C', 'DChC3XlF', null, null, 'BZ2EMBbSrtSUTe0HJxijqzNE9x5diJ62tQDWogdr3Hk7HIIXrkMqF0VqDy3K', '0', '2017-10-13 15:15:05', '2017-11-21 17:19:17');
-INSERT INTO `users` VALUES ('109', null, '', 'testcode', '/images/user_default.png', '', null, '12', '0', '', 'testcode@gmail.com', '$2y$10$iXPd9tF2GWYMiGfs8d8f/e7wyiAfdc53h1HGAjVljqZn5rpuNnZ8i', 'Cer9EG97', '', null, 'OOvSZKJzUoM3mqMNdeSco0BZrlz9nj8aM3GU2Ae91cgWz5tJjgJVfcpUr1b6', '0', '2017-11-07 16:04:21', '2017-11-07 17:29:43');
-INSERT INTO `users` VALUES ('110', null, '', 'haitvbadmin', '/images/user_default.png', 'Tân Hương - Châu Thành', null, '82', '0', '0874438348', 'haitvbadmin@vng.com.vn', '$2y$10$pxGTK2LrTcvWlt39ZyNHF.mszctdkivN88bEovPPJxFwfan4crH/a', '5ZPVV4sH', null, null, 'xHPvlO7Kr5Il3vL7nVSN9qTtntsPii1iwTPu3wf49CobWyyivkktPe3vvrEl', '0', '2017-11-09 16:39:01', '2017-11-09 16:40:44');
-INSERT INTO `users` VALUES ('120', null, '', 'test', '/images/user_default.png', '', null, '1', '0', '', 'testworklowabc@gmail.com', '$2y$10$wrrenRUNJfIVIALIgyxU7.x2uUzSDpCIGpGoEedmrPnNMSX1kqHRq', 'YPVLMnkJ', '', null, 'kMjToqlP1CshNBmGzXVyyQ251g2ENcjlljYrFrlIRvGISdGuz3E7w1PJzeZe', '1', '2017-11-14 14:32:10', '2018-03-22 16:05:41');
-INSERT INTO `users` VALUES ('125', null, '1500971046653848', 'Bé Hai', '/images/user_default.png', '', null, '0', '0', '', 'behaispkt2010@gmail.com', '', 'tn1vpjsI', null, null, 'KHAAmgAzDWepLQVTf44doKRrUjr149hOTN55Jt1jyCOtl6WsASU2UN0BEZtU', '0', '2017-11-14 16:31:46', '2017-11-14 17:14:29');
-INSERT INTO `users` VALUES ('126', null, '', '111111', '/images/user_default.png', '122121, Tây Hồ, Hà Nội', null, '1', '0', '32323223', '2222@gmail.com', '123456', null, null, null, null, '0', '2018-07-19 00:11:43', '2018-07-19 00:11:43');
-INSERT INTO `users` VALUES ('127', null, '', 'Quản lí vận chuyển', '/images/user_default.png', 'testfactory, Gò Vấp, Hồ Chí Minh', null, '79', '764', '0969875777', 'support@3stone.vn', '123456', null, null, null, null, '0', '2018-08-09 22:27:40', '2018-08-09 22:27:40');
+INSERT INTO `users` VALUES ('1', null, '', 'admin', '/images/user_default.png', 'đà năng', null, '89', '0', '0999999999', 'admin@gmail.com', '$2y$10$3Qc3K.iEJ0KaBIZqUBf/FufouPVU.ZIgLFlAZeLiB1l2SxmJxN4Ei', '8dusdjewi', null, null, null, null, null, null, null, 'WYI5IP55WWxbg3BOTfaAvI1I6oPh7P6HNzze66rBLDP3fuHMzhEuZ8d8W3QG', '0', '2017-02-03 16:25:09', '2018-08-01 23:51:29');
+INSERT INTO `users` VALUES ('2', null, '', 'editor', '/images/user_default.png', '', null, '0', '0', '', 'editor@gmail.com', '$2y$10$ntQ8.DWlxjXQTHdrj5Hq8.NghMS7j.yGrxBzD8M8xqyhZABv8/j4a', '', null, null, null, null, null, null, null, 'GTo6I8XJehnArcaJHxZsuIKsmPncVZU6IHxiVZkoNzm3l4qcjzS8U3wOKmas', '0', '2017-02-03 16:25:09', '2017-08-23 21:57:19');
+INSERT INTO `users` VALUES ('3', null, '', 'user', '/images/user_default.png', '', null, '0', '0', '', 'user@gmail.com', '$2y$10$UyhCaKSueoyFg5fSzYdxpuZTLfE5frh8Bsjmro5O3FFl9YYnqxnEG', '', null, null, null, null, null, null, null, 'g7wWOUfKecKOOShyQ2qNGx5J9b1YnVGY8nSAyTzskU6ewMgXKS1ZURy3kBx2', '0', '2017-02-03 16:25:10', '2017-08-23 21:56:27');
+INSERT INTO `users` VALUES ('4', null, '', 'kho', '/images/user_default.png', '1282382392', null, '0', '0', '010191911', 'kho@gmail.com', '$2y$10$CK.QYvo2xZjs6WXsRFkP/.G3xb24MtMgdb4lsXcS6FYi2DWKb9Yiy', '', null, null, null, null, null, null, null, null, '0', '2017-02-03 16:25:10', '2017-02-07 19:24:23');
+INSERT INTO `users` VALUES ('74', null, '', 'Nguyễn Văn Tín', '/images/user_default.png', '', null, '0', '0', '0969696969', 'tintin162126@gmail.com', '$2y$10$b6cxLdVZhosaj/sm6RsPmuwS.fWEWKzCfnRUiRTWCGOkKhRecQB.e', '6cEVu0p2', null, null, null, null, null, null, null, 'N3EjsIbJjN1Zqfnk28KzAD8arxMQ5s3JRWgXu44zTt2fIuC3SlICQd8J4I9T', '0', '2017-06-12 12:47:51', '2017-06-13 13:37:11');
+INSERT INTO `users` VALUES ('75', null, '', 'Nguyễn Văn Dũng', '/images/user_default.png', '', null, '0', '0', '09787787878', 'dung@gmail.com', '$2y$10$luPNYKj.uHc1oS7sEaOULuwi.B6sSbd8zS1gWOtmFGYQ677DjXN2K', 'Nq8MwXMn', null, null, null, null, null, null, null, 'Xr4GnLJJqLYWTjIfP4uUVE0ZlZqEZBAqbhKbBkYW9aKFUWhCV5XD9PaZcUqk', '0', '2017-06-13 13:28:29', '2017-06-13 13:38:58');
+INSERT INTO `users` VALUES ('76', null, '', 'Nguyễn Văn An', '/images/user_default.png', '', null, '0', '0', '0885857858', 'an@gmail.com', '$2y$10$LBAwmSFDGMpGyBXU.fQ7..N5Bwx8roRKjLg5EP.LQd2QgLU/K2ywO', 'DhuEJ4DZ', null, null, null, null, null, null, null, null, '0', '2017-06-13 13:38:54', '2017-06-13 13:38:54');
+INSERT INTO `users` VALUES ('77', null, '', 'Trần Dũng', '/images/user_default.png', 'ấp 1, xã Phù Cát, Phù Mỹ, Bình Định', null, '52', '0', '0959595959', 'dungtran@gmail.com', '$2y$10$dUQqxQnVJJLYLQbhSaXNiOCuNYkv4068nQ4cPnHEHYGHkNHC/pora', null, null, null, null, null, null, null, null, null, '0', '2017-06-13 14:05:04', '2017-06-13 14:05:04');
+INSERT INTO `users` VALUES ('78', null, '', 'Trần Bo', '/images/user_default.png', '23322222', '13/06/2014', '83', '0', '232332', 'botran@gmail.com', '$2y$10$s90kHAv1ccGIcH8jbaNJS.CF2hjlJqrBkRSbnIk25JjTL8mN/Tfxi', 's0szcXLt', null, null, null, null, null, null, null, 'b9eQqt1WpE2HaZmmUgyolHLwvkiXKos9XB1NzpYZBvrIPjpnbWuubs4CrO04', '0', '2017-06-13 14:10:32', '2018-08-25 15:36:11');
+INSERT INTO `users` VALUES ('79', null, '', 'Kawasaki', '/images/user_default.png', 'đường Tokyo, Long Biên, Hà Nội', null, '1', '0', '09887885888', 'kawasaki@gmail.com', '$2y$10$20H.hvBVuU9O4vDDrGstveFS7R37LoUdJ2n0YrQxY/y7VQdOfCjBC', null, null, null, null, null, null, null, null, null, '0', '2017-06-13 14:28:45', '2017-06-13 14:28:45');
+INSERT INTO `users` VALUES ('80', null, '', 'Cô chủ nhỏ bé bé xinh xinh đẹp gái', '/images/user_default.png', '666/30/17 đường 3/2 Phường 15 , Quận 11, Hồ Chí Minh', null, '79', '0', '098262722828', 'cobe@gmaiil.com', '$2y$10$wa6Qulg.uyPKf0d9UzsJ4O1thZhTkkJ9MmpUPPrjQR1b4syX/KyLy', null, null, null, null, null, null, null, null, null, '0', '2017-06-16 00:54:08', '2017-06-16 00:54:08');
+INSERT INTO `users` VALUES ('85', null, '', 'test2', '/images/2.png', '323443433443', null, '95', '0', '43243443', 'test2@gmail.com', '$2y$10$8kEADePUZwgw/ba60eVJaO76CjIjHzg6.9WjwzCuugmBbmv2Z5UYy', 's1VAyjYf', null, null, null, null, null, null, null, 'eIl5WJGs915RMYK7FMEYYag56nXbxkI8suyUq3UN65DbIW17f5mz47xfxKQu', '0', '2017-08-14 22:12:40', '2017-09-07 23:28:49');
+INSERT INTO `users` VALUES ('86', null, '', 'Cty XNK Nam Bo', '/images/user_default.png', '', null, '96', '0', '0987662626', 'a@gmail.com', '$2y$10$JiEE/fqm2FrL.QtFzVJ9kuI2w/u4iAyMqSjwLK0qEXFukqnL3Y.b.', 'UmNwCXQq', null, null, null, null, null, null, null, null, '0', '2017-08-18 00:56:12', '2017-08-18 00:56:12');
+INSERT INTO `users` VALUES ('87', null, '', 'haitvb@vng.com.vn', '/images/user_default.png', '09393939 duong trường giang', null, '25', '0', '039393933', 'haitvb@vng.com.vn', '$2y$10$T2iQ/ZrJxfFPoYJhsVVCi.fHmWoYHp2/HglmjttIOyMfrQg4na5ru', 'ZUlcd6Vb', '', null, null, null, null, null, null, 'raNrVqpPRjV0mxv1FUFJTevwSjB6XolCKuldFabhpC1Ld5DKXan8BJNnbYA7', '0', '2017-08-23 22:20:00', '2017-10-11 21:33:47');
+INSERT INTO `users` VALUES ('88', null, '', 'testkho', '/images/user_default.png', '', null, '0', '0', '0324934932', 'testkho@gmail.com', '$2y$10$LDZtD73qAMGekwVeTS0ZxOH/gVRyMj4KWXC6SPN71UMxJNinKoRt.', 'SbD1mD26', null, null, null, null, null, null, null, null, '0', '2017-08-30 22:44:19', '2017-08-30 22:44:19');
+INSERT INTO `users` VALUES ('89', null, '', 'testkho1', '/images/user_default.png', '', null, '0', '0', '85564468', 'testkho1@gmail.com', '$2y$10$l5RKu4BpZmLz5o13T7bL5uBpKkEmpI7iih0p6.OrFchcCb8gfT4H6', 'CGo9lTjC', null, null, null, null, null, null, null, 'oFULQZuTtA84Lrq2QqiDOXbmZ6tDjFWXbYkK7R6UPH1K6jQsJPOE4E7dAKcl', '0', '2017-08-30 22:45:10', '2017-09-04 15:33:13');
+INSERT INTO `users` VALUES ('90', null, '', 'haitvbtest1', '/images/user_default.png', '', null, '0', '0', '09292929292', 'haitvbtest1@gmail.com', '$2y$10$36/wH5auYm3JuVW65ApFEey9mtkL8.73iGIg4oEu8cozsUe7VuvwO', 'h2pPdqIQ', null, null, null, null, null, null, null, '7oj8OCW6uLTBS6nlWo3mPYmCnAIt9yZRW3mEJyo4uUhiiftVKwmz7pLBhPzp', '0', '2017-10-09 19:34:23', '2017-10-09 19:38:00');
+INSERT INTO `users` VALUES ('92', null, '', 'haitvbtest2', '/images/user_default.png', '', null, '0', '0', '099393932', 'haitvbtest2@gmail.com', '12345!@#$%Q', 'EgMwEwJM', null, null, null, null, null, null, null, null, '0', '2017-10-09 19:37:41', '2017-10-09 19:37:41');
+INSERT INTO `users` VALUES ('93', null, '', 'haitvbtest3', '/images/user_default.png', '', null, '0', '0', '09744848474', 'haitvbtest3@gmail.com', '$2y$10$88qtPjQHKL9PqutOJBxWI./aDU29CyvXh1emNc7TqIFXRMBEQwAPi', 'grd5c006', null, null, null, null, null, null, null, 'GYv5iCtE39nMyb5GBktscrkDFM1cjoN8A2kMB5QkmfTcWEtFsfK7Ikx4gvLf', '0', '2017-10-09 19:42:38', '2017-10-09 19:43:06');
+INSERT INTO `users` VALUES ('95', null, '', 'haitvbtestproduction', '/images/user_default.png', '', null, '0', '0', '098348484', 'behaispkt20101@gmail.com', '$2y$10$N2EoFG4.PmbPoXfpU0QYY./LgccxDFVEyKt5RIvVPZHbLWqLQoWk6', 'zCL1aofG', null, null, null, null, null, null, null, 'NClDevcPHuKHqUMYkTlucHu4mTtoODFKiicXa4AvmKD7GcCUELNo985AKEaz', '0', '2017-10-09 19:46:01', '2017-10-09 20:05:01');
+INSERT INTO `users` VALUES ('96', null, '', 'haitvbtest4', '/images/user_default.png', '', null, '10', '0', '', 'haitvbtest4@gmail.com', '12345!@#$%Q', '1j6ya62k', '', null, null, null, null, null, null, 'Lsymkq2k2lIlQlPmyGUZV2ZFVRFj1J62pe2g1GaBqIQ9FVunrFyvzNtoXu2b', '0', '2017-10-09 19:51:54', '2017-10-09 19:52:03');
+INSERT INTO `users` VALUES ('97', null, '', 'haitvbtest5', '/images/user_default.png', '', null, '19', '0', '', 'haitvbtest5@gmail.com', '12345!@#$%Q', 'WrTUqw4v', '', null, null, null, null, null, null, '1l07kXzVUUI5O5e8k3nbLcPaSm1JXfwRcbosLJRyYEyby7Pr6TPmvU7K53Z7', '0', '2017-10-09 19:53:36', '2017-10-09 19:53:42');
+INSERT INTO `users` VALUES ('99', null, '', 'haitvbtest7', '/images/user_default.png', 'HAGL', null, '95', '0', '93834438349', 'haitvbtest7@gmail.com', '$2y$10$MyLETSObO9YC1ovg.kF33uekkgEuLVGjGN8GZc8Y/KTpYr6ghKyaC', '3zT782ow', null, null, null, null, null, null, null, 'ULPLwIK5yE6d80KJjaLVdt85ltvITCgfNqDU9nCrOcfrd75mqaEjFP2E7nLi', '0', '2017-10-09 19:57:13', '2017-10-09 20:04:18');
+INSERT INTO `users` VALUES ('100', null, '', 'testworklow', '/images/user_default.png', 'từ khách hàng lên nhân viên => chủ kho', null, '1', '0', '0969875777', 'testworklow@gmail.com', '$2y$10$vHjXC4xaqY4uRXMUvyXwve1cZPvWoB4C9B7n/gIFk628DFEE47.X2', 'EOsHB1Ns', '', null, null, null, null, null, null, 'TOvb2yfTLprY9im42XjJbomnyOe4O2CyLlx1v6I5Jrk6kviJH09l1MUOprIl', '0', '2017-10-09 22:38:03', '2017-11-02 22:01:14');
+INSERT INTO `users` VALUES ('101', null, '', 'testworklow1', '/images/user_default.png', '', null, '10', '0', '094948483', 'testworklow1@gmail.com', '$2y$10$jgJ0MHNYIYWPHeAtbroY7e1QFUTlaw0bfQiNlnhwNiPF4tgXFI71S', 'O6oyCKkj', '', null, null, null, null, null, null, 'c7vSU9SMCHQGiVTz32Hl57kllThB0BHzZmPXZ33nVsnlS2BsVezQ1BJZPlGL', '0', '2017-10-09 23:01:07', '2017-10-10 00:10:01');
+INSERT INTO `users` VALUES ('102', null, '', 'testworklow2', '/images/user_default.png', '', null, '0', '0', '02393932', 'testworklow2@gmail.com', '$2y$10$3xNI3doZMtZW.6.W81gN7Oi5F.kM5/ljp3Uzh6rvWLWKwkTYZmvie', 'bdqWFjho', null, null, null, null, null, null, null, null, '0', '2017-10-09 23:55:16', '2017-10-09 23:55:16');
+INSERT INTO `users` VALUES ('103', null, '', 'testworklow3', '/images/user_default.png', '', null, '0', '0', '43534534534', 'testworklow3@gmail.com', '$2y$10$erqtUg1LbpCHZVjaVGDk9u9Eq2YJrPhicp/sczYBcUQiyMomWxbIe', 'C3v3Sdug', null, null, null, null, null, null, null, null, '0', '2017-10-10 00:06:57', '2017-10-10 00:06:57');
+INSERT INTO `users` VALUES ('104', null, '', 'testworklow4', '/images/user_default.png', '', null, '24', '0', '344343434', 'testworklow4@gmail.com', '$2y$10$949DCb0ZVqtK3an4v.yyceMLIij2N6sKl8kK8x.iy0.5buiR68x7W', 'OCW3qbMI', '', null, null, null, null, null, null, 'gtcgT26huakr7TqzDBcqzveHhnXO0gqR1pVOgCRZWgDUePmXImm7HSYsxahj', '0', '2017-10-10 00:10:43', '2017-10-10 00:16:29');
+INSERT INTO `users` VALUES ('105', null, '', 'testworklow5', '/images/user_default.png', '', null, '0', '0', '534534543534', 'testworklow5@gmail.com', '$2y$10$nkjmKcQixwlBjERJDSBpfuVq5XkxmoHyB9pTIjuIebkmt9HTnSgM6', 'dfgQOMjS', null, null, null, null, null, null, null, 'gxVDSCOIgTp1SLCOVcgfTVrvHbeSnZFgPfmXIm0NIE3RM344ar4oaer8WIpi', '0', '2017-10-10 00:16:15', '2017-10-10 00:21:09');
+INSERT INTO `users` VALUES ('106', null, '', 'testworklow6', '/images/user_default.png', '', null, '22', '0', '3432423423', 'testworklow6@gmail.com', '$2y$10$3ea8ODoSl08eEDZrc1PJHucvdqYq.M7etfgx5IkmBXf0lwughqWJa', 'IiSWRyuI', '', null, null, null, null, null, null, null, '0', '2017-10-10 00:21:54', '2017-10-10 00:23:12');
+INSERT INTO `users` VALUES ('107', null, '', 'testworklow7', '/images/user_default.png', '', null, '22', '0', '3453534', 'testworklow7@gmail.com', '$2y$10$WL7/7qo4/DUb0Xpiw5R4ZOp1DGEVtt7xoFvzXiwq85jIg9p19TrIW', 'qLrDBz6Q', null, null, null, null, null, null, null, null, '0', '2017-10-10 00:24:07', '2017-10-10 00:24:07');
+INSERT INTO `users` VALUES ('108', null, '', 'haitest1', '/images/user_default.png', '', null, '0', '0', '09876543223', 'haitest1@gmail.com', '$2y$10$kqi5V71dHhV3mz9OTyVssOuYZq9xttmah/NWptNZugfKdxuSSbG0C', 'DChC3XlF', null, null, null, null, null, null, null, 'BZ2EMBbSrtSUTe0HJxijqzNE9x5diJ62tQDWogdr3Hk7HIIXrkMqF0VqDy3K', '0', '2017-10-13 15:15:05', '2017-11-21 17:19:17');
+INSERT INTO `users` VALUES ('109', null, '', 'testcode', '/images/user_default.png', '', null, '12', '0', '', 'testcode@gmail.com', '$2y$10$iXPd9tF2GWYMiGfs8d8f/e7wyiAfdc53h1HGAjVljqZn5rpuNnZ8i', 'Cer9EG97', '', null, null, null, null, null, null, 'OOvSZKJzUoM3mqMNdeSco0BZrlz9nj8aM3GU2Ae91cgWz5tJjgJVfcpUr1b6', '0', '2017-11-07 16:04:21', '2017-11-07 17:29:43');
+INSERT INTO `users` VALUES ('110', null, '', 'haitvbadmin', '/images/user_default.png', 'Tân Hương - Châu Thành', null, '82', '0', '0874438348', 'haitvbadmin@vng.com.vn', '$2y$10$pxGTK2LrTcvWlt39ZyNHF.mszctdkivN88bEovPPJxFwfan4crH/a', '5ZPVV4sH', null, null, null, null, null, null, null, 'xHPvlO7Kr5Il3vL7nVSN9qTtntsPii1iwTPu3wf49CobWyyivkktPe3vvrEl', '0', '2017-11-09 16:39:01', '2017-11-09 16:40:44');
+INSERT INTO `users` VALUES ('120', null, '', 'test', '/images/user_default.png', '', null, '1', '0', '', 'testworklowabc@gmail.com', '$2y$10$wrrenRUNJfIVIALIgyxU7.x2uUzSDpCIGpGoEedmrPnNMSX1kqHRq', 'YPVLMnkJ', '', null, null, null, null, null, null, 'kMjToqlP1CshNBmGzXVyyQ251g2ENcjlljYrFrlIRvGISdGuz3E7w1PJzeZe', '1', '2017-11-14 14:32:10', '2018-03-22 16:05:41');
+INSERT INTO `users` VALUES ('125', null, '1500971046653848', 'Bé Hai', '/images/user_default.png', '', null, '0', '0', '', 'behaispkt2010@gmail.com', '', 'tn1vpjsI', null, null, null, null, null, null, null, 'KHAAmgAzDWepLQVTf44doKRrUjr149hOTN55Jt1jyCOtl6WsASU2UN0BEZtU', '0', '2017-11-14 16:31:46', '2017-11-14 17:14:29');
+INSERT INTO `users` VALUES ('126', null, '', '111111', '/images/user_default.png', '122121, Tây Hồ, Hà Nội', null, '1', '0', '32323223', '2222@gmail.com', '123456', null, null, null, null, null, null, null, null, null, '0', '2018-07-19 00:11:43', '2018-07-19 00:11:43');
+INSERT INTO `users` VALUES ('127', null, '', 'Quản lí vận chuyển', '/images/user_default.png', 'testfactory, Gò Vấp, Hồ Chí Minh', null, '79', '764', '0969875777', 'support@3stone.vn', '123456', null, null, null, null, null, null, null, null, null, '0', '2018-08-09 22:27:40', '2018-08-09 22:27:40');
+INSERT INTO `users` VALUES ('128', null, '', 'testcode1', '/images/user_default.png', '540 Đồng Khởi', null, '83', '831', '0929299292', 'testcode1@gmail.com', '123456', null, null, null, null, null, null, null, '78', null, '0', '2018-08-19 15:41:17', '2018-08-19 15:41:17');
+INSERT INTO `users` VALUES ('129', null, '', 'testcode12', '/images/user_default.png', 'quốc lộ 50', null, '82', '815', '029292929', 'testcode12@gmail.com', '123456', null, null, null, null, null, null, null, '78', null, '0', '2018-08-19 15:43:03', '2018-08-19 15:43:03');
+INSERT INTO `users` VALUES ('130', '-BTR-130', '', 'testusercode', '/images/user_default.png', 'hương lộ 5', null, '83', '831', '01919191', 'testusercode@gmail.com', '123456', null, null, null, null, null, null, null, '78', null, '0', '2018-08-19 15:44:55', '2018-08-19 15:44:55');
+INSERT INTO `users` VALUES ('131', '-TGI-131', '', 'testcodeu2', '/images/user_default.png', 'test', null, '82', '818', '929292929', 'testcodeu2@gmail.com', '123456', null, null, null, null, null, null, null, '78', null, '0', '2018-08-19 15:48:25', '2018-08-19 15:48:25');
+INSERT INTO `users` VALUES ('132', null, '', 'test1511', '/images/user_default.png', 'test', null, '1', '2', '0929292', 'test1511@gmail.com', '123456', null, null, null, null, null, null, null, '78', null, '0', '2018-08-19 15:55:36', '2018-08-19 15:55:36');
+INSERT INTO `users` VALUES ('133', null, '', 'test15111', '/images/user_default.png', 'iieeje', null, '2', '28', '9393383', 'test15111@gmail.com', '123456', null, null, null, null, null, null, null, '78', null, '0', '2018-08-19 15:57:50', '2018-08-19 15:57:50');
+INSERT INTO `users` VALUES ('134', null, '', 'test151112', '/images/user_default.png', 'test151112', null, '6', '60', '33320102102', 'test151112@gmail.com', '123456', null, null, null, null, null, null, null, '78', null, '0', '2018-08-19 16:04:06', '2018-08-19 16:04:06');
+INSERT INTO `users` VALUES ('135', null, '', 'test1511122', '/images/user_default.png', 'test1511122', null, '2', '26', '029298118', 'test1511122@gmail.com', '123456', null, null, null, null, null, null, null, '78', null, '0', '2018-08-19 16:06:19', '2018-08-19 16:06:19');
+INSERT INTO `users` VALUES ('136', null, '', 'test15111221', '/images/user_default.png', '839393', null, '10', '84', '09929292', 'test15111221@gmail.com', '123456', null, null, null, null, null, null, null, '78', null, '0', '2018-08-19 16:18:31', '2018-08-19 16:18:31');
+INSERT INTO `users` VALUES ('137', null, '', 'test151112212', '/images/user_default.png', 'yeukds', null, '17', '152', '7897892', 'test151112212@gmail.com', '123456', null, null, null, null, null, null, null, '78', null, '0', '2018-08-19 16:21:34', '2018-08-19 16:21:34');
+INSERT INTO `users` VALUES ('138', 'USER-HTI-138', '', 'test1511122122', '/images/user_default.png', 'test1511122122', null, '42', '445', '67890111', 'test1511122122@gmail.com', '123456', null, null, null, null, null, null, null, '78', null, '0', '2018-08-19 16:22:43', '2018-08-19 16:22:43');
+INSERT INTO `users` VALUES ('139', null, '', 'test location', '/images/user_default.png', '219 Đường Trần Hưng Đạo, Phường Cô Giang', '16/09/1992', '79', '760', '093939393', 'testlocation@gmail.com', '$2y$10$uYWWJq6OtC1rnKC3wBjQkum3GdHseAuCs1OpZWC0NIsBrFJxrr/Zi', 'lPsSRzJx', null, null, null, null, null, null, null, null, '0', '2018-09-17 22:30:40', '2018-09-17 22:31:11');
+INSERT INTO `users` VALUES ('140', null, '', 'test customer', '/images/user_default.png', '219 Đường Trần Hưng Đạo', '15/09/1993', '79', '760', '0393984844', 'testcustomer@gmail.com', '123456', null, null, null, 'tiềm năng', null, null, null, '78', null, '0', '2018-09-18 21:03:03', '2018-09-18 21:03:03');
+INSERT INTO `users` VALUES ('141', null, '', 'test12321', '/uploads/images/2018-09/web-2018-09-18_23-21-12-chuoi.jpg', 'testabc', '15/09/1994', '77', '750', '0947474747', 'test12321@gmail.com', '123456', null, null, 'nhóm mua nhanh', 'test', null, null, null, '78', null, '0', '2018-09-18 23:21:12', '2018-09-18 23:21:12');
+INSERT INTO `users` VALUES ('142', 'USER-BTR-142', '', 'testfinalup1', '/uploads/images/2018-09/web-2018-09-22_13-21-19-nhan.jpg', 'testfinalup1', '11/09/1997', '83', '831', '09494838211', 'testfinalup@gmail.com', '123456', 'Mgeoa9vx', null, 'testfinal1', 'testfinal avc2', 'testfinalup', 'testfinalup1', 'testfinalup2', '78', null, '0', '2018-09-18 23:30:13', '2018-09-22 13:22:14');
+INSERT INTO `users` VALUES ('143', 'USER-HCM-143', '', '1234', '/uploads/images/2018-09/web-2018-09-25_20-58-05-chuoi.jpg', '217 Đường Trần Hưng Đạo', '18/09/2018', '79', '760', '12345321', '134324@gmail.com', '123456', null, null, 'test', 'test', 'test', '324543632', ' Tân Trường - Hải Trường - Hải Lăng - Quảng Trị  ', '78', null, '0', '2018-09-25 20:58:05', '2018-09-25 20:58:05');
+INSERT INTO `users` VALUES ('144', 'USER-HCM-144', '', 'fsdfewr', '/images/user_default.png', '219 Đường Trần Hưng Đạo', '25/09/2018', '79', '760', '345452343', 'ewwdadsa@gmail.com', '123456', null, null, 'test', 'test', 'ewrewrrwe', '53425324234', ' Tân Trường - Hải Trường - Hải Lăng - Quảng Trị  ', '78', null, '0', '2018-09-25 21:05:27', '2018-09-25 21:05:27');
+INSERT INTO `users` VALUES ('145', 'USER-HCM-145', '', 'têtttte', '/uploads/images/2018-09/web-2018-09-25_21-06-35-chuoi.jpg', '219 Đường Trần Hưng Đạo', '25/09/2018', '79', '760', '24213124', 'botr21an123412@gmail.com', '123456', null, null, 'test', 'test', 'test323', '353232432', ' Tân Trường - Hải Trường - Hải Lăng - Quảng Trị  ', '78', null, '0', '2018-09-25 21:06:35', '2018-09-25 21:06:36');
+INSERT INTO `users` VALUES ('146', 'USER-HCM-146', '', 'tewewrew', '/uploads/images/2018-09/web-2018-09-25_21-10-27-chuoi.jpg', '219 Đường Trần Hưng Đạo', '25/09/2018', '79', '760', '0969875727', 'bot213234ran@gmail.com', '123456', null, null, 'test', 'test', 'test', '324532', ' Tân Trường - Hải Trường - Hải Lăng - Quảng Trị  ', '78', null, '0', '2018-09-25 21:10:27', '2018-09-25 21:10:27');
 
 -- ----------------------------
 -- Table structure for views

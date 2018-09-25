@@ -337,7 +337,7 @@
                                                        data-target=".modal-bank-edit"
                                                        class="fa fa-pencil edit_bank" data-id="{{$itemBankWareHouse->id}}"
                                                        data-bank="{{$itemBankWareHouse->bank}}" data-province="{{$itemBankWareHouse->province}}"
-                                                       data-card_number="{{$itemBankWareHouse->card_number}}"data-check="{{$itemBankWareHouse->check}}"  data-card_name="{{$itemBankWareHouse->card_name}}" class="fa fa-pencil" style="cursor: pointer;"></i> 
+                                                       data-card_number="{{$itemBankWareHouse->card_number}}"data-check="{{$itemBankWareHouse->check}}" data-type_pay="{{ $itemBankWareHouse->type_pay }}" data-card_name="{{$itemBankWareHouse->card_name}}" class="fa fa-pencil" style="cursor: pointer;"></i> 
                                                     <label style="margin-bottom: -1px;">
                                                         <input style="display: none" name="bankHas"  type="checkbox" @if($itemBankWareHouse->check==1) checked @endif disabled>
                                                         <input type="hidden" name="bankcheck" value="{{ $itemBankWareHouse->check }}">
@@ -926,7 +926,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                     </button>
-                    <h4 class="modal-title text-center" id="myModalLabel">Tài khoản ngân hàng</h4>
+                    <h4 class="modal-title text-center" id="myModalLabel">Thông tin thanh toán</h4>
                 </div>
                 <div class="modal-body">
 
@@ -996,9 +996,9 @@
                                         <input type="checkbox" name="check" class="checkBank">
                                     </label>
                                     </div>
+                                </div>
                             </div>
                         </div>
-                            </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -1013,66 +1013,68 @@
          data-backdrop="static">
         <div class="modal-dialog modal-bank-edit">
             <input type="hidden" name="id_bank">
+            <input type="hidden" name="type_pay">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                     </button>
-                    <h4 class="modal-title text-center" id="myModalLabel">Tài khoản ngân hàng</h4>
+                    <h4 class="modal-title text-center" id="myModalLabel">Thông tin thanh toán</h4>
                 </div>
                 <div class="modal-body">
 
                     <div class="frm-add">
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="name" class="col-md-4 col-sm-4 control-label ">Tên ngân hàng</label>
-                                <div class="col-md-8 col-sm-8">
-                                    <select id="bank_select"  data-placeholder="Ngân hàng" class="form-control bank" name="bank">
-                                        @foreach($bank as $itemBank)
-                                            <option value="{{$itemBank->id}}">{{$itemBank->name}}</option>
-                                        @endforeach
-                                    </select>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="name" class="col-md-4 col-sm-4 control-label">Tỉnh/thành phố</label>
-                                <div class="col-md-8 col-sm-8">
-                                    <select class="form-control province" name="province">
-                                        @foreach($province as $itemProvince)
-                                            <option value="{{$itemProvince->provinceid}}">{{$itemProvince->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <label  class="col-md-4 col-sm-4 control-label">Số tài khoản</label>
-                                <div class="col-md-8 col-sm-8">
-                                    <input type="text" class="ng-valid ng-dirty ng-touched form-control card_number" required value="" name="card_number">
-                                </div>
-                            </div>
-                        </div>
+                        
                         <div class="row">
                             <div class="form-group">
                                 <label  class="col-md-4 col-sm-4 control-label">Chủ tài khoản</label>
-
                                 <div class="col-md-8 col-sm-8">
-                                    <input type="text" class="ng-valid ng-dirty ng-touched form-control card_name" value="" required name="card_name">
+                                    <input type="text" class="ng-valid ng-dirty ng-touched form-control card_name" required name="card_name">
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="name" class="col-md-4 col-sm-4 control-label">Tên ngân hàng</label>
+                                <div class="col-md-8 col-sm-8">
+                                    <select data-placeholder="Lựa chọn" class="form-control bank" name="bank">
+                                        @foreach($bank as $itemBank)
+                                        <option value="{{$itemBank->id}}">{{$itemBank->name}}</option>
+                                            @endforeach
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                            <label for="name" class="col-md-4 col-sm-4 control-label">Chi Nhánh</label>
+                            <div class="col-md-8 col-sm-8">
+                                <select data-placeholder="Lựa chọn" class="form-control province" name="province">
+                                    @foreach($province as $itemProvince)
+                                        <option value="{{$itemProvince->provinceid}}">{{$itemProvince->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                                </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                            <label  class="col-md-4 col-sm-4 control-label">Số tài khoản</label>
+                            <div class="col-md-8 col-sm-8">
+                                <input type="text" class="ng-valid ng-dirty ng-touched form-control card_number" required  name="card_number">
+                            </div>
+                                </div>
+                        </div>
+                        
                         <div class="row">
 
                             <div class="form-group">
                                 <label  class="col-md-4 col-sm-4 control-label">Kích hoạt</label>
                                 <div class="col-md-8 col-sm-8">
                                     <div class="togglebutton">
-                                        <label>
-                                            <input type="checkbox" name="check" class="checkBank">
-                                        </label>
+                                    <label>
+                                        <input type="checkbox" name="check" class="checkBank">
+                                    </label>
                                     </div>
                                 </div>
                             </div>
@@ -1124,7 +1126,6 @@
     <script> 
         $('#time_upgrade_bonus, #category_warehouse_id, #user_test, #time_upgrade_level, #time_confirm_kho, #time_confirm_kho_bonus, #time_quangcao, #time_quangcao_bonus, #time_request_upgrade_level, #time_request_quangcao, #month_required, #time_request_confirm_kho, .bank, .province, .type_pay, .select2_single').selectize({create: true,});
     </script>
-    
     <script type="text/javascript">
         $(document).ready(function () {
             $('#date-format').bootstrapMaterialDatePicker
@@ -1304,9 +1305,7 @@
             var province = $('.modal-bank select[name="province"] :selected').val();
             var card_number = $('.modal-bank input[name="card_number"]').val();
             var card_name = $('.modal-bank input[name="card_name"]').val();
-            // console.log(bank);
-            // console.log(province);
-            // console.log(card_number);
+            var type_pay = $('.modal-bank select[name="type_pay"] :selected').val();
             var check = 0;
             if($('.modal-bank input[name="check"]').is(':checked'))
                 var check = 1;
@@ -1315,7 +1314,7 @@
             $.ajax({
                 type: "POST",
                 url: '{{ url('/') }}/admin/warehouse/AjaxBank',
-                data: {bank: bank, province: province, card_number: card_number,card_name: card_name,check:check,_token: _token,ware_id:ware_id},
+                data: {bank: bank,type_pay: type_pay, province: province, card_number: card_number,card_name: card_name,check:check,_token: _token,ware_id:ware_id},
                 success: function( msg ) {
                     $('.loading').css('display','none');
                     //show notify
@@ -1938,14 +1937,29 @@
             $('.modal-bank-edit input[name="id_bank"]').val(_self.data('id'));
             $('.modal-bank-edit input[name="card_number"]').val(_self.data('card_number'));
             $('.modal-bank-edit input[name="card_name"]').val(_self.data('card_name'));
+            $('.modal-bank-edit input[type="hidden"][name="type_pay"]').val(_self.data('type_pay'));
             if(_self.data('check') == 1) {
                 $('.modal-bank-edit input[name="check"]').prop('checked', true);
             }
             else{
                 $('.modal-bank-edit input[name="check"]').prop('checked', false);
             }
-
-
+            var type_pay = _self.data('type_pay');
+            console.log(type_pay);
+            if(type_pay == 1) {
+                var bank = $(".modal-bank-edit select[name='bank']")[0].selectize;
+                bank.clear();   
+                bank.disable(); 
+                var province = $(".modal-bank-edit select[name='province']")[0].selectize;
+                province.clear();   
+                province.disable();
+                $('.card_number').val("");
+                $('.card_number').prop('disabled', true);
+            } else {
+                $('.modal-bank-edit select[name="bank"]')[0].selectize.enable();
+                $('.modal-bank-edit select[name="province"]')[0].selectize.enable();
+                $('.card_number').prop('disabled', false);
+            }
         });
     </script>
     <script>
@@ -1980,7 +1994,6 @@
         $(function(){
             var districtID = $('.districtID').val();
             var provinceID = $('.provinceID').val();
-            console.log(provinceID);
             var _token = $('input[name="_token"]').val();
             if(provinceID){
                 $.ajax({

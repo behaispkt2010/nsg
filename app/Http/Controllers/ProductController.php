@@ -99,6 +99,7 @@ class ProductController extends Controller
             'image'         => $product->image,
             'name'          => $product->title,
             'price'         => $product->price_out,
+            'code'          => $product->code,
             'inventory_num' => $product->inventory_num,
         );
         return \Response::json($response);

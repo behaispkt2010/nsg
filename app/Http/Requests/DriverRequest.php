@@ -24,8 +24,8 @@ class DriverRequest extends FormRequest
     public function rules()
     {
         return [
-            'phone_driver' => 'unique:driver,phone_driver',
-            'number_license_driver' => 'unique:driver,number_license_driver',
+            'phone_driver' => 'required',
+            'number_license_driver' => 'required',
             'type_driver' => 'required',
             'name_driver' => 'required',
         ];

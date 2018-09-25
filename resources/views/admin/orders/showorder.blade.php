@@ -45,7 +45,7 @@
                 <div class="col-md-12 con-tracking hidden-xs" style="color: #000;">
                     <div class="col-md-7 col-sm-6 col-xs-12 fix-padlr">
                         <h2>Thông tin đặt hàng</h2>
-                        <table class="table list-order table-curved">
+                        <table class="table table-borderless list-order table-curved">
                             <tbody>
                             <?php $total = 0; ?>
                             @foreach($productOrder as $itemProductOrder)
@@ -57,16 +57,44 @@
                                 </tr>
                                 <?php $total=$total + (($itemProductOrder->price_out)*($itemProductOrder->num)); ?>
                             @endforeach
+                            
                             <tr>
-                                {{--<th></th>--}}
+                                <td></td>
+                                <td></td>
+                                <td>Tổng giá trị sản phẩm: </td>
+                                <td><strong class="total">  {!! \App\Util::FormatMoney($total)!!} </strong></td>
+                            </tr>
+                            <tr>
                                 <td>
                                 </td>
                                 <td></td>
-                                <td>Tổng: </td>
-                                <td><strong class="total">  {!! \App\Util::FormatMoney($total)!!} </strong></td>
+                                <td>Giảm giá: </td>
+                                <td>@if(!empty($order->discount)){!! \App\Util::FormatMoney($order->discount)!!} @endif</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                </td>
+                                <td></td>
+                                <td>Thuế: </td>
+                                <td>@if(!empty($order->tax)){!! \App\Util::FormatMoney($order->tax)!!} @endif</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                </td>
+                                <td></td>
+                                <td>Phí vận chuyển: </td>
+                                <td>@if(!empty($order->transport_pay)){!! \App\Util::FormatMoney($order->transport_pay)!!} @endif</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                </td>
+                                <td></td>
+                                <td>Tổng đơn hàng: </td>
+                                <td><strong class="total">{!! \App\Util::FormatMoney(\App\ProductOrder::getSumOrder($order->id)) !!}</strong></td>
                             </tr>
                             </tbody>
                         </table>
+                        
                         <div class="clear"></div>
 
                         <div class="row">
@@ -80,6 +108,7 @@
                                 </p>
                             </div>
                         </div>
+                        
                         <div class="row">
                             <div class="col-md-4">
                                 Vận chuyển:

@@ -1675,8 +1675,8 @@ ul.msg_list li {
     display: flex;
     margin: 6px 6px 0;
     height: 88px;
-    width: 96% !important;
-    border-bottom: 1px solid #dddfe2 !important;
+    width: 98% !important;
+    /*border-bottom: 1px solid #dddfe2 !important;*/
 }
 ul.msg_list li:hover {
     background-color: #f7f7f7 !important;
@@ -1701,8 +1701,8 @@ ul.msg_list li a .image img {
 
 ul.msg_list li a .time {
     font-size: 11px;
-    font-style: italic;
-    font-weight: bold;
+    /*font-style: italic;*/
+    font-weight: 400;
     position: relative;
     /*right: 35px; */
 }
@@ -1710,6 +1710,7 @@ ul.msg_list li a .time {
 ul.msg_list li a .message {
     display: block !important;
     font-size: 14px;
+    min-height: 40px;
 }
 
 ul.msg_list li a .message .different {
@@ -6536,7 +6537,13 @@ ul {
     top: 0;
     padding: 10px;
 }
-
+.img-avatar {
+    max-width: 100%;
+    height: 170px !important;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 .selectize-control.single .selectize-dropdown .selected {
     background-color: transparent !important;
 }
@@ -7100,7 +7107,7 @@ table.dtp-picker-days thead {
 }
 
 .notification_title {
-    color: #000;
+    color: #0f9d58;
 }
 
 .transport_tmp {
@@ -7120,7 +7127,11 @@ table.dtp-picker-days thead {
         font-weight: 400;
     }
 }
-
+@media only screen and (max-width:767px) {
+    .non-dis{
+        display: none;
+    }
+}
 @media only screen and (max-width:767px) {
     .date-past {
         display: none;
@@ -7334,9 +7345,36 @@ table.dtp-picker-days thead {
 .f18 {
     font-size: 18px;
 }
+.pT-7 {
+    padding-top: 7px;
+}
 .iconPrint{
     height: 40px !important;
     min-width: 40px !important;
     width: 40px !important;
     right: 45px !important;
+}
+.selectize-control.single .selectize-dropdown .optgroup-header {
+    font-weight: bold !important;
+}
+.non-d{
+    display: none !important;
+}
+.list-unstyled span.label-box1{
+    display: inline-block;
+    width: 95px !important;
+}
+.totalOrderTmp {
+    font-weight: bold;
+}
+.table-borderless > tbody > tr > td,
+.table-borderless > tbody > tr > th,
+.table-borderless > tfoot > tr > td,
+.table-borderless > tfoot > tr > th,
+.table-borderless > thead > tr > td,
+.table-borderless > thead > tr > th {
+    border: none;
+}
+.table-bordernontop > tbody > tr > th{
+    border: none !important;
 }

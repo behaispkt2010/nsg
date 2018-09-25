@@ -41,7 +41,6 @@
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <label for="code" class="col-md-3 col-xs-12 control-label">Mã</label>
-
                                                             <div class="col-md-9 col-xs-12">
                                                                 <div  disabled class="form-control" id="code" >@if(!empty($user->id)){{\App\Util::UserCode($user->id)}}@endif</div>
                                                             </div>
@@ -59,12 +58,10 @@
                                                         </div>
                                                     </div>
                                                 </li>
-
                                                 <li>
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <label for="name" class="col-md-3 col-xs-12 control-label">SDT</label>
-
                                                             <div class="col-md-9 col-xs-12 ">
                                                                 <input type="number"  class="form-control" disabled  name="phone_number" value="@if(!empty($user->phone_number)){{$user->phone_number}}@else{{old('phone_number')}}@endif"/>
                                                             </div>
@@ -75,7 +72,6 @@
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <label for="name" class="col-md-3 col-xs-12 control-label">Ngày sinh</label>
-
                                                             <div class="col-md-9 col-xs-12 ">
                                                                 <input type="text" id="birthday" class="form-control" disabled  name="birthday" value="@if(!empty($user->birthday)){{$user->birthday}}@else{{old('birthday')}}@endif"/>
                                                             </div>
@@ -87,12 +83,12 @@
                                                         <div class="row">
                                                             <label for="name" class="col-md-3 col-xs-12 control-label">Địa chỉ</label>
                                                             <div class="col-md-9 col-xs-12 ">
-                                                                <input type="text"  class="form-control" disabled name="address" value="@if(!empty($user->address)){{$user->address}}@else{{old('address')}}@endif"/>
+                                                                <input type="text" placeholder="Địa chỉ số nhà, tên đường,..." class="form-control" disabled name="address" value="@if(!empty($user->address)){{$user->address}}@else{{old('address')}}@endif"/>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </li>
-                                                <li class="listselect">
+                                                <!-- <li class="listselect">
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <label for="name" class="col-md-3 col-sm-3 control-label">Tỉnh/TP</label>
@@ -103,6 +99,39 @@
                                                                         @foreach($province as $item)
                                                                             <option value="{{$item->provinceid}}" @if (!empty($user->province) && $user->province == $item->provinceid) selected="selected" @endif>{{$item->name}}</option>
                                                                         @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li> -->
+                                                <li class="listselect">
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <label for="name" class="col-md-3 col-sm-3 control-label">Tỉnh/TP</label>
+                                                            <input type="hidden" class="provinceID" name="provinceID" value="@if(!empty($user->province)) {{$user->province}} @endif">
+                                                            <input type="hidden" class="districtID" name="districtID" value="@if(!empty($user->district)) {{$user->district}} @endif">
+                                                            <div class="col-md-9 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <select id="province" class="form-control select2_single" required name="province" >
+                                                                        <option value="0">Chọn Tỉnh/TP</option>
+                                                                        @foreach($province as $item)
+                                                                            <option value="{{$item->provinceid}}" @if(!empty($user->province) && $user->province == $item->provinceid) selected @endif>{{$item->name}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="listselect">
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <label for="name" class="col-md-3 col-sm-3 control-label">Quận/Huyện</label>
+                                                            <div class="col-md-9 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <select id="district" class="form-control" required name="district" >
+                                                                        <option value="0">Chọn Huyện/Thị trấn</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -229,6 +258,61 @@
                 lang: 'vi',
                 time: false,
             });
+        });
+    </script>
+    <script type="text/javascript">
+        $('#province').on('change',function(){
+            var countryID = $(this).val();
+            var _token = $('input[name="_token"]').val();
+
+            if(countryID){
+                $.ajax({
+                    type:'POST',
+                    url:'{{ url("/") }}/admin/orders/AjaxGetDistrictByProvinceID',
+                    data: {id: countryID, _token: _token},
+                    success:function(html){
+                        $('#district').selectize()[0].selectize.destroy();
+                        $('#district').html(html);
+                        $('#district').selectize(); 
+                    }
+                }); 
+            } else {
+                $('#district').html('<option value="">Chọn Huyện/Thị trấn</option>');
+            }
+        });
+        // get update district, provinde
+        $(function(){
+            var districtID = $('.districtID').val();
+            var provinceID = $('.provinceID').val();
+            var _token = $('input[name="_token"]').val();
+            if(provinceID){
+                $.ajax({
+                    type:'POST',
+                    url:'{{ url("/") }}/admin/orders/AjaxLoadInfoAddress',
+                    data: {id: provinceID, type: 'district', valueID: districtID , _token: _token},
+                    success:function(html){
+                        $('#district').selectize()[0].selectize.destroy();
+                        $('#district').html(html);
+                        $('#district').selectize();
+                    }
+                }); 
+            } else {
+                $('#district').html('<option value="">Chọn Huyện/Thị trấn</option>');
+            }
+            /*if(districtID){
+                $.ajax({
+                    type:'POST',
+                    url:'{{ url("/") }}/admin/orders/AjaxLoadInfoAddress',
+                    data: {id: districtID, type: 'village', valueID: villageID , _token: _token},
+                    success:function(html){
+                        $('#x').selectize()[0].selectize.destroy();
+                        $('#x').html(html);
+                        $('#x').selectize();
+                    }
+                }); 
+            } else {
+                $('#x').html('<option value="">Chọn Phường/Xã</option>'); 
+            }*/
         });
     </script>
     <script>

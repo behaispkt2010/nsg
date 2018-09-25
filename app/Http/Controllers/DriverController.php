@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\DriverRequest;
 use App\Driver;
+use App\Util;
+use App\Province;
 use App\User;
+use App\CarType;
 use App\Transport;
 use Yajra\Datatables\Datatables;
 
@@ -30,49 +33,102 @@ class DriverController extends Controller
         return \Response::json($response);
     }
     public function AjaxGetDataTransport(Request $request) {
-        $driver   = Driver::find($request->get('id_select_transport'));
+        $arrDrivers = Driver::leftjoin('transports','transports.id','=','driver.type_driver')
+                        ->selectRaw('driver.*')
+                        ->selectRaw('transports.name as name')
+                        ->where('driver.id', $request->get('id_select_transport'))
+                        ->get();
+                        // dd($arrDrivers);
+        foreach ($arrDrivers as $itemDriver) {
+            $id_driver              = $itemDriver['id'];
+            $name                   = $itemDriver['name'];
+            $name_driver            = $itemDriver['name_driver'];
+            $phone_driver           = $itemDriver['phone_driver'];
+            $number_license_driver  = $itemDriver['number_license_driver'];
+        }
         $response = array(
-            'type_driver'           => $driver->type_driver,
-            'name_driver'           => $driver->name_driver,
-            'phone_driver'          => $driver->phone_driver,
-            'number_license_driver' => $driver->number_license_driver
+            'name'                  => $name,
+            'id_driver'             => $id_driver,
+            'name_driver'           => $name_driver,
+            'phone_driver'          => $phone_driver,
+            'number_license_driver' => $number_license_driver
         );
         return \Response::json($response);
     }
     public function index(Request $request)
     {
-        if ($request->get('name') || $request->get('kho')) {
+        if ($request->get('name') || $request->get('kho') || $request->get('type_trans')) {
             $name    = $request->get('name');
             $kho     = $request->get('kho');
+            $type_trans = $request->get('type_trans');
+            // dd($type_trans);
             $driver1 = Driver::query();
             if(!empty($name)){
                 if(Auth::user()->hasRole(\App\Util::$viewDriver))
-                    $driver1 =  $driver1->where('name_driver','LiKE','%'.$name.'%')->where('deleted', 0)->orwhere('phone_driver','LiKE','%'.$name.'%');
+                    $driver1 =  $driver1->leftjoin('transports','transports.id','=','driver.type_driver')
+                                        ->selectRaw('driver.*')
+                                        ->selectRaw('transports.name as transName')
+                                        ->where('driver.name_driver','LiKE','%'.$name.'%')
+                                        ->where('driver.deleted', 0)
+                                        ->orwhere('driver.phone_driver','LiKE','%'.$name.'%');
                 else {
-                    $driver1 =  $driver1->where('kho', Auth::user()->id)->where('deleted', 0)->where('name_driver','LiKE','%'.$name.'%')->orwhere('phone_driver','LiKE','%'.$name.'%');
+                    $driver1 =  $driver1->leftjoin('transports','transports.id','=','driver.type_driver')
+                                        ->selectRaw('driver.*')
+                                        ->selectRaw('transports.name as transName')
+                                        ->where('driver.kho', Auth::user()->id)
+                                        ->where('driver.deleted', 0)
+                                        ->where('driver.name_driver','LiKE','%'.$name.'%')
+                                        ->orwhere('driver.phone_driver','LiKE','%'.$name.'%');
                 }
             }
             if(!empty($kho)){
                 if(Auth::user()->hasRole(\App\Util::$viewDriver))
-                    $driver1 =  $driver1->where('kho', $kho)->where('deleted', 0);
+                    $driver1 =  $driver1->leftjoin('transports','transports.id','=','driver.type_driver')
+                                        ->selectRaw('driver.*')
+                                        ->selectRaw('transports.name as transName')
+                                        ->where('driver.kho', $kho)
+                                        ->where('driver.deleted', 0);
                 else {
-                    $driver1 =  $driver1->where('kho', Auth::user()->id)->where('deleted', 0);
+                    $driver1 =  $driver1->leftjoin('transports','transports.id','=','driver.type_driver')
+                                        ->selectRaw('driver.*')
+                                        ->selectRaw('transports.name as transName')
+                                        ->where('driver.kho', Auth::user()->id)
+                                        ->where('driver.deleted', 0);
                 }
             }
-            /*if(!empty($name) && !empty($kho)) {
-                $driver1 = $driver1->where('kho', $kho)->where('name_driver','LiKE','%'.$name.'%')->orwhere('phone_driver','LiKE','%'.$name.'%');
-            }*/
+            if(!empty($type_trans)){
+                if(Auth::user()->hasRole(\App\Util::$viewDriver))
+                    $driver1 =  $driver1->leftjoin('transports','transports.id','=','driver.type_driver')
+                                        ->selectRaw('driver.*')
+                                        ->selectRaw('transports.name as transName')
+                                        ->where('driver.type_driver', $type_trans)
+                                        ->where('driver.deleted', 0);
+                else {
+                    $driver1 =  $driver1->leftjoin('transports','transports.id','=','driver.type_driver')
+                                        ->selectRaw('driver.*')
+                                        ->selectRaw('transports.name as transName')
+                                        ->where('driver.type_driver', $type_trans)
+                                        ->where('driver.kho', Auth::user()->id)
+                                        ->where('driver.deleted', 0);
+                }
+            }
             $driver = $driver1->paginate(9);
         }
         else if(Auth::user()->hasRole(\App\Util::$viewDriver)) {
-            $driver = Driver::orderBy('id', 'DESC')
-                ->where('deleted', 0)
+            $driver = Driver::leftjoin('transports','transports.id','=','driver.type_driver')
+                ->selectRaw('driver.*')
+                ->selectRaw('transports.name as transName')
+                ->orderBy('driver.id', 'DESC')
+                ->where('driver.deleted', 0)
                 ->paginate(9);
         }
         else {
-            $driver = Driver::orderBy('id','DESC')
-                ->where('kho',Auth::user()->id)
-                ->where('deleted', 0)
+            $driver = Driver::leftjoin('transports','transports.id','=','driver.type_driver')
+                ->selectRaw('driver.*')
+                ->selectRaw('transports.name as transName')
+                ->orderBy('driver.id','DESC')
+                ->where('driver.kho',Auth::user()->id)
+                ->where('driver.deleted', 0)
                 ->paginate(9);
         }
         $user = User::select('users.*','ware_houses.id as ware_houses_id','ware_houses.level as level')
@@ -81,10 +137,11 @@ class DriverController extends Controller
             ->where('role_user.role_id', 4)
             ->where('users.deleted', 0)
             ->get();
-        
+        $transport = Transport::where('deleted', 0)->get();
         $data = [
-            'user'   => $user,
-            'driver' => $driver,
+            'user'      => $user,
+            'driver'    => $driver,
+            'transport' => $transport,
         ];
         return view('admin.driver.index', $data);
     }
@@ -96,9 +153,13 @@ class DriverController extends Controller
      */
     public function create()
     {
-        $transport = Transport::where('deleted', 0)->get();
+        $arrTransport = Transport::where('deleted', 0)->get();
+        $arrProvince  = Province::where('deleted', 0)->get();
+        $arrCarType   = CarType::where('deleted', 0)->get();
         $data = [
-            'transport' => $transport
+            'transport' => $arrTransport,
+            'province'  => $arrProvince,
+            'cartype'   => $arrCarType
         ];
         return view('admin.driver.edit', $data);
     }
@@ -113,6 +174,12 @@ class DriverController extends Controller
     {
         $data        = $request->all();
         $data['kho'] = Auth::user()->id;
+        if ($request->hasFile('image_identity')) {
+            $data['image_identity']  = Util::saveFile($request->file('image_identity'), '');
+        }
+        if ($request->hasFile('image_car')) {
+            $data['image_car']  = Util::saveFile($request->file('image_car'), '');
+        }
         Driver::create($data);
         return redirect('admin/driver/')->with(['flash_level'=>'success','flash_message'=>'Thành công']);
     }
@@ -141,12 +208,16 @@ class DriverController extends Controller
      */
     public function edit($id)
     {
-        $driver = Driver::find($id);
-        $transport = Transport::where('deleted', 0)->get();
+        $driver       = Driver::find($id);
+        $arrProvince  = Province::where('deleted', 0)->get();
+        $arrCarType   = CarType::where('deleted', 0)->get();
+        $transport    = Transport::where('deleted', 0)->get();
         $data   = [
             'transport' => $transport,
-            'id'     => $id,
-            'driver' => $driver,
+            'province'  => $arrProvince,
+            'cartype'   => $arrCarType,
+            'id'        => $id,
+            'driver'    => $driver,
         ];
         return view('admin.driver.edit', $data);
     }
@@ -161,6 +232,12 @@ class DriverController extends Controller
     public function update(DriverRequest $request, $id)
     {
         $data   = $request->all();
+        if ($request->hasFile('image_identity')) {
+            $data['image_identity']  = Util::saveFile($request->file('image_identity'), '');
+        }
+        if ($request->hasFile('image_car')) {
+            $data['image_car']  = Util::saveFile($request->file('image_car'), '');
+        }
         $driver = Driver::find($id);
         $driver->update($data);
         return redirect('admin/driver/')->with(['flash_level'=>'success','flash_message'=>'Lưu thành công']);

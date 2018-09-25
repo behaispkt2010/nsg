@@ -41,9 +41,6 @@
                             <li class="show-menu @if($select == 99 )  active @endif"><a href="{!! url('/') !!}/admin/orders">Tất cả</a><span
                                         style="background-color: #9C27B0"
                                         class="ng-binding">{{$allOrders}}</span></li>
-                            <!-- <li class="show-menu li-0 @if($select == 0 )  active @endif"><a href="{!! url('/') !!}/admin/orders/getOrderByStatus/0">Mới tạo</a><span
-                                        style="background-color: #8bc34a"
-                                        class="ng-binding">{{\App\ProductOrder::countOrderByStatus(0)}}</span></li> -->
                             @foreach($arrOrderByStatus as $item)
                             <li class="show-menu li-{{$item->id}} @if($select == $item->id )  active @endif"><a href="{!! url('/') !!}/admin/orders/getOrderByStatus/{{$item->id}}">{{$item->name}}</a><span
                                         style="background-color:{{$item->color}}"
@@ -52,7 +49,6 @@
                             <li class="show-menu other-item-button pst-tootip" style="">
                                 Trạng thái khác
                                 <span class="glyphicon glyphicon-menu-down"></span>
-                                <!-- ngIf: (orderByStatus.currentTutorialID == 4) -->
                                 <div class="other-item-list">
                                     <ul>
                                         @foreach($arrOrderByStatus as $item)
@@ -61,7 +57,7 @@
                                                 <span style="background-color:{{$item->color}}"class="ng-binding">{{\App\ProductOrder::countOrderByStatus($item->id)}}
                                                 </span>
                                             </li>
-                                        @endforeach                                                                                 {{--class="ng-binding">{!! $arrCountOrderByStatus[3] !!}</span></li>--}}
+                                        @endforeach                                     
                                     </ul>
                                 </div>
                             </li>
@@ -71,7 +67,6 @@
                     <div class="col-xs-12 tab-fill visible-xs">
                         <select name="" class="form-control" id="select-status">
                             <option value="{!! url('/') !!}/admin/orders" @if($select == 99 )  selected @endif>Tất cả ({{$allOrders}})</option>
-                            <option  value="{!! url('/') !!}/admin/orders/getOrderByStatus/0" @if($select == 0 )  selected @endif>Mới tạo ({{\App\ProductOrder::countOrderByStatus(0)}})</option>
                             @foreach($arrOrderByStatus as $item)
                                 <option class="li-{{$item->id}}" @if($select == $item->id )  selected @endif value="{!! url('/') !!}/admin/orders/getOrderByStatus/{{$item->id}}">{{$item->name}} ({{\App\ProductOrder::countOrderByStatus($item->id)}})</option>
                             @endforeach
@@ -125,8 +120,7 @@
                                         <p class="text-center status-title">@if($arrOrders->status==0) Mới tạo @else @foreach($arrOrderByStatus as $itemOrderStatus) @if(@$arrOrders->status==$itemOrderStatus->id) {{ $itemOrderStatus->name }} @endif @endforeach @endif</p>
                                     </div>
                                     <div class="col-sm-12 col-xs-12" data-toggle="modal" data-target=".modal-tracking" href="{{route('orders.show',['id' => $arrOrders->id])}}">
-                                        <h4 class="cod" style="padding-left: 10px;">{{\App\Util::OrderCode( $arrOrders->id)}}</h4>
-
+                                        <h4 class="cod" style="padding-left: 10px;">{{ $arrOrders->order_code}}</h4>
                                         <div class="col-xs-12" >
                                             <ul class="list-unstyled">
                                                 <li class="limitcharacter"><i class="fa fa-user "></i> {{ $arrOrders->name }} </li>
@@ -134,7 +128,7 @@
                                                     <span class="">{{ $arrOrders->address }}</span>
                                                 </li>
                                                 <li class="limitcharacter"><i class="fa fa-phone"></i> {{$arrOrders->phone_number }}</li>
-                                                <li class="limitcharacter"><i class="fa fa-usd"></i> <span class="box-money">{!! \App\Util::FormatMoney(\App\ProductOrder::getSumOrder($arrOrders->id)) !!} </span></li>
+                                                <li class="limitcharacter"><i class="fa fa-usd"></i> <span class="box-money">{!! \App\Util::FormatMoney(\App\ProductOrder::getSumOrder($arrOrders->id)) !!}</span></li>
                                                 <li class="limitcharacter"><i class="fa fa-database"></i> Thuộc Chủ Kho {{\App\Util::UserCode($arrOrders->kho_id)}}
                                             </ul>
                                         </div>

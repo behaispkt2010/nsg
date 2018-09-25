@@ -130,10 +130,10 @@
                                     </div>
 
                                     <div class="col-sm-12 text-center">
-                                        <a href="#" class="input-product btn btn-raised btn-info btn-xs" data-toggle="modal"
+                                        <!-- <a href="#" class="input-product btn btn-raised btn-info btn-xs" data-toggle="modal"
                                            data-target=".modal-product" data-title="{{$itemProduct->title}} ({{\App\Util::ProductCode($itemProduct->id)}})" data-id="{{$itemProduct->id}}" >
                                         <i class="fa fa-caret-square-o-down" aria-hidden="true"></i> Nhập kho
-                                        </a>
+                                        </a> -->
                                         <a href="{{route('products.edit',['id' => $itemProduct->id])}}"
                                            class="btn btn-raised btn-primary btn-xs">
                                             <i class="fa fa-pencil" aria-hidden="true"></i> Sửa

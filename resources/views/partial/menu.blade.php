@@ -113,9 +113,9 @@
 
                             <li><a href="{{route('warehouse.index')}}"></i> Thông tin chủ kho</a></li>
                             @endpermission
-                            @permission('money')
+                            @permission('warehousing')
 
-                            <li><a href="{{route('money.index')}}">Sổ quỹ</a></li>
+                            <li><a href="{{route('warehousing.index')}}">Nhập | Xuất kho</a></li>
                             @endpermission
                             @permission('inventory')
 
@@ -129,6 +129,17 @@
                         </ul>
                     </li>
                     @endif
+                    <li><a><i class="fa fa-usd" aria-hidden="true"></i>Sổ quỹ <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            @permission('money')
+                            <li><a href="{{route('money.index')}}">Tổng quan</a></li>
+                            @endpermission
+                            @permission('payment')
+                            <li><a href="{{route('payment.index')}}">Quản lý Phiếu thu | chi</a></li>
+                            @endpermission
+                        </ul>
+                    
+                    </li>
                     @if(Auth::user()->hasRole(['editor','admin']))
                         @permission('company')
                         <li><a href="{{route('company.index')}}"><i class="fa fa-industry"></i> Quản lý công ty </a></li>
@@ -151,7 +162,9 @@
                     <li><a><i class="fa fa-car"></i>Quản lý vận chuyển <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="{{route('driver.index')}}">Thông tin tài xế</a></li>
-                            <li><a href="{{route('driver.create')}}">Tạo mới</a></li>
+                            <li><a href="{{route('driver.create')}}">Tạo mới thông tin tài xế</a></li>
+                            <li><a href="{{route('transport.index')}}">Quản lý loại xe</a></li>
+                            <li><a href="{{route('cartype.index')}}">Quản lý hãng xe</a></li>
                         </ul>
                     </li>
                     @endpermission
@@ -284,7 +297,6 @@
                                         <span class="time">{{ $itemNotification->created_at }}</span>
                                     </a>
                                 </li>
-
                             @endforeach
                             <li style="height: 40px;">
                                 <div class="text-center">

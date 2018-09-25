@@ -33,6 +33,8 @@
     <!-- bootstrap-daterangepicker -->
     <script src="{{asset('js/moment/moment.min.js')}}"></script>
     <script src="{{asset('js/datepicker/daterangepicker.js')}}"></script>
+
+    <script src="{{asset('js/jquery.number.js')}}"></script>
 <!-- jQuery custom content scroller -->
     <script src="{{asset('plugin/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js')}}"></script>
     <!-- Custom Theme Scripts -->

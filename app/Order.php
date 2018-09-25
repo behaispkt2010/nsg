@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 class Order extends Model
 {
     protected $table = 'orders';
-    protected $fillable = ['order_code', 'time_order','status','customer_id','note','status_pay','type_pay','received_pay','remain_pay','type_driver','name_driver','phone_driver','number_license_driver','author_id', 'deleted'];
+    protected $fillable = ['order_code', 'time_order','status','customer_id','note','status_pay','type_pay','received_pay','remain_pay','type_driver','name_driver','phone_driver','number_license_driver','discount','tax','transport_pay','author_id', 'deleted'];
     public  static function getKhoProduct($id){
         $product = Product::select('kho')->where('id', $id)->where('deleted', 0)->first();
         return $product->kho;
@@ -45,12 +45,12 @@ class Order extends Model
         return count($orders);
 
     }
-    public static function getAllNumOrder($status,$date){
+    public static function getAllNumOrder($status, $date){
         $idUser = Auth::user()->id;
 
         $orders = Order::where('kho_id', $idUser)
             ->where('deleted', 0)
-            ->whereNotIn('status', $status)
+            ->whereNotIn('status', [$status])
             ->where(DB::raw("(DATE_FORMAT(updated_at,'%d-%m-%Y'))"), $date)
             ->get();
         return count($orders);

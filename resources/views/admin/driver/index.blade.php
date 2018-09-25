@@ -36,7 +36,7 @@
                     <div class="row">
                         <div class="col-md-3 col-sm-12 col-xs-12">
                             <div class="form-group">
-                                <select id="select-driver" class="form-control" name="kho" data-placeholder="Chọn kho">
+                                <select id="select-kho" class="form-control" name="kho" data-placeholder="Chọn kho">
                                     @if(!Auth::user()->hasRole('kho'))
                                         <option value="0" >Chọn kho</option>
                                         @foreach($user as $user)
@@ -45,17 +45,25 @@
                                     @else
                                         <option value="{{Auth::user()->id}}" selected >{{Auth::user()->name}}</option>
                                     @endif
-
+                                </select>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="col-md-3 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <select id="select-driver" class="form-control" name="type_trans" data-placeholder="Chọn phương thức vận chuyển">
+                                    <option value="0" >Chọn phương thức vận chuyển</option>
+                                    @foreach($transport as $item)
+                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                    @endforeach 
                                 </select>
                             </div>
                             <div class="clear"></div>
                         </div>
                         
-                        <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="col-md-4 col-sm-12 col-xs-12">
                             <div class="form-group label-floating">
-
                                 <label class="control-label" for="addon2">Tên tài xế | Số điện thoại</label>
-
                                 <div class="input-group text-center">
                                     <input type="text" id="addon2" class="form-control" name="name" value="{{Request::get('name')}}">
                                       <span class="input-group-btn">
@@ -97,7 +105,7 @@
                                                 <li class="limitcharacter"><span class="label-box">Số điện thoại 1:</span>{{ $itemDriver['phone_driver'] }}</li>
                                                 <li class="limitcharacter"><span class="label-box">Số điện thoại 2:</span>{{ $itemDriver['phone_driver2'] }}</li>
                                                 <li class="limitcharacter"><span class="label-box">Email:</span>{{ $itemDriver['email'] }}</li>
-                                                <li class="limitcharacter"><span class="label-box">Loại xe:</span>{{ $itemDriver['type_driver'] }}</li>
+                                                <li class="limitcharacter"><span class="label-box">Loại xe:</span>{{ $itemDriver['transName'] }}</li>
                                                 
                                                 <li class="limitcharacter"><span class="label-box">Biển số xe:</span>{{ $itemDriver['number_license_driver'] }}</li>
                                             </ul>
@@ -141,7 +149,7 @@
             <!-- Datatables -->
     <script src="{{asset('js/selectize.js')}}"></script>        
     <script>
-        $('#select-driver').selectize({
+        $('#select-driver, #select-kho').selectize({
             //create: true,
             //sortField: 'text'
         });

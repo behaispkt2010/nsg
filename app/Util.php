@@ -62,8 +62,9 @@ class Util extends Model
     public static $ordernew = "ordernew";
     public static $orderfail = "orderfail";
     public static $orderreturn = "orderreturn";
+    public static $statusOrderNew = 1;
     public static $statusOrderSuccess = 8;
-    public static $statusOrderFail = 9;
+    public static $statusOrderFinish = 9;
     public static $statusOrderReturn = 10;
     public static $strNumberProductOfLevel1 = 5;
     public static $strNumberProductOfLevel2 = 20;
@@ -364,15 +365,14 @@ class Util extends Model
         }
         return $code_cate;
     }
-    public  static function UserCode($id){
+    public static function UserCode($id){
         $userInfo = User::select('users.*','role_user.user_id','role_user.role_id','roles.name as nameRole')
             ->leftJoin('role_user','users.id','=','role_user.user_id')
             ->leftJoin('roles','roles.id','=','role_user.role_id')
-            ->where('users.id',$id)
+            ->where('users.id', $id)
             ->first();
         $code_user ="";
-//        dd($userInfo);
-        if(count($userInfo)!=0) {
+        if(count($userInfo) != 0) {
             if ($userInfo->role_id != 4) {
                 $id_province = User::where('id', $id)->first();
                 $code_1 = strtoupper($userInfo->nameRole);

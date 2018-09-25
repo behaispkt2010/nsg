@@ -6,6 +6,10 @@ use App\Order;
 use App\Province;
 use App\User;
 use App\Role;
+use App\ProductOrder;
+use App\Util;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -19,25 +23,44 @@ class customerController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->get('q')){
-            $q     = $request->get('q');
-            $users = User::leftjoin('role_user','role_user.user_id','=','users.id')
-                ->where('role_user.role_id',3)
-                ->where('users.deleted', 0)
-//                ->orderBy('id','DESC')
-                ->where('name','LIKE','%'.$q.'%')
-                ->orwhere('id','LIKE','%'.$q.'%')
-                ->orwhere('phone_number','LIKE','%'.$q.'%')->paginate(9);
+        $user_id = Auth::user()->id;
+        if ( Auth::user()->hasRole(['kho']) ) {
+            if($request->get('q')){
+                $q     = $request->get('q');
+                $users = User::leftjoin('role_user','role_user.user_id','=','users.id')
+                    ->where('role_user.role_id',3)
+                    ->where('users.deleted', 0)
+                    ->where('users.idwho', $user_id)
+                    ->where('name','LIKE','%'.$q.'%')
+                    ->orwhere('id','LIKE','%'.$q.'%')
+                    ->orwhere('phone_number','LIKE','%'.$q.'%')->paginate(9);
+            }
+            else {
+                $users = User::leftjoin('role_user','role_user.user_id','=','users.id')
+                    ->where('role_user.role_id',3)
+                    ->where('users.deleted', 0)
+                    ->where('users.idwho', $user_id)
+                    ->orderBy('id','DESC')
+                    ->paginate(9);
+            }
+        } else {
+            if($request->get('q')){
+                $q     = $request->get('q');
+                $users = User::leftjoin('role_user','role_user.user_id','=','users.id')
+                    ->where('role_user.role_id',3)
+                    ->where('users.deleted', 0)
+                    ->where('name','LIKE','%'.$q.'%')
+                    ->orwhere('id','LIKE','%'.$q.'%')
+                    ->orwhere('phone_number','LIKE','%'.$q.'%')->paginate(9);
+            }
+            else {
+                $users = User::leftjoin('role_user','role_user.user_id','=','users.id')
+                    ->where('role_user.role_id',3)
+                    ->where('users.deleted', 0)
+                    ->orderBy('id','DESC')
+                    ->paginate(9);
+            }
         }
-        else {
-            $users = User::leftjoin('role_user','role_user.user_id','=','users.id')
-                ->where('role_user.role_id',3)
-                ->where('users.deleted', 0)
-                ->orderBy('id','DESC')
-                ->paginate(9);
-//            dd($users);
-        }
-
         $data = [
             'users'=>$users,
             'type' => 'users',
@@ -59,7 +82,7 @@ class customerController extends Controller
             'roles'    => $roles,
             'province' => $province,
         ];
-        return view('admin.users.edit',$data);
+        return view('admin.customers.edit',$data);
     }
     public function show($id)
     {
@@ -83,6 +106,56 @@ class customerController extends Controller
         ];
         return view('admin.customers.history', $data);
 
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(UserRequest $request) {
+        
+    }
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $roles    = Role::get();
+        $user     = User::find($id);
+        $roleUser = DB::table('role_user')
+            ->where('user_id',$id)->first();
+        $province = Province::get();
+        $totalPrice = 0;
+        $totalRemain = 0;
+        $arrOrder = Order::where('customer_id', $id)->get();
+        // dd($arrOrder);
+        $countOrder = 0;
+        foreach ($arrOrder as $itemOrder) {
+            if($itemOrder['status'] == 9) {
+                $totalPrice += ProductOrder::getSumOrder($itemOrder->id);
+                $countOrder++;
+            }
+            if($itemOrder['status'] == 9 && $itemOrder['status_pay'] == 2) // đặt cọc thanh toán sau
+            {
+                $totalRemain += $itemOrder['remain_pay'] ;
+            }
+        }
+        $data     = [
+            'id'       => $id,
+            'roles'    => $roles,
+            'user'     => $user,
+            'roleUser' => $roleUser,
+            'province' => $province,
+            'countOrder' => $countOrder,
+            'totalPrice' => $totalPrice,
+            'totalRemain' => $totalRemain,
+        ];
+        // dd($data);
+        return view('admin.customers.edit', $data);
     }
 
 }

@@ -37,27 +37,7 @@
                                 </div>
 
                             </div>
-                            {{--<div class="x_panel">--}}
-                            {{--<div class="x_title">--}}
-                            {{--<h2>Đăng nhiều ảnh sản phẩm</h2>--}}
-                            {{--<ul class="nav navbar-right panel_toolbox">--}}
-                            {{--<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>--}}
-                            {{--</li>--}}
-
-                            {{--<li><a class="close-link"><i class="fa fa-close"></i></a>--}}
-                            {{--</li>--}}
-                            {{--</ul>--}}
-                            {{--<div class="clearfix"></div>--}}
-                            {{--</div>--}}
-                            {{--<div class="x_content">--}}
-                            {{--<p>Kéo thả nhiều hình cùng lúc vào</p>--}}
-                            {{--<form action="form_upload.html" class="dropzone"></form>--}}
-                            {{--<br />--}}
-                            {{--<br />--}}
-                            {{--<br />--}}
-                            {{--<br />--}}
-                            {{--</div>--}}
-                            {{--</div>--}}
+                            
                             <div class="x_panel">
                                 <div class="form-group">
                                     <h4 class="title-product-main text-no-bold mb20">Thông tin chi tiết sản phẩm </h4>
@@ -68,7 +48,7 @@
                                         <input type="text" class="form-control" disabled>
                                         <input type="hidden" name="code" id="code" value="">
                                         @else
-                                            {{\App\Util::ProductCode($product->id)}}
+                                            {{$product->code}}
                                         @endif
                                     </div>
                                     <div class="form-group">
@@ -233,13 +213,9 @@
                                         <div class="form-group">
                                             <label>Chủ kho</label>
                                             <select id="select-ck" name="kho" class="form-control"
-                                                    data-placeholder="chọn kho">
+                                                    data-placeholder="chọn kho" required="">
                                                 @if(Auth::user()->hasRole(\App\Util::$viewProduct))
-
-                                                <option value="0"
-                                                        @if(!empty($article->category) && $article->category == 0) selected @endif >
-                                                    Mặc định
-                                                </option>
+                                                <option value=""> Mặc định </option>
                                                 @foreach($wareHouses  as $itemData)
                                                     <option value="{{$itemData->id}}"
                                                             @if(!empty($product->kho) && $product->kho == $itemData->id) selected @endif >
@@ -257,34 +233,24 @@
                                         <div class="form-group">
                                             <label>Loại sản phẩm</label>
                                             <select id="select-type" name="category" class="form-control">
-                                                <option value="0"
+                                                <!-- <option value="0"
                                                         @if(!empty($product->category) && $product->category == 0) selected @endif >
                                                     Mặc định
-                                                </option>
+                                                </option> -->
+
                                                 @if(Request::is('admin/products/create'))
-                                                    {{ \App\Category::CateMulti($category,0,$str="&nbsp&nbsp&nbsp&nbsp",old('parent')) }}
+                                                    {{ \App\Category::CateMulti($category,0,$str="&nbsp&nbsp&nbsp",old('parent')) }}
                                                 @else
-                                                    {{ \App\Category::CateMulti($category,0,$str="&nbsp&nbsp&nbsp&nbsp",$product->category) }}
+                                                    {{ \App\Category::CateMulti($category,0,$str="&nbsp&nbsp&nbsp",$product->category) }}
                                                 @endif
-                                                {{--@foreach($category  as $itemData)
-                                                    <option value="{{$itemData->id}}"
-                                                            @if(!empty($product->category) && $product->category == $itemData->id) selected @endif >
-                                                        {{$itemData->name}}
-                                                    </option>
-                                                @endforeach--}}
                                             </select>
                                         </div>
-
                                     </div>
-
                                 </div>
                             </div>
                             <div class="x_panel">
                                 <div class="wrapper-content mt20">
                                     <div class="pd-all-20 border-top-title-main">
-
-
-
                                             <label class="mb5">Hình đại diện</label>
 
                                             <div class="image-view">
@@ -390,7 +356,9 @@
     <script src="{{asset('js/selectize.js')}}"></script>
     <!-- Select2 -->
     <script>
-        $('#select-ck,#select-type').selectize({});
+        $('#select-ck, #select-type').selectize({
+            sortField: 'text'
+        });
     </script>
     <!-- /jQuery Tags Input -->
     <script>

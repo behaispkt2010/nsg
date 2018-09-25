@@ -105,6 +105,7 @@ Route::group(['prefix' => 'admin','middleware' => ['auth', 'authorize']], functi
     Route::resource('categoryProducts', 'CategoryProductController');
     Route::post('categoryProducts/createAjax', 'CategoryProductController@createAjax');
     Route::post('categoryProducts/updateAjax', 'CategoryProductController@updateAjax');
+    Route::post('categoryProducts/AjaxGetCategory', 'CategoryProductController@AjaxGetCategory');
  
     //Đơn hàng
     Route::resource('orders', 'OrderController');
@@ -114,8 +115,13 @@ Route::group(['prefix' => 'admin','middleware' => ['auth', 'authorize']], functi
     Route::post('orders/AjaxLoadInfoAddress', 'OrderController@AjaxLoadInfoAddress');
     //ql kho
     Route::resource('inventory', 'InventoryController');
+    // xuất nhập kho
+    Route::resource('warehousing', 'WarehousingController');
     //ql sỗ quỹ
     Route::resource('money', 'MoneyController');
+    Route::resource('payment', 'PaymentController');
+    Route::post('payment/getListOfType', 'PaymentController@getListOfType');
+    Route::post('payment/getTotalPayment', 'PaymentController@getTotalPayment');
     //ql lịch sữ giao dịch
     Route::resource('historyInput', 'HistoryInputController');
     Route::resource('company', 'CompanyController');
@@ -164,6 +170,16 @@ Route::group(['prefix' => 'admin','middleware' => ['auth', 'authorize']], functi
     Route::get('driver/data/json', 'DriverController@data');
     Route::post('driver/AjaxCreateTransport', 'DriverController@AjaxCreateTransport');
     Route::post('driver/AjaxGetDataTransport', 'DriverController@AjaxGetDataTransport');
+    /////
+    Route::resource('cartype', 'CarTypeController'); 
+    Route::post('cartype/createAjax', 'CarTypeController@createAjax');
+    Route::post('cartype/updateAjax', 'CarTypeController@updateAjax');
+    /////
+    Route::resource('transport', 'TransportController'); 
+    Route::post('transport/createAjax', 'TransportController@createAjax');
+    Route::post('transport/updateAjax', 'TransportController@updateAjax');
+
+    
     //Cài đặt
     Route::resource('setting', 'SettingController');
     //Menu

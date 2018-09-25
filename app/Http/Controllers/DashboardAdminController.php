@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\User;
 use App\ProductOrder;
 use App\Product;
 use App\WareHouse;
+use App\Util;
 use DateTime;
 use Illuminate\Http\Request;
 
@@ -24,21 +26,22 @@ class DashboardAdminController extends Controller
         $lineDatas       = [];
         $barLabels       = [];
         $barDatas1       = [];
-        $barDatas2       =[];
+        $barDatas2       = [];
 
         $idUser          = Auth::user()->id;
         $orders          = Order::whereBetween('updated_at', array(new DateTime(trim($dateRes[0])), new DateTime(trim($dateRes[1]))))
             ->where('kho_id',$idUser)
-            ->whereIn('status',[8,10])
+            ->whereIn('status',[9,10])
             ->groupBy(DB::raw("DATE(updated_at)"))
             ->get();
         $i = 0;
-        foreach($orders as $key => $order ){
+
+        foreach($orders as $order ){
             $barLabels[$i] = $order->updated_at->format('d-m-Y');
             // get All order has status #10
             $barDatas1[$i] = Order::getAllNumOrder(10,$order->updated_at->format('d-m-Y')); 
             $barDatas2[$i] = Order::getNumOrder(10,$order->updated_at->format('d-m-Y'));
-
+            // dd($barDatas2[$i]);
             $lineLabels[$i]= $order->updated_at->format('d-m-Y');
             $lineDatas[$i] = ProductOrder::getSumPrice($order->updated_at->format('d-m-Y'));
             $lineDatasProfit[$i] = ProductOrder::getSumPriceProfit($order->updated_at->format('d-m-Y'));
@@ -68,14 +71,14 @@ class DashboardAdminController extends Controller
     public function index()
     {
         $idUser       = Auth::user()->id; 
-        $order        = Order::where('kho_id',$idUser)->get();
+        $order        = Order::where('kho_id', $idUser)->get();
         $numOrder     = count($order);
         $orderProduct = ProductOrder::select('product_orders.id','orders.kho_id','product_orders.price_in','product_orders.price','product_orders.num')
             ->leftJoin('orders','product_orders.order_id','=','orders.id')
             ->where('orders.kho_id',$idUser)
-            ->where('orders.status','=',8)
+            ->where('orders.status','=', Util::$statusOrderFinish)
             ->get();
-        $numProduct   = count(Product::where('kho',$idUser)->get());   
+        $numProduct   = count(Product::where('kho', $idUser)->get());   
         $totalPriceIn = 0;
         $totalPrice   = 0;
         foreach($orderProduct as $itemOrder){
@@ -90,12 +93,14 @@ class DashboardAdminController extends Controller
             ->where('orders.type_pay', 2)
             ->where('orders.remain_pay','!=', 0)
             ->paginate(10);
+        $strCustomerOfWareHouse = User::where('idwho', $idUser)->where('deleted', 0)->count();
         $data = [
             'numOrder'       => $numOrder,
             'totalPrice'     => $totalPrice,
             'profit'         => $profit,
             'numProduct'     => $numProduct,
             'arrOrderRemain' => $arrOrderRemain,
+            'strCustomerOfWareHouse' => $strCustomerOfWareHouse,
         ];
         return view('admin.dashboard-admin',$data);
     }

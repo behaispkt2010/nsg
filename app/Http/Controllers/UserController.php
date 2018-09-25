@@ -6,6 +6,7 @@ use App\Province;
 use App\Role;
 use App\RoleUser;
 use App\User;
+use App\Util;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 Use App\Http\Requests\UserRequest;
@@ -32,6 +33,7 @@ class UserController extends Controller
     {
         $user             = new User();
         $data             = $request->all();
+        $data['idwho']    = Auth::user()->id;
         $data['province'] = $request->get('t');
         $data['district'] = $request->get('q');
         if(empty($request->get('password'))){
@@ -39,12 +41,17 @@ class UserController extends Controller
         }
         $data['image'] = "/images/user_default.png";
         $user          = User::create($data);
-        $user->attachRole(3);
+        $addRoles = $user->attachRole(3);
+        if($addRoles == NULL) {
+            $user1['code'] = Util::UserCode($user->id);    
+        }
+        $user->update($user1);
         $response = array(
             'status'      => 'success',
             'msg'         => 'Setting created successfully',
             'customer_id' => $user->id
         );
+        
         return \Response::json($response);
     }
 
@@ -147,11 +154,13 @@ class UserController extends Controller
         if(empty($request->get('password'))){
             $data['password'] = "123456";
         }
-        $provinceID    = $request->get('t');
-        $roleUser      = $request->get('select-role');
-        $data['image'] = "/images/user_default.png";
+        if ($request->hasFile('image')) {
+            $data['image']  = Util::saveFile($request->file('image'), '');
+        } else {
+            $data['image'] = "/images/user_default.png";
+        }
+        $data['idwho'] = Auth::user()->id;
         $user          = User::create($data);
-//        $user->attachRole($request->get('role'));
         if($request->get('role'))
         {
             $user->attachRole($request->get('role'));
@@ -160,8 +169,20 @@ class UserController extends Controller
         {
             $user->roles()->sync([]);
         }
-            return redirect('admin/users')->with(['flash_level' => 'success', 'flash_message' => 'Tạo thành công']);
-
+        $arrLastUser = User::leftjoin('role_user','role_user.user_id','=','users.id')
+                         ->leftjoin('roles','roles.id','=','role_user.role_id')
+                         ->where('users.id', '=', $user->id)
+                         ->first();
+        $strProvinceCode   = strtoupper(\App\Util::StringExplodeProvince($arrLastUser->province));
+        $strRoleCode       = strtoupper($arrLastUser->name);
+        $data['code'] = $strRoleCode . '-' . $strProvinceCode . '-' . $arrLastUser->user_id;
+        $user->update($data);
+        if ($request->is('admin/customers/*')) {
+            $url = "admin/customers";
+        } else {
+            $url = "admin/users";
+        }
+        return redirect($url)->with(['flash_level' => 'success', 'flash_message' => 'Tạo thành công']);
     }
 
     /**
@@ -214,12 +235,12 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, $id)
     {
-        $today                = date("Y-m-d_H-i-s");
-        $user                 =  User::find($id);
-        $data['name']         = $request->get('name');
-        $data['address']      = $request->get('address');
-        $data['phone_number'] = $request->get('phone_number');
-        $data['province']     = $request->get('province');
+        $today = date("Y-m-d_H-i-s");
+        $user  = User::find($id);
+        $data  = $request->all();
+        if ($request->hasFile('image')) {
+            $data['image']  = Util::saveFile($request->file('image'), '');
+        }
         if(!empty($request->get('email'))){
             $data['email']    = $request->get('email');
         }
@@ -227,9 +248,7 @@ class UserController extends Controller
             $data['password'] = bcrypt($request->get('password'));
         }
         $user->update($data);
-
         $roleUser             = RoleUser::where('user_id', $id)->first();
-//        dd($roleUser);
         $roleUser->role_id    = $request->get('role');
         DB::table('role_user')
             ->where('user_id',$id)

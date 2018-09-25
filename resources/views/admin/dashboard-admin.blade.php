@@ -8,7 +8,7 @@
         <br>
         <div class="col-md-3 col-xs-6 col-ms-6 text-center">Đơn Hàng<br><span class="value-das">{{$numOrder}}</span></div>
         <div class="col-md-3 col-xs-6 col-ms-6 text-center">Doanh Thu<br><span class="value-das">{!!\App\Util::FormatMoney($totalPrice)!!}</span></div>
-        <div class="col-md-3 col-xs-6 col-ms-6 text-center">Lợi nhuận<br><span class="value-das">{!! \App\Util::FormatMoney($profit)!!}</span></div>
+        <div class="col-md-3 col-xs-6 col-ms-6 text-center">Số lượng khách hàng<br><span class="value-das">{!! $strCustomerOfWareHouse!!}</span></div>
         <div class="col-md-3 col-xs-6 col-ms-6 text-center">Số sản phẩm<br><span class="value-das">{{$numProduct}}</span></div>
 
     </div>
@@ -21,14 +21,14 @@
                 <div class="x_title">
                     <div class="row">
                         <div class="col-md-4">
-                    <h2>Doanh thu </h2>
+                            <h2>Doanh thu </h2>
                         </div>
-                    <div class="col-md-8" style="float: right; font-size: 13px;">
-                        <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc;border-radius: 4px;">
-                            <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                            <span id="date-filter1"></span> <b class="caret"></b>
+                        <div class="col-md-8" style="float: right; font-size: 13px;">
+                            <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc;border-radius: 4px;">
+                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                <span id="date-filter1"></span> <b class="caret"></b>
+                            </div>
                         </div>
-                    </div>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -478,7 +478,8 @@
                                     data: barDatas1
                                 }, {
                                     label: 'Bị lỗi',
-                                    backgroundColor: "#0aaf5f",
+                                    // backgroundColor: "#0aaf5f",
+                                    backgroundColor: "red",
                                     data: barDatas2
                                 }]
                             },

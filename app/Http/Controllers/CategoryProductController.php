@@ -17,7 +17,7 @@ class CategoryProductController extends Controller
     /**
      * ajax create
      */
-     public function createAjax(CategoryProductRequest $request){
+    public function createAjax(CategoryProductRequest $request){
 
          $category      = new CategoryProduct();
          $today         = date("Y-m-d_H-i-s");
@@ -33,7 +33,7 @@ class CategoryProductController extends Controller
              'msg'    => 'Setting created successfully',
          );
          return \Response::json($response);
-     }
+    }
 
     /**
      * ajax update
@@ -57,6 +57,43 @@ class CategoryProductController extends Controller
         return \Response::json($response);
     }
     /**
+     * ajax select Category
+     */
+    public function AjaxGetCategory(Request $request)
+    {
+        $id           = $request->get('id_select_cate');
+        $parent     = CategoryProduct::find($id);
+        $arrListID = [];
+        if($parent['parent'] != 0) {
+            if(!Auth::user()->hasRole('kho')) {
+                $products = Product::where('category', $id)->get();
+            } else {
+                $products = Product::where('category', $id)->where('kho', Auth::user()->id)->get();
+            }
+            
+        } else {
+            $category     = CategoryProduct::where('parent', $id)->get();
+            foreach ($category as $itemCate) {
+                if(!in_array($itemCate['id'], $arrListID )) {
+                    $arrListID[] = $itemCate['id'];
+                }
+            }
+            if(!Auth::user()->hasRole('kho')) {
+                $products = Product::whereIn('category', $arrListID)->get();
+            } else {
+                $products = Product::whereIn('category', $arrListID)->where('kho', Auth::user()->id)->get();
+            }
+        }
+        foreach($products as $item) { 
+            echo '<option class="" value="'.$item->id.'">'.$item->title.'</option>';
+        }
+        /*$response = array(
+            'status' => 'success',
+            'msg'    => 'Setting created successfully',
+        );*/
+        // return \Response::json($products);
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -68,11 +105,11 @@ class CategoryProductController extends Controller
             $name = $request->get('name');
             $kho  = $request->get('kho');
             if (Auth::user()->hasRole(\App\Util::$viewCategory)) {
-                $categoryProduct = CategoryProduct::where('name','LiKE','%'.$name.'%')->where('disable', 0)->where('deleted', 0)->paginate(6);
+                $categoryProduct = CategoryProduct::where('name','LIKE','%'.$name.'%')->where('disable', 0)->where('deleted', 0)->paginate(6);
             } else {
                 $categoryProduct = CategoryProduct::leftjoin('products','products.category','=','category_products.id')
                     ->where('products.kho', $user_id)
-                    ->where('category_products.name','LiKE','%'.$name.'%')
+                    ->where('category_products.name','LIKE','%'.$name.'%')
                     ->where('category_products.disable', 0)
                     ->where('category_products.deleted', 0)
                     ->paginate(6);

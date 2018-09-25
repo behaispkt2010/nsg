@@ -62,42 +62,39 @@
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-xs-12 text-center">
                         </div>
-
                         <div class="clearfix"></div>
                         @if(count($users) !=0)
                         @foreach($users as $user)
                             <div class="col-md-4 col-sm-4 col-xs-12 profile_details box-detail">
-
                                 <div class="well box_1">
-
-
                                     <div class="img-product-view">
                                         <img src="{{url('/')}}{{$user->image}}" alt="" class="img-circle img-responsive"
                                              data-pin-nopin="true">
                                     </div>
                                     <div class="col-sm-12" data-toggle="modal" data-target=".modal-history" href="{{route('customers.show',['id' => $user->id])}}">
                                         <h4 class="cod">{{\App\Util::UserCode($user->id)}}</h4>
-
                                         <div class="row">
                                             <div class="col-xs-12">
                                                 <ul class="list-unstyled">
                                                     <li style="" class="limitcharacterWithImg">
-                                                    <span class="label-box55">Tên:</span> {{$user->name}}
-                                                    </li>
+                                                    <span class="label-box55">Tên:</span> {{$user->name}} </li>
                                                     <li><span class="label-box55">Email:</span> {{$user->email}}</li>
                                                     <li><span class="label-box55">SDT:</span> {{$user->phone_number}}</li>
                                                     <li class="limitcharacter"><span class="label-box55">Địa chỉ:</span> {{$user->address}}</li>
+                                                    <li class="limitcharacter"><span class="label-box55">Nhóm:</span> 
+                                                        <?php 
+                                                        $tagTmp = explode(",", $user->tagType);
+                                                        ?>
+                                                        @foreach($tagTmp as $itemTag)
+                                                        <a href="#">{{ $itemTag }}</a>
+                                                        @endforeach
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-xs-12 text-center">
-                                        {{--<a href="#"  target="_blank" class="btn btn-primary btn-xs" >--}}
-                                        {{--<i class="fa fa-eye" aria-hidden="true"></i> Xem--}}
-                                        {{--</a>--}}
-
-                                        <a href="{{route('users.edit',['id' => $user->id])}}"
+                                        <a href="{{route('customers.edit',['id' => $user->id])}}"
                                            class="btn btn-raised btn-primary btn-xs">
                                             <i class="fa fa-pencil" aria-hidden="true"></i> Chỉnh sửa
                                         </a>

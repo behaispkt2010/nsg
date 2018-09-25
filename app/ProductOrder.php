@@ -15,12 +15,12 @@ class ProductOrder extends Model
 
     public static function getSumPrice($date){
         $idUser = Auth::user()->id;
-        $statusOrderSuccess = Util::$statusOrderSuccess;
+        $statusOrderFinish = Util::$statusOrderFinish;
         $orderProducts = ProductOrder::select('product_orders.price','product_orders.num','product_orders.updated_at')
             ->leftJoin('orders','product_orders.order_id','=','orders.id')
             ->where('orders.kho_id', $idUser)
             ->where('orders.deleted', 0)
-            ->where('orders.status', $statusOrderSuccess)
+            ->where('orders.status', $statusOrderFinish)
             ->where(DB::raw("(DATE_FORMAT(product_orders.updated_at,'%d-%m-%Y'))"),$date)
             ->get();
         $res = 0;
@@ -32,12 +32,12 @@ class ProductOrder extends Model
     }
     public static function getSumPriceProfit($date){
         $idUser = Auth::user()->id;
-        $statusOrderSuccess = Util::$statusOrderSuccess;
+        $statusOrderFinish = Util::$statusOrderFinish;
         $orderProducts = ProductOrder::select('product_orders.price','product_orders.price_in','product_orders.num','product_orders.updated_at')
             ->leftJoin('orders','product_orders.order_id','=','orders.id')
             ->where('orders.kho_id',$idUser)
             ->where('orders.deleted', 0)
-            ->where('orders.status',$statusOrderSuccess)
+            ->where('orders.status',$statusOrderFinish)
             ->where(DB::raw("(DATE_FORMAT(product_orders.updated_at,'%d-%m-%Y'))"),$date)
             ->get();
         $res = 0;
@@ -48,10 +48,10 @@ class ProductOrder extends Model
 
     }
     public static function getSumPriceAdmin($date){
-        $statusOrderSuccess = Util::$statusOrderSuccess;
+        $statusOrderFinish = Util::$statusOrderFinish;
         $orderProducts = ProductOrder::select('product_orders.price','product_orders.num','product_orders.updated_at')
             ->leftJoin('orders','product_orders.order_id','=','orders.id')
-            ->where('orders.status',$statusOrderSuccess)
+            ->where('orders.status',$statusOrderFinish)
             ->where('orders.deleted', 0)
             ->where(DB::raw("(DATE_FORMAT(product_orders.updated_at,'%d-%m-%Y'))"),$date)
             ->get();
@@ -64,19 +64,26 @@ class ProductOrder extends Model
     }
     public static function getSumOrder($id){
         $sum = 0 ;
-        $pd= ProductOrder::where('order_id',$id)->get();
-        if(count($pd)!=0) {
+        $cost = 0 ; // các khoản chi phi
+        $pd = ProductOrder::where('order_id', $id)->get();
+        if(count($pd) != 0) {
             foreach ($pd as $item) {
                 $sum = $sum + $item->price;
             }
         }
-        return $sum;
+        $arrProduct = Order::find($id);
+        // return $arrProduct;
+        if(count($arrProduct) != 0) {
+            $cost = $cost - $arrProduct->discount + $arrProduct->tax + $arrProduct->transport_pay ;
+        }
+        $total = $sum + $cost;
+        return $total;
     }
     public static function countOrderByStatus($id){
         $idUser = Auth::user()->id;
         if(Auth::user()->hasRole('kho')) {
             return Order::where('status', $id)
-                ->where('kho_id',$idUser)
+                ->where('kho_id', $idUser)
                 ->where('orders.deleted', 0)
                 ->count();
         }

@@ -22,57 +22,74 @@
                     <input type="hidden" name="id" value="{{ $id }}">
                     @endif
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <div class="col-md-8 col-xs-12">
+                    <div class="col-md-8 col-xs-12 col-lg-8">
                         <!-- Name and Description -->
                         <div class="x_panel">
                             @if(Request::is('admin/orders/create'))
                                 <h2>Thông tin đơn hàng</h2>
                             @else
-                                <h2>Chi tiết đơn hàng {{\App\Util::OrderCode($id)}}</h2>
+                            <?php 
+                            // echo "<pre>";
+                            // print_r($arrOrder);
+                            // echo "</pre>";
+                            // die();
+                            ?>
+                                <h2>Chi tiết đơn hàng {!! $arrOrder->order_code !!}</h2>
                             @endif
-                            
-                            <div class="col-md-6 col-xs-12 text-left visible-xs">
-                                <p>Tổng giá trị sản phẩm <span class="allpaymoney">0</span> VNĐ</p>
+                            <div class="row col-xs-12 col-md-12 col-lg-12">
+                                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                    <select id="select-category" name="category" class="form-control" data-placeholder="Danh mục sản phẩm">
+                                        <option></option>
+                                        <?php $category = \App\CategoryProduct::where('disable',0)->get();?>
+                                        {{ \App\Category::CateMulti($category,0,$str="",old('parent')) }}
+                                    </select>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <select id="select-product" name="select-product"  class="form-control " placeholder="Thêm sản phấm">
+                                        <option value=""></option>
+                                        @if(!empty($products))
+                                            @foreach($products as $product)
+                                                <option value="{{$product->id}}" data-image="dsa" data-name="dsa">
+                                                    {{$product->title}} ({{\App\Util::ProductCode($product->id)}})
+                                                </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                                    <button type="button" id="btn_add_product" class="btn btn-raised btn-success">Thêm</button>
+                                </div>
+                                <input type="hidden" class="form-control" name="slug" placeholder="slug" id="txtSlug" required>
                             </div>
-                            <div class="list_product_respone visible_xs_list_product text-left">
-                                @if(Request::is('admin/orders/create'))
-                                @else
-                                    @foreach($arrProductOrders as $arrProductOrder)
-                                        <div class="item-product" style="float: left;">
-                                            <div class="clear"></div>
-                                            <hr>
-                                            <div class="img_product_respone col-xs-3">
-                                                <img src="{{url('/')}}/{!! $arrProductOrder->image !!}" class="img-responsive img-thumbnail" alt="">
-                                                <i class="fa fa-times red delete-img-order" id="delete_product" style="cursor: pointer" aria-hidden="true"></i>
-                                            </div>
-                                            <div class="name-product col-xs-7">
-                                                <p><span>{{ $arrProductOrder->title }} ({!! \App\Util::ProductCode($arrProductOrder->id_product) !!})</span></span><input type="hidden" value="{!! $arrProductOrder->id_product !!}" name="product_id[]"></p>
-                                                <span class="total"> <span>{!! \App\Util::FormatMoney($arrProductOrder->price) !!}</span></span>
-                                                <input type="hidden" name="pricetotal[]" value="{{ $arrProductOrder->price }}" >
-                                                <input type="hidden" name="price_product_tmp[]" value="{{ $arrProductOrder->price_out }}">
-                                            </div>
-                                            <div class="col-xs-2">
-                                                <span>x</span><input type="number" class="number-product" style="width:21px;" name="product_number[]" value="{{ $arrProductOrder->num }}">
-                                            </div>
-                                        </div>
-
-                                    @endforeach
-                                @endif
-                            </div>
-
-                            <table class="table hidden_xs_list_product">
+                            <table class="table table-condensed table-hover">
                                 <tbody class="list_product" style="width:100%;">
+                                    <tr>
+                                        <th class="non-dis">Mã</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Giá</th>
+                                        <th>Số lượng</th>
+                                        <th class="non-dis">Tồn kho</th>
+                                        <th></th>
+                                    </tr>
                                 @if(Request::is('admin/orders/create'))
                                 @else
                                     @foreach($arrProductOrders as $arrProductOrder)
                                         <tr class="item-product">
-                                            <th><img src="{{url('/')}}/{!! $arrProductOrder->image !!}" class="img-responsive img-thumbnail" style="max-width: 50px;" alt=""></th>
-                                            <td style="min-width: 210px;"><span class="name-product"><span>{{ $arrProductOrder->title }} ({!! \App\Util::ProductCode($arrProductOrder->id_product) !!})</span></span><input type="hidden" value="{!! $arrProductOrder->id_product !!}" name="product_id[]"></td>
+                                            <td  class="non-dis" style=""><span class="code-product"><span>{{ $arrProductOrder->code }} </span></span>
+                                            </td>
+                                            <td><span class="name-product"><span>{{ $arrProductOrder->title }} </span></span>
+                                                <input type="hidden" value="{!! $arrProductOrder->id_product !!}" name="product_id[]">
+                                            </td>
                                             <td><span class="price-product"><span>{!! \App\Util::FormatMoney($arrProductOrder->price_out) !!}</span> </span>
                                             <input type="hidden" name="price_product_tmp[]" value="{{ $arrProductOrder->price_out }}">
                                             </td>
-                                            <td><span>x</span><input type="number" class="number-product" style="width:70px;" name="product_number[]" value="{{ $arrProductOrder->num }}"></td>
-                                            <td><span class="total"> <span>{!! \App\Util::FormatMoney($arrProductOrder->price) !!}</span></span><input type="hidden" value="{{ $arrProductOrder->price }}" name="pricetotal[]"></td>
+                                            <td><span>x</span><input type="number" class="number-product" style="width:70px;" name="product_number[]" value="{{ $arrProductOrder->num }}">
+                                                <input type="hidden" value="{{ $arrProductOrder->price }}" name="pricetotal[]">
+                                            </td>
+                                            <td class="non-dis">
+                                                <span class="inventory_num">{{ number_format($arrProductOrder->inventory_num) }}</span>
+                                                <!-- <span class="total"> <span>{!! \App\Util::FormatMoney($arrProductOrder->price) !!}</span></span> -->
+                                                </td>
                                             <td><i class="fa fa-times red delete" id="delete_product" style="cursor: pointer" aria-hidden="true"></i></td>
                                         </tr>
                                     @endforeach
@@ -80,39 +97,59 @@
                                 </tbody>
                             </table>
                             
-                            <div class="row hidden-xs">
+                            <div class="row">
                                 <hr>
-                                <div class="col-md-6 col-md-offset-6 col-xs-12 text-right">
-                                    <p>Tổng giá trị sản phẩm <span class="allpaymoney">0</span> VNĐ</p>
+                                <div class="col-md-8 col-md-offset-4 col-xs-12">
+                                    <div class="form-group">
+                                        <div class="row col-md-12 col-xs-12">
+                                            <label class="col-md-6 col-xs-6 control-label text-right">Tổng giá trị sản phẩm</label>
+                                            <div class="col-md-5 col-xs-5">
+                                                <input type="text" name="allpaymoney" value="" class="form-control allpaymoney" disabled="" placeholder="10,000 "> 
+                                            </div>
+                                            <div class="col-md-1 col-xs-1 pT-7">VNĐ</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row col-md-12 col-xs-12">
+                                            <label class="col-md-6 col-xs-6 control-label text-right">Giảm giá</label>
+                                            <div class="col-md-5 col-xs-5">
+                                                <input type="text" name="discount" value="@if(!empty($arrOrder->discount)){{$arrOrder->discount}} @else{{old('discount')}} @endif" class="form-control discount" placeholder="10,000 ">
+                                            </div>
+                                            <div class="col-md-1 col-xs-1 pT-7">VNĐ</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row col-md-12 col-xs-12">
+                                            <label class="col-md-6 col-xs-6 control-label text-right">Thuế</label>
+                                            <div class="col-md-5 col-xs-5">
+                                                <input type="text" name="tax" value="@if(!empty($arrOrder->tax)){{$arrOrder->tax}} @else{{old('tax')}} @endif" class="form-control tax" placeholder="10,000 ">
+                                            </div>
+                                            <div class="col-md-1 col-xs-1 pT-7">VNĐ</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row col-md-12 col-xs-12">
+                                            <label class="col-md-6 col-xs-6 control-label text-right">Phí vận chuyển</label>
+                                            <div class="col-md-5 col-xs-5">
+                                                <input type="text" name="transport_pay" value="@if(!empty($arrOrder->transport_pay)){{$arrOrder->transport_pay}} @else{{old('transport_pay')}} @endif" class="form-control transport_pay" placeholder="10,000 ">
+                                            </div>
+                                            <div class="col-md-1 col-xs-1 pT-7">VNĐ</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row col-md-12 col-xs-12">
+                                            <label class="col-md-6 col-xs-6 control-label text-right">Tổng đơn hàng</label>
+                                            <div class="col-md-5 col-xs-5">
+                                                <input type="text" name="totalOrderTmp" value="" class="form-control totalOrderTmp" disabled="" placeholder="10,000 ">
+                                            </div>
+                                            <div class="col-md-1 col-xs-1 pT-7">VNĐ</div>
+                                        </div>
+                                    </div>
                                 </div>
+                                
                             </div>
                             <div class="clear"></div>
                             <hr>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-9 col-xs-12" style="margin-top: 13px">
-                                        <select id="select-product" name="select-product"  class="form-control " placeholder="Thêm sản phấm">
-                                            <option value=""></option>
-                                            @if(!empty($products))
-                                                @foreach($products as $product)
-                                                    <option value="{{$product->id}}" data-image="dsa" data-name="dsa">
-                                                        {{$product->title}} ({{\App\Util::ProductCode($product->id)}})
-                                                    </option>
-                                                @endforeach
-                                            @endif
-
-                                        </select>
-                                    </div>
-
-                                    <div class="col-md-3 col-xs-12">
-                                        <button type="button" id="btn_add_product" class="btn btn-raised btn-success col-xs-12">Thêm</button>
-                                    </div>
-                                </div>
-
-                                
-                            </div>
-                            <input type="hidden" class="form-control" name="slug" placeholder="slug" id="txtSlug" required>
-
                             <div class="form-group">
                                 <div class="col-md-6 col-xs-12">
                                     <label style="margin-bottom: 16px;">Ghi chú</label>
@@ -137,9 +174,9 @@
                                         </div> -->
                                     </div>
 
-                                    <div class="tmp_type_driver ">@if(!empty($arrOrder->type_driver))
-                                            <label for="" class="transport_tmp">Phương thức vận chuyển: </label>
-                                            <span> {{$arrOrder->type_driver}}@else{{old('type_driver')}} </span> @endif
+                                    <div class="tmp_type_driver ">@if(!empty($arrOrder->name))
+                                            <label for="" class="transport_tmp">Loại xe: </label>
+                                            <span> {{$arrOrder->name}}@else{{old('name')}} </span> @endif
                                     </div>
                                     <div class="tmp_name_driver ">@if(!empty($arrOrder->name_driver))
                                             <label for="" class="transport_tmp">Tên tài xế: </label>
@@ -153,14 +190,14 @@
                                             <label for="" class="transport_tmp">Biển số xe: </label>
                                             <span> {{$arrOrder->number_license_driver}}@else{{old('number_license_driver')}} </span> @endif
                                     </div>
-                                    <input type="hidden" name="type_driver" class="type_driver" value="@if(!empty($arrOrder->type_driver)){{$arrOrder->type_driver}}@else{{old('type_driver')}}@endif">
+                                    <input type="hidden" name="id_driver" class="id_driver" value="@if(!empty($arrOrder->id_driver)){{$arrOrder->id_driver}}@else{{old('id_driver')}}@endif">
                                     <input type="hidden" name="name_driver" class="name_driver" value="@if(!empty($arrOrder->name_driver)){{$arrOrder->name_driver}}@else{{old('name_driver')}}@endif">
                                     <input type="hidden" name="phone_driver" class="phone_driver" value="@if(!empty($arrOrder->phone_driver)){{$arrOrder->phone_driver}}@else{{old('phone_driver')}}@endif">
                                     <input type="hidden" name="number_license_driver" class="number_license_driver" value="@if(!empty($arrOrder->number_license_driver)){{$arrOrder->number_license_driver}}@else{{old('number_license_driver')}}@endif">
                                 </div>
                             </div>
                             
-                            <div class="clear"></div>
+                            <!-- <div class="clear"></div>
                             <hr>
                             <div class="footer_order">
                                 <span><i class="fa fa-id-card-o" aria-hidden="true"></i>Xác nhận thanh toán</span>
@@ -175,7 +212,7 @@
                                 <input type="hidden" value="@if(!empty($arrOrder->type_pay)){!! $arrOrder->type_pay !!} @else{!! "" !!} @endif" name="type_pay">
                                 <input type="hidden" value="@if(!empty($arrOrder->received_pay)){!! $arrOrder->received_pay !!} @else{!! "" !!} @endif" name="received_pay">
                                 <input type="hidden" value="@if(!empty($arrOrder->remain_pay)){!! $arrOrder->remain_pay !!} @else{!! "" !!} @endif" name="remain_pay">
-                            </div>
+                            </div> -->
                         </div>
 
                     </div>
@@ -209,7 +246,7 @@
 
                                 <div class="form-group">
                                     <label> Tình trạng đơn hàng</label>
-                                    <select id="select-tracking" name="status" class="form-control" data-placeholder="Chọn tình trạng đơn hàng">
+                                    <select id="select-tracking" name="status" required="" class="form-control" data-placeholder="Chọn tình trạng đơn hàng">
                                         @foreach($order_status as $itemOrder_status)
                                             <option value="{{$itemOrder_status->id}}" @if(!empty($arrOrder->status) && ($arrOrder->status == $itemOrder_status->id)) selected='selected' @endif>{{$itemOrder_status->name}}</option>
                                         @endforeach
@@ -223,6 +260,26 @@
                         <div class="x_panel">
                             <div class="wrapper-content mt20">
                                 <div class="pd-all-20 border-top-title-main">
+                                    <div class="form-group">
+                                        <label> Thông tin thanh toán</label>
+                                        <select id="type_pay" name="type_pay" required="" class="form-control" data-placeholder="Chọn thông tin thanh toán">
+                                            <option value=""></option>
+                                            <option value="1" @if(!empty($arrOrder->type_pay) && $arrOrder->type_pay == 1) selected @endif>Đã thanh toán</option>
+                                            <option value="2" @if(!empty($arrOrder->type_pay) && $arrOrder->type_pay == 2) selected @endif>Đặt cọc | Thanh toán sau</option>
+                                        </select>
+                                        
+                                        <div class="form-group received_pay_div" style="@if(!empty($arrOrder->type_pay) && $arrOrder->type_pay == 1) display: none; @endif">
+                                            <label class="control-label" for="focusedInput1"> Đã nhận</label>
+                                            <input class="form-control received_pay" value='' type="text" name="received_pay" placeholder="@if(!empty($arrOrder->received_pay)){!! number_format($arrOrder->received_pay) !!} @else{!! "0" !!} @endif">
+                                            <input type="hidden" value="@if(!empty($arrOrder->received_pay)){!! $arrOrder->received_pay !!} @else{!! "" !!} @endif" name="received_pay_old">
+                                        </div>
+                                        <div class="form-group remain_pay_div" style="@if(!empty($arrOrder->type_pay) && $arrOrder->type_pay == 1) display: none; @endif">
+                                            <label class="control-label" for="focusedInput2"> Còn lại</label>
+                                            <input class="form-control remain_pay" value='@if(!empty($arrOrder->remain_pay)){!! $arrOrder->remain_pay !!} @else{!! "" !!} @endif' type="text" name="remain_pay" required readonly="readonly" >
+                                        </div>
+                                        
+                                        <div class="clear"></div>
+                                    </div>
                                     <div class="form-group">
                                         <div class="form-group">
                                             <label>Thông tin khách hàng</label>
@@ -522,7 +579,7 @@
 <script src="{{asset('js/selectize.js')}}"></script>
 <!-- Select2 -->
 <script>
-    $('#select-tracking').selectize({});
+    $('#select-tracking, #type_pay').selectize({});
 </script>
 <script type="text/javascript">
     function pricetotal(){
@@ -530,7 +587,14 @@
         $('input[type="hidden"][name="pricetotal[]"]').each(function() {
             price = parseInt(price) + parseInt($(this).val());
         });
-        $('.allpaymoney').html(price);
+        $('.allpaymoney').val(price);
+        $('.discount').number( true, 0 );
+        $('.allpaymoney').number( true, 0 );
+        $('.tax').number( true, 0 );
+        $('.transport_pay').number( true, 0 );
+        $('.received_pay').number( true, 0 );
+        $('.remain_pay').number( true, 0 );
+        
     }
     $(document).ready(function () {
         $('#date-format').bootstrapMaterialDatePicker
@@ -544,7 +608,7 @@
 </script>
 <!-- Select2 -->
 <script>
-    $('#select-kh,.select-payment,#select-product,#select-transport').selectize({
+    $('#select-kh,.select-payment,#select-product,#select-category,#select-transport').selectize({
         create: true,
         sortField: 'text'
     });
@@ -552,15 +616,19 @@
 <script type="text/javascript">
     function pricecaculator(){
         var price = 0;
+        var discount = ($(".discount").val() > 0) ? $(".discount").val() : 0;
+        var tax = ($(".tax").val() > 0) ? $(".tax").val() : 0;
+        var transport_pay =($(".transport_pay").val() > 0) ? $(".transport_pay").val() : 0;
         $('input[type="hidden"][name="pricetotal[]"]').each(function() {
             price = parseInt(price) + parseInt($(this).val());
         });
-        return price;
+        var totalOder = parseInt(price) - parseInt(discount) + parseInt(tax) + parseInt(transport_pay);
+        return totalOder;
     }
     $('.received_pay').on('change', function() {
         var allpaymoney = pricecaculator();
         var pay_receive = $(this).val();
-        var received = $('input[type="hidden"][name="received_pay"]').val();
+        var received = $('input[type="hidden"][name="received_pay_old"]').val();
         pay_remain = allpaymoney - pay_receive - received;
         $('.remain_pay').val(pay_remain);
         /*alert(allpaymoney);
@@ -611,14 +679,41 @@
             data: {id_select_transport: id_select_transport, _token: _token},
             success: function (msg) {
                 $('.loading').css('display', 'none');
-                $('.tmp_type_driver').html('<label class="transport_tmp">Phương thức vận chuyển: </label>' + '<span>' + msg['type_driver'] + '</span>');
+                $('.tmp_type_driver').html('<label class="transport_tmp">Phương thức vận chuyển: </label>' + '<span>' + msg['name'] + '</span>');
                 $('.tmp_name_driver').html('<label class="transport_tmp">Tên tài xế: </label>' + '<span>' + msg['name_driver'] + '</span>');
                 $('.tmp_phone_driver').html('<label class="transport_tmp">Số điện thoại: </label>' + '<span>' + msg['phone_driver'] + '</span>');
                 $('.tmp_number_license_driver').html('<label class="transport_tmp">Biển số xe: </label>' + '<span>' + msg['number_license_driver'] + '</span>');
-                $('.type_driver').val(msg['type_driver']);
+                $('.id_driver').val(msg['id_driver']);
                 $('.name_driver').val(msg['name_driver']);
                 $('.phone_driver').val(msg['phone_driver']);
                 $('.number_license_driver').val(msg['number_license_driver']);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //show notify
+                var Data = JSON.parse(XMLHttpRequest.responseText);
+                new PNotify({
+                    title: 'Lỗi',
+                    text: 'Không tải được thông tin',
+                    type: 'danger',
+                    hide: true,
+                    styling: 'bootstrap3'
+                });
+                $('.loading').css('display', 'none');
+            }
+        });
+    });
+    $("#select-category").on('change', function(e) {
+        e.preventDefault();
+        var id_select_cate = $('select[name="category"] :selected').val();
+        var _token = $('input[name="_token"]').val();
+        $.ajax({
+            type: "POST",
+            url: '{!! url("/") !!}/admin/categoryProducts/AjaxGetCategory',
+            data: {id_select_cate: id_select_cate, _token: _token},
+            success: function (msg) {
+                $('#select-product').selectize()[0].selectize.destroy();
+                $('#select-product').html(msg);
+                $('#select-product').selectize();
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 //show notify
@@ -772,6 +867,7 @@
     $(document).on('click','#delete_product', function (e) {
         $(this).closest('.item-product').remove();
         pricetotal();
+        countTotalOrder();
     });
     $(document).on('change','.number-product', function (e) {
         var num = $(this).val();
@@ -779,8 +875,10 @@
         
         var total = num*price;
         $(this).closest('.item-product').find('.total span').text(total);
+        $('.total span').number(true, 0);
         $(this).closest('.item-product').find('input[type="hidden"][name="pricetotal[]"]').val(total);
         pricetotal();
+        countTotalOrder();
     });
     function ProductIDExist(str){
         //console.log($('tr[id*=output_newrow]').length)
@@ -829,16 +927,16 @@
                     }
                     $('.loading').css('display', 'none');
                     $('.list_product').append('<tr class="item-product">'
-                            + '<th><img src="{{url('/')}}/' + msg['image'] + '" class="img-responsive img-thumbnail"'
-                            + 'style="max-width: 50px;" alt=""></th>'
-                            + '<td style="min-width: 210px;"><span class="name-product"><span>' + msg['name'] + '(#' + id + ')</span></span><input type="hidden" value="' + id + '" name="product_id[]"></td>'
+                            + '<td class="non-dis" style=""><span class="code-product">' + msg['code'] + '</span></span>'
+                            + '<td><span class="name-product">' + msg['name'] + '</span></span><input type="hidden" value="' + id + '" name="product_id[]"></td>'
                             + '<td><span class="price-product"><span>' + msg['price'] + '</span>VNĐ </span><input type="hidden" value="' + msg['price'] + '" name="price_product_tmp[]"></td>'
-                            + '<td><span>x</span><input type="number" class="number-product" style="width:50px;" name="product_number[]" value="1"></td>'
-                            + '<td><span class="total"> <span>' + msg['price'] + '</span>VNĐ</span><input type="hidden" value="' + msg['price'] + '" name="pricetotal[]"></td>'
+                            + '<td><span>x</span><input type="number" class="number-product" style="width:70px;" name="product_number[]" value="1"><input type="hidden" value="' + msg['price'] + '" name="pricetotal[]"></td>'
+                            + '<td class="non-dis"><span class="inventory_num">' + msg['inventory_num'] + ' <span></td>'
                             + '<td><i class="fa fa-times red delete" id="delete_product" style="cursor: pointer" aria-hidden="true"></i></td>'
                             + '</tr>'
                     );
-                    $('.list_product_respone').append('<div class="clear"></div>'
+                    
+                    /*$('.list_product_respone').append('<div class="clear"></div>'
                             +'<hr>'
                             +'<div class="item-product ">'
                             + '<div class="img_product_respone col-xs-3">'
@@ -855,10 +953,12 @@
                             +    '<span>x</span><input type="number" class="number-product" style="width:21px;" name="product_number[]" value="1">'
                             +'</div>'
                             +'</div>'
-                    );
+                    );*/
                     price_total = price_total + parseInt(msg['price']);
                     //alert(price_total);
                     $('.allpaymoney').html(price_total);
+                    pricetotal();
+                    countTotalOrder();
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     //show notify
@@ -931,6 +1031,16 @@
     $(document).ready(function () {
         updateContainer();
         pricetotal();
+        countTotalOrder();
+        $('.discount').on('change', function(){
+            countTotalOrder();
+        });
+        $('.tax').on('change', function(){
+            countTotalOrder();
+        });
+        $('.transport_pay').on('change', function(){
+            countTotalOrder();
+        });
     });
     var rtime;
     var timeout = false;
@@ -971,5 +1081,28 @@
             $('.visible_xs_list_product').css('display','none');
         }
     }
+    function countTotalOrder() {
+        var allpaymoney = $(".allpaymoney").val();
+        var discount = ($(".discount").val() > 0) ? $(".discount").val() : 0;
+        var tax = ($(".tax").val() > 0) ? $(".tax").val() : 0;
+        var transport_pay =($(".transport_pay").val() > 0) ? $(".transport_pay").val() : 0;
+        var totalOder = parseInt(allpaymoney) - parseInt(discount) + parseInt(tax) + parseInt(transport_pay);
+        $(".totalOrderTmp").val(totalOder);
+        $(".totalOrderTmp").number(true, 0);
+        var received = $('input[type="hidden"][name="received_pay_old"]').val();
+        pay_remain = totalOder - received;
+        $('.remain_pay').val(pay_remain);
+    }
+    $('#type_pay').on('change', function(){
+        var type_pay = $(this).val();
+        if(type_pay == 2) {
+            $('.received_pay_div').show();
+            $('.remain_pay_div').show();
+        } else {
+            $('.received_pay_div').hide();
+            $('.remain_pay_div').hide();
+        }
+    });
+    
 </script>
 @endsection

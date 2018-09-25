@@ -147,8 +147,8 @@ class WarehouseController extends Controller
     {
         $ware_id         = $request->ware_id;
         $check           = $request->check;
-        $active          = 0;
-        $checkBankActive = BankWareHouse::where('ware_id',$ware_id)->get();
+        /*$active          = 0;
+        $checkBankActive = BankWareHouse::where('ware_id', $ware_id)->get();
         foreach($checkBankActive as $itemCheckBankActive){
             if (($itemCheckBankActive->check == 1)){
                 $active++;
@@ -159,10 +159,11 @@ class WarehouseController extends Controller
                 'status' => 'danger',
                 'msg'    => 'Đã có ngân hàng được sử dụng',
             );
-        } else {
+        } else */
+
+        {
             $data     = $request->all();
             BankWareHouse::create($data);
-            //dd("dsds");
             $response = array(
                 'status' => 'success',
                 'msg'    => 'Setting created successfully',
@@ -179,7 +180,7 @@ class WarehouseController extends Controller
         $idBank  = 0;
         $id      = $request->get('id_bank');
         $check   = $request->check;
-        $checkBankActive = BankWareHouse::where('ware_id',$ware_id)->get();
+        /*$checkBankActive = BankWareHouse::where('ware_id', $ware_id)->get();
         foreach($checkBankActive as $itemCheckBankActive){
 
             if (($itemCheckBankActive->check == 1)){
@@ -192,7 +193,8 @@ class WarehouseController extends Controller
                 'status' => 'danger',
                 'msg'    => 'Đã có ngân hàng được sử dụng',
             );
-        } else {
+        } else*/
+        {
 
             $warehouse = BankWareHouse::find($id);
             $data      = $request->all();
