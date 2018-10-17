@@ -87,6 +87,9 @@ class Util extends Model
     public static $cash = 1;  // tra tien mat
     public static $bank = 2;  // thanh toan qua ngan hang
 
+    // cate phieu thu chi
+    public static $commission = 2; // from table cate_payment
+
     public static function saveFile($file, $type)
     {
         $today = date("Y-m-d_H-i-s");

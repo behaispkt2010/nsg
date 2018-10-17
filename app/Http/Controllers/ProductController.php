@@ -120,7 +120,7 @@ class ProductController extends Controller
                 if(!Auth::user()->hasRole('kho'))
                     $product1 =  $product1->where('title','LiKE','%'.$name.'%')->where('deleted', 0);
                 else {
-                    $product1 =  $product1->where('title','LiKE','%'.$name.'%')->where('deleted', 0)->where('kho', Auth::user()->id);
+                    $product1 =  $product1->where('title','LiKE','%'.$name.'%')->orwhere('code','LiKE','%'.$name.'%')->where('deleted', 0)->where('kho', Auth::user()->id);
                 }
             }
             if(!empty($cate)){

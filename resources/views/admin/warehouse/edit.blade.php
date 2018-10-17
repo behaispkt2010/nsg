@@ -18,11 +18,9 @@
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <input type="hidden" name="id" value="{{$id}}">
             <input type="hidden" name="user_id" value="{{$userInfo->id}}">
-
             <div class="">
                 <div class="row">
                     <div class="col-md-6 col-sm-12 col-xs-12 profile_details product-detail">
-
                         <div class="well box1 info-warehouse info-user" style="min-height: 846px; position: relative;">
                             <h4 class="text-center">Thông tin người đại diện <i style="float: right"
                                                                                 class="fa fa-edit"
@@ -456,7 +454,6 @@
                 </div>
             </div>
         </div>
-
     </div>
     <div class="loading" style="display: none"><img src="{{url('/images/loading.gif')}}" class="img-reponsive" alt=""></div>
     <!-- admin confirm các thông báo -->
@@ -1202,9 +1199,9 @@
     <script>
         $('#update_info').on('click', function (e) {
             e.preventDefault();
-
             var id = $('input[name="user_id"]').val();
             var name = $('.info-warehouse input[name="name"]').val();
+            var birthday = $('.info-warehouse input[name="birthday"]').val();
             var email = $('.info-warehouse input[name="email"]').val();
             var phone_number = $('.info-warehouse input[name="phone_number"]').val();
             var _token = $('input[name="_token"]').val();
@@ -1212,7 +1209,7 @@
             $.ajax({
                 type: "POST",
                 url: '{{ url('/') }}/admin/warehouse/AjaxInfo',
-                data: {name: name, email: email, phone_number: phone_number,_token: _token,id:id},
+                data: {name: name, birthday: birthday, email: email, phone_number: phone_number,_token: _token,id:id},
                 success: function( msg ) {
                     $('.loading').css('display','none');
                     //show notify
@@ -1251,13 +1248,13 @@
             var renew_pass = $('.modal-change-pass input[name="renew_pass"]').val();
 
             var _token = $('input[name="_token"]').val();
-            $('.loading').css('display','block');
+            $('.modal-change-pass .loading').css('display','block');
             $.ajax({
                 type: "POST",
                 url: '{{ url('/') }}/admin/warehouse/AjaxChangePass',
                 data: {old_password: old_password,new_pass: new_pass,renew_pass: renew_pass,_token: _token,id:id},
                 success: function( msg ) {
-                    $('.loading').css('display','none');
+                    $('.modal-change-pass .loading').css('display','none');
                     //show notify
                     if(msg['status'] != "danger") {
                         new PNotify({

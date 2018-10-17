@@ -10,6 +10,8 @@ use App\Inventory;
 use App\Payment;
 use App\CatePayment;
 use App\BankWareHouse;
+use App\Order;
+use App\ProductOrder;
 use DateTime;
 use Illuminate\Http\Request;
 
@@ -161,10 +163,21 @@ class PaymentController extends Controller
      */
     public function create(Request $request)
     {
+        $strUserID = Auth::user()->id;
+        if (Auth::user()->hasRole('kho')){
+            $arrOrder = Order::where('kho_id', $strUserID)
+                ->where('status', '<', 9)
+                ->where('deleted', 0)
+                ->get();
+        }
+        else {
+            $arrOrder = Order::where('status', '<', 9)->where('deleted', 0)->get();
+        }
         $type = !empty($request->type) ? $request->type : "receipt";
-        $catePayment = Catepayment::where('deleted', 0)->get();
+        $catePayment = Catepayment::where('deleted', 0)->where('type', $type)->get();
         $data = [
             'catePayment'  => $catePayment,
+            'arrOrder'  => $arrOrder,
             'type' => $type,
         ];
         return view('admin.payment.edit', $data);
@@ -215,12 +228,23 @@ class PaymentController extends Controller
      */
     public function edit($id)
     {
+        $strUserID = Auth::user()->id;
+        if (Auth::user()->hasRole('kho')){
+            $arrOrder = Order::where('kho_id', $strUserID)
+                ->where('status', '<', 9)
+                ->where('deleted', 0)
+                ->get();
+        }
+        else {
+            $arrOrder = Order::where('status', '<', 9)->where('deleted', 0)->get();
+        }
         $payment = Payment::find($id);
         $type = $payment->type;
-        $catePayment = Catepayment::where('deleted', 0)->get();             
+        $catePayment = Catepayment::where('deleted', 0)->where('type', $type)->get();             
         $data = [
             'id'         => $id,
             'type'       => $type,
+            'arrOrder'   => $arrOrder,
             'catePayment'=> $catePayment,
             'arrPayment' => $payment,
         ];
@@ -352,6 +376,67 @@ class PaymentController extends Controller
             'status'  => 'success',
             'payment' => $payment,
             'receipt' => $receipt,
+        );
+        return \Response::json($response);
+    }
+    /**
+     * Get info orders
+     *
+     * @param  int  $status
+     * @param  string  $date
+     * @return \Illuminate\Http\Response
+     */
+    public static function getMoneyOrderByDate(Request $request) {
+        $data    = $request->get('data1');
+        $status  = [
+                [1],
+                [2,3,4],
+                [7],
+                [8],
+                [9],
+                [10],
+        ];
+        $dateRes = explode('>',$data);
+        $start = date_create($dateRes[0]);
+        $dateStart = date_format($start ,"Y-m-d H:i:s");
+        $end = date_create($dateRes[1]);
+        $dateEnd = date_format($end ,"Y-m-d") . ' 23:59:59';
+        $idUser  = Auth::user()->id;
+        $arrOrders = [];
+        $arrTotalPrice = [];
+        if ( Auth::user()->hasRole(['kho']) ) {
+            for($i = 0; $i < 6; $i++) {
+                $arrOrder = Order::whereBetween('created_at', array(trim($dateStart), trim($dateEnd)))
+                    ->where('kho_id', $idUser)
+                    ->whereIn('status', $status[$i])
+                    ->get();
+                $arrOrders[] = count($arrOrder);
+                // calculate price 
+                $totalPrice   = 0;
+                foreach($arrOrder as $itemOrder){
+                    $totalPrice = $totalPrice + ProductOrder::getSumOrder($itemOrder->id);
+                }
+                $arrTotalPrice[] = $totalPrice;
+            }
+        } else {
+            for($i = 0; $i < 6; $i++) {
+                $arrOrder = Order::whereBetween('created_at', array(trim($dateStart), trim($dateEnd)))
+                    ->whereIn('status', $status[$i])
+                    ->get();
+                $arrOrders[] = count($arrOrder);
+                // calculate price 
+                $totalPrice   = 0;
+                foreach($arrOrder as $itemOrder){
+                    $totalPrice = $totalPrice + ProductOrder::getSumOrder($itemOrder->id);
+                }
+                $arrTotalPrice[] = $totalPrice;
+            }
+        }
+
+        $response = array(
+            'status'        => 'success',
+            'arrTotalPrice' => $arrTotalPrice,
+            'arrOrders'     => $arrOrders,
         );
         return \Response::json($response);
     }

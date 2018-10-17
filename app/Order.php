@@ -65,10 +65,17 @@ class Order extends Model
         }
     public static function getNumOrderByStatus($status){
         $idUser = Auth::user()->id;
-
-        $orders = Order::where('status', $status)
-            ->where('deleted', 0)
-            ->get();
+        if(Auth::user()->hasRole('kho')) {
+            $orders = Order::where('kho_id', $idUser)
+                            ->whereIn('status', $status)
+                            ->where('deleted', 0)
+                            ->get();
+        } else {
+            $orders = Order::whereIn('status', $status)
+                            ->where('deleted', 0)
+                            ->get();
+        }   
+        
         if(empty($orders)) $num = 0;
         else $num = count($orders);
         return $num;
@@ -84,6 +91,22 @@ class Order extends Model
         }
         return $res;
 
+    }
+    public static function getMoneyOrderByStatus($status) {
+        $idUser            = Auth::user()->id;
+        if(Auth::user()->hasRole('kho')) {
+            $arrOrder = Order::where('kho_id', $idUser)
+                    ->whereIn('status', $status)
+                    ->get();
+        } else {
+            $arrOrder = Order::whereIn('status', $status)
+                    ->get();
+        }   
+        $totalPrice   = 0;
+        foreach($arrOrder as $itemOrder){
+            $totalPrice = $totalPrice + ProductOrder::getSumOrder($itemOrder->id);
+        }
+        return $totalPrice;
     }
     public static function getInfoOrder($status,$type=0){
         $idUser            = Auth::user()->id;
@@ -131,11 +154,9 @@ class Order extends Model
             }
           $count = count($orderProducts);
         }
-
         $data = [
             "price" => $price,
             "count" => $count
-
         ];
 
         return $data;

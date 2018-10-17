@@ -28,7 +28,7 @@
                                 @elseif($cate == 'receipt')
                                 <h2>Phiếu nhập kho</h2>
                                 @endif
-                                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 pL-0">
                                     <select id="select-product" name="select-product"  class="form-control " placeholder="Thêm sản phấm">
                                         <option value=""></option>
                                         @if(!empty($products))
@@ -40,7 +40,7 @@
                                         @endif
                                     </select>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                                     <button type="button" id="btn_add_product" class="btn btn-raised btn-success">Thêm</button>
                                 </div>
                                 <table class="table table-condensed table-hover table-bordernontop">
@@ -61,7 +61,7 @@
                                                     <input type="hidden" value="{!! $itemProduct->idproduct !!}" name="product_id[]">
                                                     <input type="hidden" value="{!! $itemProduct->nameproduct !!}" name="nameproduct[]">
                                                 </td>
-                                                <td><input type="text" class="quantity" style="width:70px;" name="quantity[]" value="{{ $itemProduct->quantity }}">
+                                                <td><input type="number" class="quantity input-non-bTr" style="width:70px;" name="quantity[]" value="{{ $itemProduct->quantity }}">
                                                 </td>
                                                 <td><i class="fa fa-times red delete" id="delete_product" style="cursor: pointer" aria-hidden="true"></i></td>
                                             </tr>
@@ -82,11 +82,8 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <div class="col-md-12 col-xs-12">
-                                        <label style="margin-bottom: 16px;">Ghi chú</label>
-                                        <textarea class="form-control note" rows="5" name="note">@if(!empty($itemProduct->note)){{$itemProduct->note}}@else{{old('note')}}@endif</textarea>
-
-                                    </div>
+                                    <label>Ghi chú</label>
+                                    <textarea class="form-control note" rows="5" name="note">@if(!empty($itemProduct->note)){{$itemProduct->note}}@else{{old('note')}}@endif</textarea>
                                 </div>
                             </div>
                         </div>
@@ -132,21 +129,21 @@
                                                 data-placeholder="Chọn Loại">
                                             @if($cate == 'receipt')
                                                 <option></option>
-                                                <option value="0" @if(!empty($itemProduct->type) && $itemProduct->type == 0) selected @endif>Mua hàng vào</option>
-                                                <option value="1" @if(!empty($itemProduct->type) && $itemProduct->type == 1) selected @endif>Nhập hàng trả về</option>
-                                                <option value="2" @if(!empty($itemProduct->type) && $itemProduct->type == 2) selected @endif>Cân bằng kho</option>
-                                                <option value="3" @if(!empty($itemProduct->type) && $itemProduct->type == 3) selected @endif>Khác</option>
+                                                <option value="1" @if(!empty($itemProduct->type) && $itemProduct->type == 1) selected @endif>Mua hàng vào</option>
+                                                <option value="2" @if(!empty($itemProduct->type) && $itemProduct->type == 2) selected @endif>Nhập hàng trả về</option>
+                                                <option value="3" @if(!empty($itemProduct->type) && $itemProduct->type == 3) selected @endif>Cân bằng kho</option>
+                                                <option value="4" @if(!empty($itemProduct->type) && $itemProduct->type == 4) selected @endif>Khác</option>
                                             @elseif($cate == 'issue')
                                                 <option></option>
-                                                <option value="0" @if(!empty($itemProduct->type) && $itemProduct->type == 0) selected @endif>Bán hàng</option>
-                                                <option value="1" @if(!empty($itemProduct->type) && $itemProduct->type == 1) selected @endif>Xuất trả NCC</option>
-                                                <option value="2" @if(!empty($itemProduct->type) && $itemProduct->type == 2) selected @endif>Cân bằng kho</option>
-                                                <option value="3" @if(!empty($itemProduct->type) && $itemProduct->type == 3) selected @endif>Khác</option>
+                                                <option value="1" @if(!empty($itemProduct->type) && $itemProduct->type == 1) selected @endif>Bán hàng</option>
+                                                <option value="2" @if(!empty($itemProduct->type) && $itemProduct->type == 2) selected @endif>Xuất trả NCC</option>
+                                                <option value="3" @if(!empty($itemProduct->type) && $itemProduct->type == 3) selected @endif>Cân bằng kho</option>
+                                                <option value="4" @if(!empty($itemProduct->type) && $itemProduct->type == 4) selected @endif>Khác</option>
                                             @endif
 
                                         </select>
                                     </div>
-                                    <div class="form-group orders" style="@if(!empty($itemProduct->type) && $itemProduct->type != 0) display: none; @endif">
+                                    <div class="form-group orders" style="@if(!empty($itemProduct->type) && ($itemProduct->type > 1)) display: none; @endif">
                                         <label>Đơn hàng</label>
                                         <select id="order_id" name="order_id" class="form-control">
                                             <option></option>
@@ -159,54 +156,52 @@
                                     <h2>Thông tin nhận hàng</h2>
                                     <div class="form-group">
                                         <div class="col-md-12 col-xs-12">
-                                            <label style="margin-bottom: 16px;">Họ tên</label>
+                                            <label>Họ tên</label>
                                             <input type="text" name="name" value="@if(!empty($itemProduct->name)){{$itemProduct->name}} @else{{old('name')}} @endif" class="form-control" required="">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-12 col-xs-12">
-                                            <label style="margin-bottom: 16px;">Email</label>
+                                            <label>Email</label>
                                             <input type="email" name="email" value="@if(!empty($itemProduct->email)){{$itemProduct->email}} @else{{old('email')}} @endif" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-12 col-xs-12">
-                                            <label style="margin-bottom: 16px;">Số điện thoại</label>
+                                            <label>Số điện thoại</label>
                                             <input type="text" name="phone" value="@if(!empty($itemProduct->phone)){{$itemProduct->phone}} @else{{old('phone')}} @endif" class="form-control" required="">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-12 col-xs-12">
-                                            <label style="margin-bottom: 16px;">Địa chỉ</label>
+                                            <label>Địa chỉ</label>
                                             <input type="text" name="addpress" value="@if(!empty($itemProduct->addpress)){{$itemProduct->addpress}} @else{{old('addpress')}} @endif" class="form-control">
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <input type="hidden" class="provinceID" name="provinceID" value="@if(!empty($itemProduct->provinceid)) {{$itemProduct->provinceid}} @endif">
-                                        <input type="hidden" class="districtID" name="districtID" value="@if(!empty($itemProduct->districtid)) {{$itemProduct->districtid}} @endif">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <select id="t" class="form-control" name="t">
-                                                    <option value="0">Chọn khu vực</option>
-                                                    @foreach($province as $item)
-                                                        <option value="{{$item->provinceid}}" @if(!empty($itemProduct->provinceid) && $itemProduct->provinceid == $item->provinceid) selected @endif>{{$item->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                    <input type="hidden" class="provinceID" name="provinceID" value="@if(!empty($itemProduct->provinceid)) {{$itemProduct->provinceid}} @endif">
+                                    <input type="hidden" class="districtID" name="districtID" value="@if(!empty($itemProduct->districtid)) {{$itemProduct->districtid}} @endif">
+                                    <div class="form-group">
+                                        <div class="col-md-12 col-xs-12">
+                                            <label>Tỉnh/TP</label>
+                                            <select id="t" class="form-control" name="t">
+                                                <option value="0">Chọn khu vực</option>
+                                                @foreach($province as $item)
+                                                    <option value="{{$item->provinceid}}" @if(!empty($itemProduct->provinceid) && $itemProduct->provinceid == $item->provinceid) selected @endif>{{$item->name}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
-
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <select id="q" class="form-control" name="q">
-                                                    <option value="0">Chọn phường xã</option>
-                                                </select>
-                                            </div>
+                                    </div>    
+                                    <div class="form-group">
+                                        <div class="col-md-12 col-xs-12">
+                                            <label>Huyện/Thị trấn</label>
+                                            <select id="q" class="form-control" name="q">
+                                                <option value="0">Chọn phường xã</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </form>
             </form>
 @include('admin.partial.modal_delete')
@@ -296,7 +291,7 @@
                                 + '<td><span class="name-product">' + msg['name'] + '</span></span>'
                                 + '<input type="hidden" value="' + id + '" name="product_id[]">'
                                 + '<input type="hidden" value="' + msg['name'] + '" name="nameproduct[]"></td>'
-                                + '<td><input type="text" class="quantity" style="width:70px;" name="quantity[]" value=""></td>'
+                                + '<td><input type="number" class="quantity input-non-bTr" style="width:70px;" name="quantity[]" value=""></td>'
                                 + '<td><i class="fa fa-times red delete" id="delete_product" style="cursor: pointer" aria-hidden="true"></i></td>'
                                 + '</tr>'
                         );
@@ -349,7 +344,7 @@
     <script type="text/javascript">
         $('#type').on('change', function(){
             var type = $(this).val();
-            if(type == 0) {
+            if(type == 0 || type == 1) {
                 $('.orders').show();
             } else {
                 $('.orders').hide();

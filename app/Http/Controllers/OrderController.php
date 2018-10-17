@@ -56,13 +56,25 @@ class OrderController extends Controller
         
         if($type == 'district') {
             $arrDistrictByProvince = Order::GetRelateProvince($id);
-            echo '<option value="">Chọn Huyện/Thị trấn</option>';
+            $q = '<option value="">Chọn Huyện/Thị trấn</option>';
             foreach($arrDistrictByProvince as $item) { 
                 $select  = '';
                 if($item->districtid == $valueID) $select = 'selected';
-                echo '<option class="" '.$select.' value="'.$item->districtid.'">'.$item->name.'</option>';
+                $q .= '<option class="" '.$select.' value="'.$item->districtid.'">'.$item->name.'</option>';
+            }
+            $arrProvine = Province::where('deleted', 0)->get();
+            $t = '';
+            foreach($arrProvine as $item) { 
+                $select  = '';
+                if($item->provinceid == $id) $select = 'selected';
+                $t .= '<option class="" '.$select.' value="'.$item->provinceid.'">'.$item->name.'</option>';
             }
         }
+        $data = [
+            'q' => $q,
+            't' => $t,
+        ];
+        return \Response::json($data);
         /*elseif($type == 'village') {
             $arrVillageByDistrict = Village::GetRelateDistrict($id);
             echo '<option value="">Chọn Phường/Xã</option>';
@@ -81,10 +93,19 @@ class OrderController extends Controller
         else {
             $AllOrders = Order::count();
         }
-        $arrAllOrders = Order::select('orders.*','users.address','users.province','users.name','users.phone_number')
-            ->leftJoin('users','orders.customer_id','=','users.id')
-            ->where('status', $id)
-            ->paginate(6);
+        if(Auth::user()->hasRole('kho')) {
+            $arrAllOrders = Order::select('orders.*','users.address','users.province','users.name','users.phone_number')
+                ->leftJoin('users','orders.customer_id','=','users.id')
+                ->where('orders.kho_id', $idUser)
+                ->where('orders.status', $id)
+                ->paginate(6);
+        } else {
+            $arrAllOrders = Order::select('orders.*','users.address','users.province','users.name','users.phone_number')
+                ->leftJoin('users','orders.customer_id','=','users.id')
+                ->where('status', $id)
+                ->paginate(6);
+        }
+
         $arrOrderByStatus = OrderStatus::where('deleted', '0')->get();
         $data = [
             'arrAllOrders'     => $arrAllOrders,
@@ -100,33 +121,37 @@ class OrderController extends Controller
         $author_id = Auth::user()->id;
         if($request->get('q')){
             $q = $request->get('q');
+            // dd($q);
             if(Auth::user()->hasRole(['kho'])) {
                 $arrAllOrders = Order::select('orders.*', 'users.address', 'users.province', 'users.name', 'users.phone_number')
-                    ->leftJoin('users', 'orders.customer_id', '=', 'users.id')
-                    ->where('kho_id', $author_id)
+                    ->leftjoin('users', 'orders.customer_id', '=', 'users.id')
+                    ->where(function($q1)use ($q) {
+                        $q1->where('users.name', 'LIKE', '%' . $q . '%')
+                        ->orwhere('orders.order_code', 'LIKE', '%' . $q . '%')
+                        ->orwhere('users.phone_number', 'LIKE', '%' . $q . '%');
+                    })
+                    ->where('orders.kho_id', $author_id)
                     ->where('orders.deleted', 0)
-                    ->where('users.name', 'LIKE', '%' . $q . '%')
-                    ->orwhere('users.phone_number', 'LIKE', '%' . $q . '%')
-                    ->orwhere('orders.order_code', 'LIKE', '%' . $q . '%')
-                    ->orderBy('id','DESC')
+                    ->orderBy('orders.id','DESC')
                     ->paginate(9);
             } else {
                 $arrAllOrders = Order::select('orders.*', 'users.address', 'users.province', 'users.name', 'users.phone_number')
                     ->leftJoin('users', 'orders.customer_id', '=', 'users.id')
                     ->where('orders.deleted', 0)
-                    ->where('users.name', 'LIKE', '%' . $q . '%')
-                    ->orwhere('users.phone_number', 'LIKE', '%' . $q . '%')
-                    ->orwhere('orders.order_code', 'LIKE', '%' . $q . '%')
+                    ->where(function($q1)use ($q) {
+                        $q1->where('users.name', 'LIKE', '%' . $q . '%')
+                        ->orwhere('orders.order_code', 'LIKE', '%' . $q . '%')
+                        ->orwhere('users.phone_number', 'LIKE', '%' . $q . '%');
+                    })
                     ->orderBy('id','DESC')
                     ->paginate(9);
             }
-
         }
         else if ( Auth::user()->hasRole(['kho']) ){
             $arrAllOrders = Order::select('orders.*', 'users.address', 'users.province', 'users.name', 'users.phone_number')
                 ->leftJoin('users', 'orders.customer_id', '=', 'users.id')
                 ->where('orders.deleted', 0)
-                ->where('kho_id', $author_id)
+                ->where('orders.kho_id', $author_id)
                 ->orderBy('id','DESC')
                 ->paginate(9);
         }
@@ -142,6 +167,7 @@ class OrderController extends Controller
         } else {
             $AllOrders        = Order::count();
         }
+        // dd($arrAllOrders);
         $arrOrderByStatus = OrderStatus::where('deleted', '0')->get();
         $data = [
             'arrAllOrders'     => $arrAllOrders,

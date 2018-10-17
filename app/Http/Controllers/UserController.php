@@ -54,6 +54,20 @@ class UserController extends Controller
         
         return \Response::json($response);
     }
+    public function AjaxEditCustomer(Request $request) {
+        $userID = $request->get('customer_id');
+        $arrUser = User::find($userID);
+        $data             = $request->all();
+        $data['province'] = $request->get('t');
+        $data['district'] = $request->get('q');
+        $arrUser->update($data);
+        $response = array(
+            'status'      => 'success',
+            'msg'         => 'Setting created successfully',
+            'customer_id' => $userID
+        );
+        return \Response::json($response);
+    }
 
     public function AjaxGetDataCustomer(Request $request){
         $user     = User::find($request->get('id_select_kh'));
@@ -62,7 +76,9 @@ class UserController extends Controller
             'phone_number' => $user->phone_number,
             'email'        => $user->email,
             'address'      => $user->address,
-            'customer_id'  => $user->id
+            'customer_id'  => $user->id,
+            'province'     => $user->province,
+            'district'     => $user->district
         );
         return \Response::json($response);
     }

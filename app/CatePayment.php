@@ -9,6 +9,6 @@ use Illuminate\Support\Facades\DB;
 class Catepayment extends Model
 {
 	protected $table = 'cate_payment';
-    protected $fillable = ['name', 'deleted'];
+    protected $fillable = ['name', 'type', 'deleted'];
 
 }

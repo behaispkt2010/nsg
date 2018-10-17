@@ -172,6 +172,15 @@ class InventoryController extends Controller
             $data['code'] = 'QLK-' . $inventory->id_kho . '-' . $strInventoryID;
             $inventory->update($data);
             foreach ($arrProductID as $key => $ProductID) {
+                // update product
+                if($request->status == 2) { // hòan thành
+                    // add inventory to product
+                    $arrProduct = Product::find($ProductID);
+                    $inventory = $arrInventoryReal[$key];
+                    $arrProduct->inventory_num = $inventory;
+                    $arrProduct->save();
+                }
+                // add detail
                 $InventoryDetail                = new InventoryDetail();
                 $InventoryDetail['idinventory'] = $strInventoryID;
                 $InventoryDetail['idproduct']   = $ProductID;
@@ -274,6 +283,15 @@ class InventoryController extends Controller
             $inventory_detail->delete();
 
             foreach ($arrProductID as $key => $ProductID) {
+                //update product
+                if($request->status == 2) { // hòan thành
+                    // add inventory to product
+                    $arrProduct = Product::find($ProductID);
+                    $inventory = $arrInventoryReal[$key];
+                    $arrProduct->inventory_num = $inventory;
+                    $arrProduct->save();
+                }
+                // add detail
                 $InventoryDetail                = new InventoryDetail();
                 $InventoryDetail['idinventory'] = $id;
                 $InventoryDetail['idproduct']   = $ProductID;
@@ -306,12 +324,13 @@ class InventoryController extends Controller
         $inventory_detail->update($data);
 
         $check = Inventory::where('id', $id)->where('deleted', 0)->get();
-        $check1 = InventoryDetail::where('id', $id)->where('deleted', 0)->get();
+        
+        $check1 = InventoryDetail::where('idinventory', $id)->where('deleted', 0)->get();
         if(count($check) == 0 && count($check1) == 0) {
             return redirect('admin/inventory/')->with(['flash_level' => 'success', 'flash_message' => 'Xóa thành công']);
         }
         else{
-            return redirect('admin/inventory/')->with(['flash_level' => 'success', 'flash_message' => 'Chưa được xóa']);
+            return redirect('admin/inventory/')->with(['flash_level' => 'danger', 'flash_message' => 'Chưa được xóa']);
         }
     }
 }

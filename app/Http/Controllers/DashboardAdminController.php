@@ -8,6 +8,7 @@ use App\ProductOrder;
 use App\Product;
 use App\WareHouse;
 use App\Util;
+use App\Payment;
 use DateTime;
 use Illuminate\Http\Request;
 
@@ -39,8 +40,8 @@ class DashboardAdminController extends Controller
         foreach($orders as $order ){
             $barLabels[$i] = $order->updated_at->format('d-m-Y');
             // get All order has status #10
-            $barDatas1[$i] = Order::getAllNumOrder(10,$order->updated_at->format('d-m-Y')); 
-            $barDatas2[$i] = Order::getNumOrder(10,$order->updated_at->format('d-m-Y'));
+            $barDatas1[$i] = Order::getNumOrder(9, $order->updated_at->format('d-m-Y')); 
+            $barDatas2[$i] = Order::getNumOrder(10, $order->updated_at->format('d-m-Y'));
             // dd($barDatas2[$i]);
             $lineLabels[$i]= $order->updated_at->format('d-m-Y');
             $lineDatas[$i] = ProductOrder::getSumPrice($order->updated_at->format('d-m-Y'));
@@ -73,20 +74,18 @@ class DashboardAdminController extends Controller
         $idUser       = Auth::user()->id; 
         $order        = Order::where('kho_id', $idUser)->get();
         $numOrder     = count($order);
-        $orderProduct = ProductOrder::select('product_orders.id','orders.kho_id','product_orders.price_in','product_orders.price','product_orders.num')
-            ->leftJoin('orders','product_orders.order_id','=','orders.id')
-            ->where('orders.kho_id',$idUser)
-            ->where('orders.status','=', Util::$statusOrderFinish)
-            ->get();
+        $arrOrder = Order::where('kho_id', $idUser)
+                    ->where('status','=', Util::$statusOrderFinish)
+                    ->get();
         $numProduct   = count(Product::where('kho', $idUser)->get());   
-        $totalPriceIn = 0;
         $totalPrice   = 0;
-        foreach($orderProduct as $itemOrder){
-            $totalPrice   = $totalPrice + ($itemOrder->price);
-            $totalPriceIn = $totalPriceIn + ($itemOrder->num * $itemOrder->price_in);
-
+        foreach($arrOrder as $itemOrder){
+            // echo $itemOrder->id;
+            // echo "<br>";
+            $totalPrice = $totalPrice + ProductOrder::getSumOrder($itemOrder->id);
+            // $totalPrice   = $totalPrice + ($itemOrder->price);
         }
-        $profit         = $totalPrice - $totalPriceIn;
+        $totalPrice = $totalPrice + Payment::getMoneyCommission($idUser);
         $arrOrderRemain = Order::select('users.*','orders.*','orders.id as orderID')
             ->leftjoin('users','users.id','=','orders.customer_id')
             ->where('orders.kho_id', $idUser)
@@ -97,7 +96,6 @@ class DashboardAdminController extends Controller
         $data = [
             'numOrder'       => $numOrder,
             'totalPrice'     => $totalPrice,
-            'profit'         => $profit,
             'numProduct'     => $numProduct,
             'arrOrderRemain' => $arrOrderRemain,
             'strCustomerOfWareHouse' => $strCustomerOfWareHouse,

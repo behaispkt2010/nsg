@@ -82,12 +82,7 @@
                                                     <li><span class="label-box55">SDT:</span> {{$user->phone_number}}</li>
                                                     <li class="limitcharacter"><span class="label-box55">Địa chỉ:</span> {{$user->address}}</li>
                                                     <li class="limitcharacter"><span class="label-box55">Nhóm:</span> 
-                                                        <?php 
-                                                        $tagTmp = explode(",", $user->tagType);
-                                                        ?>
-                                                        @foreach($tagTmp as $itemTag)
-                                                        <a href="#">{{ $itemTag }}</a>
-                                                        @endforeach
+                                                        <a href="#">{{ $user->tagType }}</a>
                                                     </li>
                                                 </ul>
                                             </div>

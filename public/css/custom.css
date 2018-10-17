@@ -7378,3 +7378,13 @@ table.dtp-picker-days thead {
 .table-bordernontop > tbody > tr > th{
     border: none !important;
 }
+.pL-0 {
+    padding-left: 0;
+}
+.input-non-bTr {
+    border-radius: 5px;
+    text-align: center;
+}
+.fW-b {
+    font-weight: bold;
+}

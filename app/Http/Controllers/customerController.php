@@ -31,9 +31,13 @@ class customerController extends Controller
                     ->where('role_user.role_id',3)
                     ->where('users.deleted', 0)
                     ->where('users.idwho', $user_id)
-                    ->where('name','LIKE','%'.$q.'%')
-                    ->orwhere('id','LIKE','%'.$q.'%')
-                    ->orwhere('phone_number','LIKE','%'.$q.'%')->paginate(9);
+                    ->where(function($q1)use ($q) {
+                        $q1->where('name','LIKE','%'.$q.'%')
+                        ->orwhere('id','LIKE','%'.$q.'%')
+                        ->orwhere('code','LIKE','%'.$q.'%')
+                        ->orwhere('phone_number','LIKE','%'.$q.'%');
+                    })
+                    ->paginate(9);
             }
             else {
                 $users = User::leftjoin('role_user','role_user.user_id','=','users.id')
@@ -49,9 +53,13 @@ class customerController extends Controller
                 $users = User::leftjoin('role_user','role_user.user_id','=','users.id')
                     ->where('role_user.role_id',3)
                     ->where('users.deleted', 0)
-                    ->where('name','LIKE','%'.$q.'%')
-                    ->orwhere('id','LIKE','%'.$q.'%')
-                    ->orwhere('phone_number','LIKE','%'.$q.'%')->paginate(9);
+                    ->where(function($q1)use ($q) {
+                        $q1->where('name','LIKE','%'.$q.'%')
+                        ->orwhere('id','LIKE','%'.$q.'%')
+                        ->orwhere('code','LIKE','%'.$q.'%')
+                        ->orwhere('phone_number','LIKE','%'.$q.'%');
+                    })
+                    ->paginate(9);
             }
             else {
                 $users = User::leftjoin('role_user','role_user.user_id','=','users.id')
@@ -139,7 +147,7 @@ class customerController extends Controller
                 $totalPrice += ProductOrder::getSumOrder($itemOrder->id);
                 $countOrder++;
             }
-            if($itemOrder['status'] == 9 && $itemOrder['status_pay'] == 2) // đặt cọc thanh toán sau
+            if($itemOrder['status'] == 9 && $itemOrder['type_pay'] == 2) // đặt cọc thanh toán sau
             {
                 $totalRemain += $itemOrder['remain_pay'] ;
             }

@@ -43,7 +43,7 @@
                                 <div class="row">
                                     <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="name">Danh mục</label>
-                                        <select name="cate" class="form-control cate" id="cate" placeholder="Chọn danh mục">
+                                        <select name="cate" class="form-control cate" id="cate" placeholder="Chọn danh mục" required="">
                                             <option value=""></option>
                                             @if(!empty($catePayment))
                                                 @foreach($catePayment as $itemCate)
@@ -54,15 +54,22 @@
                                             @endif
                                         </select>
                                     </div>
+                                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 orders" style="@if(!empty($arrPayment->cate) && ($arrPayment->cate != 1)) display: none; @endif">
+                                        <label>Đơn hàng</label>
+                                        <select id="order_id" name="order_id" class="form-control">
+                                            <option></option>
+                                            @foreach($arrOrder as $itemOrder)
+                                            <option value="{{ $itemOrder->id }}" @if(!empty($arrPayment->order_id) && $arrPayment->order_id == $itemOrder->id) selected @endif>{{ $itemOrder->order_code }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="name">Giá trị</label>
-                                        <input type="text" class="form-control price" name="price" id="price" value="@if(!empty($arrPayment->price)) {{ $arrPayment->price }} @endif">
+                                        <input type="text" required="" class="form-control price" name="price" id="price" value="@if(!empty($arrPayment->price)) {{ $arrPayment->price }} @endif">
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="name">Hình thức thanh toán</label>
-                                        <select name="type_pay" class="form-control type_pay" id="type_pay" placeholder="Chọn hình thức thanh toán">
+                                        <select name="type_pay" required="" class="form-control type_pay" id="type_pay" placeholder="Chọn hình thức thanh toán">
                                             <option value=""></option>
                                             <option value="1" @if(!empty($arrPayment->type_pay) && $arrPayment->type_pay == 1) selected @endif>Tiền mặt</option>
                                             <option value="2" @if(!empty($arrPayment->type_pay) && $arrPayment->type_pay == 2) selected @endif>Chuyển khoản</option>
@@ -71,14 +78,12 @@
                                     </div>
                                     <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="name">Người nhận</label>
-                                        <select name="type_pay_detail" class="form-control type_pay_detail" id="type_pay_detail"></select>
+                                        <select name="type_pay_detail" class="form-control type_pay_detail" id="type_pay_detail" required=""></select>
                                         <input type="hidden" class="type_pay_detail_old" value="@if(!empty($arrPayment->type_pay_detail)) {{$arrPayment->type_pay_detail}} @endif">
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="name">Kỳ thanh toán</label>
-                                        <select name="period_pay" class="form-control period_pay" id="period_pay" placeholder="Chọn kỳ thanh toán">
+                                        <select name="period_pay" required="" class="form-control period_pay" id="period_pay" placeholder="Chọn kỳ thanh toán">
                                             <option value=""></option>
                                             <option value="1" @if(!empty($arrPayment->period_pay) && $arrPayment->period_pay == 1) selected @endif>Đặt cọc</option>
                                             <option value="2" @if(!empty($arrPayment->period_pay) && $arrPayment->period_pay == 2) selected @endif>Trả nợ</option>
@@ -87,7 +92,7 @@
                                     </div>
                                     <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="name">Thời gian</label>
-                                        <input type="text" name="time_pay" class="form-control time_pay" id="time_pay" value="@if(!empty($arrPayment->time_pay)){{$arrPayment->time_pay}}@else{{old('time_pay')}}@endif" required>
+                                        <input type="text" required="" name="time_pay" class="form-control time_pay" id="time_pay" value="@if(!empty($arrPayment->time_pay)){{$arrPayment->time_pay}}@else{{old('time_pay')}}@endif" required>
                                     </div>
                                 </div>
                             </div>
@@ -99,13 +104,12 @@
                                         <button type="submit" class="btn btn-raised btn-success">Tạo mới </button>
                                     @else
                                         <button type="submit" class="btn btn-raised btn-success">Cập nhật</button>
-                                        
                                     @endif
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                         <label> Trạng thái</label>
-                                        <select id="status" name="status" required="" class="form-control" data-placeholder="Chọn trạng thái">
+                                        <select id="status" required="" name="status" required="" class="form-control" data-placeholder="Chọn trạng thái">
                                             <option value="1" @if(!empty($arrPayment->status) && $arrPayment->status == 1) selected @endif>Chưa thanh toán</option>
                                             <option value="2" @if(!empty($arrPayment->status) && $arrPayment->status == 2) selected @endif>Đã thanh toán</option>
                                             <option value="3" @if(!empty($arrPayment->status) && $arrPayment->status == 3) selected @endif>Hủy</option>
@@ -161,7 +165,7 @@
     <script type="text/javascript" src="{{asset('/js/bootstrap-material-datetimepicker.js')}}"></script>
     <!-- Select2 -->
     <script>
-        $('#cate, #type_pay, #type_pay_detail, #period_pay, #status').selectize({
+        $('#cate, #order_id, #type_pay, #type_pay_detail, #period_pay, #status').selectize({
             
         });
     </script>
@@ -220,6 +224,14 @@
                     $('#type_pay_detail').html('<option value="">Chọn Người nhận</option>');
                 }
             });
+        });
+        $('#cate').on('change', function(){
+            var cate = $(this).val();
+            if(cate == 1) {
+                $('.orders').show();
+            } else {
+                $('.orders').hide();
+            }
         });
     </script>
 

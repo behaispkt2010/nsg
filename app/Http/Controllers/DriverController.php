@@ -61,58 +61,39 @@ class DriverController extends Controller
             $name    = $request->get('name');
             $kho     = $request->get('kho');
             $type_trans = $request->get('type_trans');
-            // dd($type_trans);
+            // echo($name);
+            // echo "<br>";
+            // echo($kho);
+            // echo "<br>";
+            // echo($type_trans);
+            // dd(1);
             $driver1 = Driver::query();
-            if(!empty($name)){
+            if(!empty($name) || !empty($kho) || !empty($type_trans)) {
                 if(Auth::user()->hasRole(\App\Util::$viewDriver))
                     $driver1 =  $driver1->leftjoin('transports','transports.id','=','driver.type_driver')
                                         ->selectRaw('driver.*')
                                         ->selectRaw('transports.name as transName')
                                         ->where('driver.name_driver','LiKE','%'.$name.'%')
+                                        ->orwhere('driver.phone_driver','LiKE','%'.$name.'%')
+                                        ->orwhere('driver.kho', $kho)
+                                        ->orwhere('driver.type_driver', $type_trans)
+                                        ->where('driver.deleted', 0);
+                else {
+                    $driver1 =  $driver1->leftjoin('transports','transports.id','=','driver.type_driver')
+                                        ->selectRaw('driver.*')
+                                        ->selectRaw('transports.name as transName')
+                                        ->where('driver.kho', Auth::user()->id)
                                         ->where('driver.deleted', 0)
-                                        ->orwhere('driver.phone_driver','LiKE','%'.$name.'%');
-                else {
-                    $driver1 =  $driver1->leftjoin('transports','transports.id','=','driver.type_driver')
-                                        ->selectRaw('driver.*')
-                                        ->selectRaw('transports.name as transName')
-                                        ->where('driver.kho', Auth::user()->id)
-                                        ->where('driver.deleted', 0)
-                                        ->where('driver.name_driver','LiKE','%'.$name.'%')
-                                        ->orwhere('driver.phone_driver','LiKE','%'.$name.'%');
+                                        ->where(function($q)use ($name) {
+                                            $q->where('driver.name_driver','LiKE','%'.$name.'%')
+                                            ->orWhere('driver.phone_driver','LiKE','%'.$name.'%');
+                                         })
+                                        ->where('driver.type_driver', $type_trans);
                 }
             }
-            if(!empty($kho)){
-                if(Auth::user()->hasRole(\App\Util::$viewDriver))
-                    $driver1 =  $driver1->leftjoin('transports','transports.id','=','driver.type_driver')
-                                        ->selectRaw('driver.*')
-                                        ->selectRaw('transports.name as transName')
-                                        ->where('driver.kho', $kho)
-                                        ->where('driver.deleted', 0);
-                else {
-                    $driver1 =  $driver1->leftjoin('transports','transports.id','=','driver.type_driver')
-                                        ->selectRaw('driver.*')
-                                        ->selectRaw('transports.name as transName')
-                                        ->where('driver.kho', Auth::user()->id)
-                                        ->where('driver.deleted', 0);
-                }
-            }
-            if(!empty($type_trans)){
-                if(Auth::user()->hasRole(\App\Util::$viewDriver))
-                    $driver1 =  $driver1->leftjoin('transports','transports.id','=','driver.type_driver')
-                                        ->selectRaw('driver.*')
-                                        ->selectRaw('transports.name as transName')
-                                        ->where('driver.type_driver', $type_trans)
-                                        ->where('driver.deleted', 0);
-                else {
-                    $driver1 =  $driver1->leftjoin('transports','transports.id','=','driver.type_driver')
-                                        ->selectRaw('driver.*')
-                                        ->selectRaw('transports.name as transName')
-                                        ->where('driver.type_driver', $type_trans)
-                                        ->where('driver.kho', Auth::user()->id)
-                                        ->where('driver.deleted', 0);
-                }
-            }
+            
             $driver = $driver1->paginate(9);
+            
         }
         else if(Auth::user()->hasRole(\App\Util::$viewDriver)) {
             $driver = Driver::leftjoin('transports','transports.id','=','driver.type_driver')
@@ -137,6 +118,7 @@ class DriverController extends Controller
             ->where('role_user.role_id', 4)
             ->where('users.deleted', 0)
             ->get();
+        // dd($driver);  
         $transport = Transport::where('deleted', 0)->get();
         $data = [
             'user'      => $user,

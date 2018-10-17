@@ -32,8 +32,8 @@
                                         {{ $code }}
                                     @endif
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-                                    <select id="select-product" name="select-product"  class="form-control " placeholder="Thêm sản phấm">
+                                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 pL-0">
+                                    <select id="select-product" name="select-product"  class="form-control" placeholder="Thêm sản phấm">
                                         <option value=""></option>
                                         @if(!empty($products))
                                             @foreach($products as $product)
@@ -67,7 +67,7 @@
                                                     <input type="hidden" value="{!! $itemProduct->idproduct !!}" name="product_id[]">
                                                     <input type="hidden" value="{!! $itemProduct->nameproduct !!}" name="nameproduct[]">
                                                 </td>
-                                                <td><span class="inventory_num">{{ ($itemProduct->inventory_num) }}</span>
+                                                <td><span class="inventory_num input-non-bTr">{{ ($itemProduct->inventory_num) }}</span>
                                                     <input type="hidden" value="{!! $itemProduct->inventory_num !!}" name="inventory_num[]">
                                                 </td>
                                                 <td><input type="text" class="inventory_real" style="width:70px;" name="inventory_real[]" value="{{ $itemProduct->inventory_real }}">
@@ -86,9 +86,9 @@
                                     <tr>
                                         <td class="non-dis"></td>
                                         <td>Tổng</td>
-                                        <td class="total_inventory_num">0</td>
-                                        <td class="total_inventory_real">0</td>
-                                        <td class="total_inventory_change non-dis">0</td>
+                                        <td class="total_inventory_num fW-b">0</td>
+                                        <td class="total_inventory_real fW-b">0</td>
+                                        <td class="total_inventory_change fW-b non-dis">0</td>
                                     </tr>
                                 </table>
                                 <div class="clear"></div>
@@ -288,7 +288,7 @@
                                 + '<td><span class="inventory_num">' + msg['inventory_num'] + '</span>'
                                 + '<input type="hidden" value="' + msg['inventory_num'] + '" name="inventory_num[]">'
                                 + '</td>'
-                                + '<td><input type="text" class="inventory_real" style="width:70px;" name="inventory_real[]" value=""></td>'
+                                + '<td><input type="text" class="inventory_real input-non-bTr" style="width:70px;" name="inventory_real[]" value=""></td>'
                                 + '<td class="non-dis"><span class="inventory_change"><span></td>'
                                 + '<td><i class="fa fa-times red delete" id="delete_product" style="cursor: pointer" aria-hidden="true"></i></td>'
                                 + '</tr>'

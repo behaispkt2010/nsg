@@ -61,7 +61,7 @@
                                 </div>
                                 <input type="hidden" class="form-control" name="slug" placeholder="slug" id="txtSlug" required>
                             </div>
-                            <table class="table table-condensed table-hover">
+                            <table class="table table-condensed table-hover" style="    border-top-style: hidden;">
                                 <tbody class="list_product" style="width:100%;">
                                     <tr>
                                         <th class="non-dis">Mã</th>
@@ -300,7 +300,11 @@
                                         <div class="cus_phone_number">Phone: <span>@if(!empty($arrCustomerOrder->phone_number)){{$arrCustomerOrder->phone_number}}@else{{ "" }}@endif</span></div>
                                         <div class="cus_email">Email: <span>@if(!empty($arrCustomerOrder->email)){{$arrCustomerOrder->email}}@else{{ "" }}@endif</span></div>
                                         <div class="cus_address">Địa chỉ: <span>@if(!empty($arrCustomerOrder->address)){{$arrCustomerOrder->address}}@else{{ "" }}@endif</span></div>
-                                        <div><a href="" class="view_map" target="_blank">xem bản đồ</a></div>
+                                        <div class="col-md-6"><a href="" class="view_map" target="_blank">Xem bản đồ</a></div>
+                                        <div class="col-md-6"><a href="" data-toggle="modal" data-target=".edit-kh" data-name="@if(!empty($arrCustomerOrder->name)){{$arrCustomerOrder->name}}@else{{ '' }}@endif" data-email="@if(!empty($arrCustomerOrder->email)){{$arrCustomerOrder->email}}@else{{ '' }}@endif" data-phone_number="@if(!empty($arrCustomerOrder->phone_number)){{$arrCustomerOrder->phone_number}}@else{{ '' }}@endif" data-address="@if(!empty($arrCustomerOrder->address)){{$arrCustomerOrder->address}}@else{{ '' }}@endif" data-province="@if(!empty($arrCustomerOrder->province)){{$arrCustomerOrder->province}}@else{{ '' }}@endif" data-district="@if(!empty($arrCustomerOrder->district)){{$arrCustomerOrder->district}}@else{{ '' }}@endif" id="editInfoCus" class="editInfoCus" >Sửa thông tin KH</a></div>
+
+                                        <input type="hidden" name="provinceID" id="provinceIDCus" value="@if(!empty($arrCustomerOrder->province)){{$arrCustomerOrder->province}}@else{{ '' }}@endif">
+                                        <input type="hidden" name="districtID" id="districtIDCus" value="@if(!empty($arrCustomerOrder->district)){{$arrCustomerOrder->district}}@else{{ '' }}@endif">
                                         <input type="hidden" name="customer_id" class="customer_id" value="@if(!empty($arrOrder->customer_id)){{$arrOrder->customer_id}}@else{{ "" }}@endif">
                                         <input type="hidden" class="cus_name" value="@if(!empty($arrCustomerOrder->name)){{$arrCustomerOrder->name}}@else{{ "" }}@endif">
                                         <input type="hidden" class="cus_phone_number" value="@if(!empty($arrCustomerOrder->phone_number)){{$arrCustomerOrder->phone_number}}@else{{ "" }}@endif">
@@ -440,8 +444,6 @@
                         <label class="control-label" for="focusedInput3">Địa chỉ</label>
                         <input class="form-control" id="focusedInput3" type="text" name="address">
                     </div>
-
-
                     <div class="row">
 
                         <div class="col-md-6">
@@ -478,13 +480,74 @@
     </div>
     <div class="loading" style="display: none"><img src="{{url('/images/loading.gif')}}" class="img-reponsive" alt=""></div>
 </div>
-
-
-<div class="modal fade modal-order" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false"
+<!-- edit info customer -->
+<div class="modal fade edit-kh" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false"
      data-backdrop="static">
-    <div class="modal-dialog modal-order">
+    <div class="modal-dialog edit-kh">
         <div class="modal-content">
 
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Sửa Thông tin khách hàng</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label class="control-label" for="focusedInput2"> Họ và tên</label>
+                        <input class="form-control" id="focusedInput2" type="text" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="focusedInput1"> Email</label>
+                        <input class="form-control" id="focusedInput1" type="email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="focusedInput1"> Số điện thoại</label>
+                        <input class="form-control" id="focusedInput1" type="number" name="phone_number">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="focusedInput3">Địa chỉ</label>
+                        <input class="form-control" id="focusedInput3" type="text" name="address">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <select id="province" class="form-control select2_single" name="province">
+                                    <option value="0">Chọn khu vực</option>
+                                    @foreach($province as $item)
+                                        <option value="{{$item->provinceid}}">{{$item->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <select id="district" class="form-control" name="district">
+                                    <option value="0">Chọn phường xã</option>
+                                    <!-- @foreach($district as $item)
+                                        <option value="{{$item->name}}">{{$item->name}}</option>
+                                    @endforeach -->
+                                </select>
+                            </div>
+                        </div>
+                        <!-- <input type="hidden" name="provinceID" class="provinceID" value="">
+                        <input type="hidden" name="districtID" class="districtID" value=""> -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-raised btn-default" data-dismiss="modal">Đóng</button>
+                <button id="edit_cusommer" type="button" class="btn btn-raised btn-primary">Sửa thông tin khách hàng</button>
+            </div>
+
+        </div>
+    </div>
+    <div class="loading" style="display: none"><img src="{{url('/images/loading.gif')}}" class="img-reponsive" alt=""></div>
+</div>
+
+<div class="modal fade modal-order" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-order">
+        <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
@@ -494,27 +557,22 @@
                 <div class="form-group">
                     <p>Xác nhận đã thanh toán cho đơn hàng này?
                     </p>
-
                     <p> Trạng thái thanh toán của đơn hàng này là ĐÃ THANH TOÁN. Nghĩa là bạn đã nhận đầy đủ tiền từ khách hàng bằng tiền mặt hoặc chuyển khoản.
                         Sau khi đơn hàng đã tạo, bạn không thể thay đổi trạng thái thanh toán.
                     </p>
-
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-raised btn-default" data-dismiss="modal">Hủy</button>
                 <button type="button" class="btn btn-raised btn-primary btnPayAll">Xác nhận</button>
             </div>
-
         </div>
     </div>
 </div>
 
-<div class="modal fade modal-order-1 datcoc" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false"
-     data-backdrop="static">
+<div class="modal fade modal-order-1 datcoc" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-order-1">
         <div class="modal-content">
-
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
@@ -652,6 +710,17 @@
                 $('.cus_email span' ).text(msg['email']);
                 $('.cus_address span').text(msg['address']);
                 $('.customer_id').val(msg['customer_id']);
+                // add info edit customer
+                
+                $('#editInfoCus').attr('data-name', msg['name']);
+                $('#editInfoCus').attr('data-email', msg['email']);
+                $('#editInfoCus').attr('data-phone_number', msg['phone_number']);
+                $('#editInfoCus').attr('data-address', msg['address']);
+                $('#editInfoCus').attr('data-province', msg['province']);
+                $('#editInfoCus').attr('data-district', msg['district']);
+                $('#provinceIDCus').val(msg['province']);
+                $('#districtIDCus').val(msg['district']);
+
                 $('.view_map').attr('href','https://www.google.com/maps/search/'+msg['address']);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -730,10 +799,22 @@
         });
     });
 </script>
+
+<script type="text/javascript">
+    $(document).on("click", ".editInfoCus", function () {
+        var _self = $(this);
+        _self.removeData();
+        $('.edit-kh input[name="name"]').val(_self.data('name'));
+        $('.edit-kh input[name="email"]').val(_self.data('email'));
+        $('.edit-kh input[name="phone_number"]').val(_self.data('phone_number'));
+        $('.edit-kh input[name="address"]').val(_self.data('address'));
+        $('.edit-kh input[name="provinceID"]').val(_self.data('province'));
+        $('.edit-kh input[name="districtID"]').val(_self.data('district'));
+    });
+</script>
 <script>
     $('#create_cusommer').on('click', function (e) {
         e.preventDefault();
-//        var ware_id = $('input[name="id"]').val();
         var name = $('.modal-kh input[name="name"]').val();
         var phone_number = $('.modal-kh input[name="phone_number"]').val();
         var t = $('.modal-kh select[name="t"] :selected').val();
@@ -783,6 +864,58 @@
             $('.modal-kh').modal('hide');
         });
     });
+    $('#edit_cusommer').on('click', function (e) {
+        e.preventDefault();
+        var name = $('.edit-kh input[name="name"]').val();
+        var phone_number = $('.edit-kh input[name="phone_number"]').val();
+        var t = $('.edit-kh select[name="province"] :selected').val();
+        var provinceName = $('.edit-kh select[name="province"] :selected').html();
+        var q = $('.edit-kh select[name="district"] :selected').val();
+        var districstName = $('.edit-kh select[name="district"] :selected').html();
+        var email = $('.edit-kh input[name="email"]').val();
+        var address = $('.edit-kh input[name="address"]').val() +', '+ districstName +', '+ provinceName;
+        var addressDB = $('.edit-kh input[name="address"]').val();
+        var customer_id = $('.customer_id').val();
+        var _token = $('input[name="_token"]').val();
+        $('.loading').css('display','block');
+        $.ajax({
+            type: "POST",
+            url: '{!! url("/") !!}/admin/users/AjaxEditCustomer',
+            data: {name: name,customer_id: customer_id,t: t,q: q, phone_number: phone_number, email: email, address: addressDB,_token: _token},
+            success: function( msg ) {
+                $('.loading').css('display','none');
+                //show notify
+                new PNotify({
+                    title: 'Cập nhật thành công',
+                    text: '',
+                    type: 'success',
+                    hide: true,
+                    styling: 'bootstrap3'
+                });
+//                location.reload();
+                $('.cus_name span').text(name);
+                $('.cus_phone_number span').text(phone_number);
+                $('.cus_email span' ).text(email);
+                $('.cus_address span').text(address);
+                $('.customer_id').val(msg['customer_id']);
+                $('.view_map').attr('href','https://www.google.com/maps/search/'+msg['address']);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                //show notify
+                var Data = JSON.parse(XMLHttpRequest.responseText);
+                new PNotify({
+                    title: 'Lỗi',
+                    text: 'Vui lòng kiểm tra lại thông tin',
+                    type: 'danger',
+                    hide: true,
+                    styling: 'bootstrap3'
+                });
+                $('.loading').css('display','none');
+            }
+        }).done(function () {
+            $('.edit-kh').modal('hide');
+        });
+    });
 
     //Add infomation transport
     $("#create_transport").on('click', function (e) {
@@ -795,9 +928,6 @@
         var tmp_phone_driver = '<label class="transport_tmp">Số điện thoại: </label>' + '<span>' + phone_driver + '</span>';
         var number_license_driver = $('.modal-transport input[name="number_license_driver"]').val();
         var tmp_number_license_driver = '<label class="transport_tmp">Biển số xe: </label>' + '<span>' + number_license_driver + '</span>';
-
-        
-
         
         var _token = $('input[name="_token"]').val();
         $('.loading').css('display','block');
@@ -892,12 +1022,9 @@
         return count;
     }
     $('#btn_add_product').on('click', function (e) {
-
         var id = $('select[name="select-product"] :selected').val();
-        
         $('select[name="select-product"]')[0].selectize.setValue();
         var _token = $('input[name="_token"]').val();
-
         var values = $("input[name='product_id']")
                 .map(function(){return $(this).val();}).get(); 
         var tmp_product = [];
@@ -905,7 +1032,6 @@
             tmp_product.push($(this).val(),tmp_product);
         });
         var price_total = parseInt($('.allpaymoney').html());
-
         var checkExist = ProductIDExist(id);
         if(id == 0){
             alert("Vui lòng chọn sản phẩm");
@@ -1012,7 +1138,6 @@
         $('.modal-transport input[name="phone_driver"]').val(_self.data('phone_driver'));
         $('.modal-transport input[name="number_license_driver"]').val(_self.data('number_license_driver'));
     });
-
 </script>
 <script type="text/javascript">
     $(document).on("click", "#thanhtoansau", function () {
@@ -1103,6 +1228,53 @@
             $('.remain_pay_div').hide();
         }
     });
-    
 </script>
+<script type="text/javascript">
+    $('#province').on('change',function(){
+        var countryID = $(this).val();
+        var _token = $('input[name="_token"]').val();
+
+        if(countryID){
+            $.ajax({
+                type:'POST',
+                url:'{{ url("/") }}/admin/orders/AjaxGetDistrictByProvinceID',
+                data: {id: countryID, _token: _token},
+                success:function(html){
+                    $('#district').selectize()[0].selectize.destroy();
+                    $('#district').html(html);
+                    $('#district').selectize(); 
+                }
+            }); 
+        } else {
+            $('#district').html('<option value="">Chọn Huyện/Thị trấn</option>');
+        }
+    });
+    // get update district, provinde
+    $(function(){
+        $('.editInfoCus').on('click', function(){
+            var districtID = $('#districtIDCus').val();
+            var provinceID = $('#provinceIDCus').val();
+            var _token = $('input[name="_token"]').val();
+            if(provinceID){
+                $.ajax({
+                    type:'POST',
+                    url:'{{ url("/") }}/admin/orders/AjaxLoadInfoAddress',
+                    data: {id: provinceID, type: 'district', valueID: districtID , _token: _token},
+                    success:function(html){
+                        $('#district').selectize()[0].selectize.destroy();
+                        $('#district').html(html['q']);
+                        $('#district').selectize();
+                        $('#province').selectize()[0].selectize.destroy();
+                        $('#province').html(html['t']);
+                        $('#province').selectize();
+                    }
+                }); 
+            } else {
+                $('#district').html('<option value="">Chọn Huyện/Thị trấn</option>');
+            }
+        });
+        
+    });
+</script>
+
 @endsection

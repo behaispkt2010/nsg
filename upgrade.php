@@ -218,4 +218,21 @@ ADD COLUMN `created_at`  timestamp(255) NULL AFTER `deleted`,
 ADD COLUMN `updated_at`  timestamp NULL AFTER `created_at`;
 
 
+// 20181015
+
+ALTER TABLE `cate_payment`
+ADD COLUMN `type`  varchar(255) NULL AFTER `deleted`;
+
+INSERT INTO `cate_payment` VALUES ('4', 'Mua hàng đầu vào', '0', 'payment');
+INSERT INTO `cate_payment` VALUES ('5', 'Hành chính văn phòng', '0', 'payment');
+INSERT INTO `cate_payment` VALUES ('6', 'Mua vật tư máy móc', '0', 'payment');
+INSERT INTO `cate_payment` VALUES ('7', 'Quan hệ đối tác khách hàng', '0', 'payment');
+INSERT INTO `cate_payment` VALUES ('8', 'Lương thưởng nhân viên', '0', 'payment');
+INSERT INTO `cate_payment` VALUES ('9', 'Chi phí vận chuyển', '0', 'payment');
+INSERT INTO `cate_payment` VALUES ('10', 'Chi phí doanh nghiệp', '0', 'payment');
+INSERT INTO `cate_payment` VALUES ('11', 'Khác', '0', 'payment');
+
+ALTER TABLE `payment`
+ADD COLUMN `order_id`  int NULL AFTER `updated_at`;
+
 

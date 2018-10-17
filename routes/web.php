@@ -122,6 +122,7 @@ Route::group(['prefix' => 'admin','middleware' => ['auth', 'authorize']], functi
     Route::resource('payment', 'PaymentController');
     Route::post('payment/getListOfType', 'PaymentController@getListOfType');
     Route::post('payment/getTotalPayment', 'PaymentController@getTotalPayment');
+    Route::post('payment/getMoneyOrderByDate', 'PaymentController@getMoneyOrderByDate');
     //ql lịch sữ giao dịch
     Route::resource('historyInput', 'HistoryInputController');
     Route::resource('company', 'CompanyController');
@@ -159,6 +160,7 @@ Route::group(['prefix' => 'admin','middleware' => ['auth', 'authorize']], functi
     //Users
     Route::resource('users', 'UserController');
     Route::post('users/AjaxCreateCustomer', 'UserController@AjaxCreateCustomer');
+    Route::post('users/AjaxEditCustomer', 'UserController@AjaxEditCustomer');
     Route::post('users/AjaxGetDataCustomer', 'UserController@AjaxGetDataCustomer');
     Route::post('users/AjaxDeleteUser', 'UserController@AjaxDeleteUser')->name('user.deleted');
 

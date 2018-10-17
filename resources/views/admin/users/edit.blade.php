@@ -33,9 +33,7 @@
                                     <div class="col-md-6 col-sm-12 col-xs-12 profile_details product-detail">
 
                                         <div class="well box1 info-warehouse" style="min-height: 440px;">
-                                            <h4 class="text-center">Thông tin Tài khoản <i style="float: right"
-                                                                                            class="fa fa-edit"
-                                                                                            aria-hidden="true"></i></h4>
+                                            <h4 class="text-center">Thông tin Tài khoản <i style="float: right" class="fa fa-edit" aria-hidden="true"></i></h4>
                                             <ul class="list-unstyled">
                                                 <li>
                                                     <div class="form-group">
@@ -299,20 +297,6 @@
             } else {
                 $('#district').html('<option value="">Chọn Huyện/Thị trấn</option>');
             }
-            /*if(districtID){
-                $.ajax({
-                    type:'POST',
-                    url:'{{ url("/") }}/admin/orders/AjaxLoadInfoAddress',
-                    data: {id: districtID, type: 'village', valueID: villageID , _token: _token},
-                    success:function(html){
-                        $('#x').selectize()[0].selectize.destroy();
-                        $('#x').html(html);
-                        $('#x').selectize();
-                    }
-                }); 
-            } else {
-                $('#x').html('<option value="">Chọn Phường/Xã</option>'); 
-            }*/
         });
     </script>
     <script>
