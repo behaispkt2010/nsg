@@ -38,7 +38,7 @@
                             <div class="form-group">
                                 <select id="select-kho" class="form-control" name="kho" data-placeholder="Chọn kho">
                                     @if(!Auth::user()->hasRole('kho'))
-                                        <option value="0" >Chọn kho</option>
+                                        <option value="" >Chọn kho</option>
                                         @foreach($user as $user)
                                             <option value="{{$user->id}}" @if(Request::get('kho')==$user->id) selected @endif>{{$user->name}}</option>
                                         @endforeach
@@ -52,9 +52,9 @@
                         <div class="col-md-3 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <select id="select-driver" class="form-control" name="type_trans" data-placeholder="Chọn phương thức vận chuyển">
-                                    <option value="0" >Chọn phương thức vận chuyển</option>
+                                    <option value="" >Chọn phương thức vận chuyển</option>
                                     @foreach($transport as $item)
-                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                        <option value="{{$item->id}}" @if($item->id == Request::get('type_trans')) selected @endif >{{$item->name}}</option>
                                     @endforeach 
                                 </select>
                             </div>

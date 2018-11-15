@@ -270,7 +270,7 @@ class InventoryController extends Controller
             $listID = implode(',', $arrProductID);
 
             $inventory        = Inventory::find($id);
-
+            $statusOld        = $inventory->status;
             $inventory->id_product = $listID;
             $inventory->status = $request->status;
             $inventory->note   = $request->note;
@@ -278,27 +278,29 @@ class InventoryController extends Controller
             $inventory->author_id = Auth::user()->id;
             $inventory->save();
             $strInventoryID   = $inventory->id;
-            //remove data of inventory_detail 
-            $inventory_detail = InventoryDetail::where('idinventory','=', $id);
-            $inventory_detail->delete();
-
+            if($statusOld != 2) {
+                //remove data of inventory_detail 
+                $inventory_detail = InventoryDetail::where('idinventory','=', $id);
+                $inventory_detail->delete();
+            }
             foreach ($arrProductID as $key => $ProductID) {
-                //update product
-                if($request->status == 2) { // hòan thành
+                if( $statusOld != 2 && $request->status == 2) { // hòan thành
                     // add inventory to product
                     $arrProduct = Product::find($ProductID);
                     $inventory = $arrInventoryReal[$key];
                     $arrProduct->inventory_num = $inventory;
                     $arrProduct->save();
                 }
-                // add detail
-                $InventoryDetail                = new InventoryDetail();
-                $InventoryDetail['idinventory'] = $id;
-                $InventoryDetail['idproduct']   = $ProductID;
-                $InventoryDetail['nameproduct']   = $arrNameProduct[$key];
-                $InventoryDetail['inventory_num'] = $arrInventoryNum[$key];
-                $InventoryDetail['inventory_real'] = $arrInventoryReal[$key];
-                $InventoryDetail->save();
+                if($statusOld != 2) {
+                    // add detail
+                    $InventoryDetail                = new InventoryDetail();
+                    $InventoryDetail['idinventory'] = $id;
+                    $InventoryDetail['idproduct']   = $ProductID;
+                    $InventoryDetail['nameproduct']   = $arrNameProduct[$key];
+                    $InventoryDetail['inventory_num'] = $arrInventoryNum[$key];
+                    $InventoryDetail['inventory_real'] = $arrInventoryReal[$key];
+                    $InventoryDetail->save();
+                }
             }
         }
         catch(\Exception $e){

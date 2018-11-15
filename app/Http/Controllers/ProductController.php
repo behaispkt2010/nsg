@@ -207,11 +207,9 @@ class ProductController extends Controller
             else{
                 $data['author_id'] = 1;
             }
-
             if ($request->hasFile('image')) {
                 $data['image']  = Util::saveFile($request->file('image'), '');
             }
-
             if (!empty($request->get('slug_seo'))) {
                 $data['slug']  = Util::builtSlug($request->get('slug_seo'));
             }
@@ -223,12 +221,9 @@ class ProductController extends Controller
                 $data['slug'] =  $data['slug'].'-'.$today;
             }
             $data['price_sale']      = $request->get('price_sale');
-
             $product1                = Product::create($data);
-            
             $data['code']            = Util::ProductCode($product1->id);
             $product1->update($data);
-
             $dataPrice['product_id'] = $product1->id;
             $dataPrice['price_in']   = $request->get('price_in');
             $dataPrice['price_out']  = $request->get('price_out');
@@ -236,7 +231,6 @@ class ProductController extends Controller
             $dataPrice['supplier']   = "create";
             $dataPrice['number']     = $request->get('inventory_num');
             ProductUpdatePrice::create($dataPrice);
-
             $userID = Auth::user()->id;
             if (Auth::user()->hasRole('kho')) {
                 $getCodeKho                         = Util::UserCode($userID);
@@ -343,7 +337,6 @@ class ProductController extends Controller
         else{
             $data['author_id'] = 1;
         }
-
         if ($request->hasFile('image')) {
             $data['image']  = Util::saveFile($request->file('image'), '');
         }

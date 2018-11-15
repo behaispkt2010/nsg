@@ -7381,10 +7381,19 @@ table.dtp-picker-days thead {
 .pL-0 {
     padding-left: 0;
 }
+.pR-0 {
+    padding-right: 0;
+}
 .input-non-bTr {
     border-radius: 5px;
     text-align: center;
 }
 .fW-b {
     font-weight: bold;
+}
+.form-control {
+    margin-bottom: 3px !important;
+}
+.mB-0 {
+    margin-bottom: 0px !important;
 }

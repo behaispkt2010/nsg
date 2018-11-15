@@ -251,7 +251,6 @@ class OrderController extends Controller
             else {
                 $order->kho_id = $kho_id;
             }
-
             $order->time_order                   = $request->time_order;
             $order->status                       = $request->status;
             $order->customer_id                  = $request->customer_id;
@@ -328,14 +327,10 @@ class OrderController extends Controller
         catch(\Exception $e){
             DB::rollback();
             return redirect('admin/orders/')->with(['flash_level' => 'danger', 'flash_message' => 'Lưu không thành công']);
-
         }
             DB::commit();
             return redirect('admin/orders/')->with(['flash_level' => 'success', 'flash_message' => 'Lưu thành công']);
-
     }
-
-
     /**
      * Display the specified resource.
      *
@@ -365,9 +360,7 @@ class OrderController extends Controller
             "historyOrder" => $historyOrder,
         ];
         return view('admin.orders.showorder', $data);
-
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -412,8 +405,9 @@ class OrderController extends Controller
         $arrProductOrders = ProductOrder::leftJoin('products','products.id','=','product_orders.id_product')
             ->where('order_id','=',$id)->get();
         // echo "<pre>";
-        // print_r($arrOrder);
+        // print_r($order_status);
         // echo "</pre>";
+        // dd(1);
         // die;
         $data = [
             'customer'         => $customer,
@@ -440,7 +434,6 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         DB::beginTransaction();
         try {
             $arrProductID     = $request->product_id;
@@ -448,6 +441,13 @@ class OrderController extends Controller
             $arrPriceTotal    = $request->pricetotal;
             $order            = Order::find($id);
             $kho_id           = Order::checkKhoByIdProduct($arrProductID);
+            $statusOld = $order->status;
+            /*$arrListProductOld = ProductOrder::select('id_product')->where('order_id', '=', $id)->get();
+            foreach ($arrListProductOld as $key => $value) {
+                $arrTmp[] = $value->id_product;
+            }
+            $res = array_diff($arrProductID, $arrTmp);*/
+            // dd($arrListProductOld);
             if($kho_id == -1){
                 return redirect("admin/orders/$id/edit/")->with(['flash_level' => 'danger', 'flash_message' => 'Các sản phẩm trong đơn hàng không cùng kho']);
             }
@@ -479,23 +479,33 @@ class OrderController extends Controller
             $historyUpdateStatusOrder->status    = $request->status;
             $historyUpdateStatusOrder->author_id = Auth::user()->id;
             $historyUpdateStatusOrder->save();
-            foreach ($arrProductID as $key => $ProductID) {
-                $ProductOrderOld             = ProductOrder::where('order_id', '=', $id)->first();
-                $productInfo                 = Product::find($ProductID);
-                $ProductOrder1['id_product'] = $ProductID;
-                $ProductOrder1['order_id']   = $strOrderID;
-                $ProductOrder1['price_in']   = $productInfo->price_in;
-                $ProductOrder1['price']      = $productInfo->price_out * $arrNumberProduct[$key];
-                $ProductOrder1['num']        = $arrNumberProduct[$key];
-                $ProductOrder1['name']       = $productInfo->title;
-                if ($ProductOrderOld->num != $arrNumberProduct[$key]) {
-                    $productInfo1['inventory_num'] = $productInfo->inventory_num - $arrNumberProduct[$key] + $ProductOrderOld->num;
-                } else {
-                    $productInfo1['inventory_num'] = $productInfo->inventory_num;
+            if($statusOld < 7 && $request->status <= 7) {
+                // get list product_order old
+                $arrListProductOld = ProductOrder::where('order_id', '=', $id)->get();
+                foreach ($arrListProductOld as $key => $itemProductOld) {
+                    $arrProduct = Product::find($itemProductOld->id_product);
+                    $invenAfter = $arrProduct['inventory_num'] + $itemProductOld->num;
+                    $dataOld['inventory_num'] = $invenAfter;
+                    $arrProduct->update($dataOld);
                 }
-                $productInfo->update($productInfo1);
-                $ProductOrderOld->update($ProductOrder1);
-            }
+                // remove list product_order old
+                $product_order = ProductOrder::where('order_id','=',$id);
+                $product_order->delete();
+                // add again
+                foreach ($arrProductID as $key => $ProductID) {
+                    $ProductOrder1                = new ProductOrder();
+                    $productInfo                  = Product::find($ProductID);
+                    $ProductOrder1['id_product']  = $ProductID;
+                    $ProductOrder1['order_id']    = $strOrderID;
+                    $ProductOrder1['price_in']    = $productInfo->price_in;
+                    $ProductOrder1['price']       = $productInfo->price_out * $arrNumberProduct[$key];
+                    $ProductOrder1['num']         = $arrNumberProduct[$key];
+                    $ProductOrder1['name']        = $productInfo->title;
+                    $ProductOrder1->save();
+                    $productInfo['inventory_num'] = $productInfo->inventory_num - $arrNumberProduct[$key];
+                    $productInfo->save();
+                }
+            } 
             if ($request->get('status') == Util::$statusOrderFinish) {
                 $arrUser                            = User::find($request->customer_id);
                 $getCodeOrder                       = Util::OrderCode($id);
@@ -629,7 +639,7 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        $order         =  Order::destroy($id);
+        $order         = Order::destroy($id);
         $product_order = ProductOrder::where('order_id','=',$id);
         $product_order->delete();
         if((!empty($order)) && (!empty($product_order))) {

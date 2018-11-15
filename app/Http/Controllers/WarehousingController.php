@@ -321,7 +321,6 @@ class WarehousingController extends Controller
             'province'   => $province,
             'district'   => $district,
             'wareHouses' => $wareHouses,
-
         ];
         // dd($arrProduct);
         return view('admin.warehousing.edit', $data);
@@ -343,8 +342,8 @@ class WarehousingController extends Controller
             $arrQuantity      = $request->quantity;
             $listID = implode(',', $arrProductID);
 
-            $warehousing        = WareHousing::find($id);
-
+            $warehousing       = WareHousing::find($id);
+            $statusOld         = $warehousing->status;
             $warehousing->cate = $request->cate;
             $warehousing->id_product = $listID;
             $warehousing->type = $request->type;
@@ -361,12 +360,13 @@ class WarehousingController extends Controller
             // $warehousing->author_id = Auth::user()->id;
             $warehousing->save();
             $strInventoryID   = $warehousing->id;
-            //remove data of inventory_detail 
-            $WareHousingDetail = WareHousingDetail::where('id_io','=', $id);
-            $WareHousingDetail->delete();
-
+            if($statusOld != 2) {
+                //remove data of inventory_detail 
+                $WareHousingDetail = WareHousingDetail::where('id_io','=', $id);
+                $WareHousingDetail->delete();
+            }
             foreach ($arrProductID as $key => $ProductID) {
-                if($request->status == 2) {
+                if( $statusOld != 2 && $request->status == 2) {
                     // add inventory to product
                     $arrProduct = Product::find($ProductID);
                     if($request->cate == "issue"){
@@ -377,14 +377,26 @@ class WarehousingController extends Controller
                     $arrProduct->inventory_num = $inventory;
                     $arrProduct->save();
                 }
-                
-                //add detail
-                $WareHousingDetail                = new WareHousingDetail();
-                $WareHousingDetail['id_io']       = $id;
-                $WareHousingDetail['idproduct']   = $ProductID;
-                $WareHousingDetail['nameproduct'] = $arrNameProduct[$key];
-                $WareHousingDetail['quantity']    = $arrQuantity[$key];
-                $WareHousingDetail->save();
+                if( $statusOld == 2 && $request->status == 3) {
+                    //  update inventory if cancel
+                    $arrProduct = Product::find($ProductID);
+                    if($request->cate == "issue"){
+                        $inventory = $arrProduct->inventory_num + $arrQuantity[$key];
+                    } elseif($request->cate == "receipt") {
+                        $inventory = $arrProduct->inventory_num - $arrQuantity[$key];
+                    }
+                    $arrProduct->inventory_num = $inventory;
+                    $arrProduct->save();
+                }
+                if($statusOld != 2) {
+                    //add detail
+                    $WareHousingDetail                = new WareHousingDetail();
+                    $WareHousingDetail['id_io']       = $id;
+                    $WareHousingDetail['idproduct']   = $ProductID;
+                    $WareHousingDetail['nameproduct'] = $arrNameProduct[$key];
+                    $WareHousingDetail['quantity']    = $arrQuantity[$key];
+                    $WareHousingDetail->save();
+                }
             }
         }
         catch(\Exception $e){

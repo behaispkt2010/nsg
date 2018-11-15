@@ -32,7 +32,7 @@
                                         {{ $code }}
                                     @endif
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 pL-0">
+                                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 pL-0">
                                     <select id="select-product" name="select-product"  class="form-control" placeholder="Thêm sản phấm">
                                         <option value=""></option>
                                         @if(!empty($products))
@@ -44,7 +44,7 @@
                                         @endif
                                     </select>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 text-right pR-0">
                                     <button type="button" id="btn_add_product" class="btn btn-raised btn-success">Thêm</button>
                                 </div>
                                 <table class="table table-condensed table-hover table-bordernontop">
@@ -67,10 +67,10 @@
                                                     <input type="hidden" value="{!! $itemProduct->idproduct !!}" name="product_id[]">
                                                     <input type="hidden" value="{!! $itemProduct->nameproduct !!}" name="nameproduct[]">
                                                 </td>
-                                                <td><span class="inventory_num input-non-bTr">{{ ($itemProduct->inventory_num) }}</span>
+                                                <td><span class="inventory_num ">{{ ($itemProduct->inventory_num) }}</span>
                                                     <input type="hidden" value="{!! $itemProduct->inventory_num !!}" name="inventory_num[]">
                                                 </td>
-                                                <td><input type="text" class="inventory_real" style="width:70px;" name="inventory_real[]" value="{{ $itemProduct->inventory_real }}">
+                                                <td><input type="text" class="inventory_real input-non-bTr" style="width:70px;" name="inventory_real[]" value="{{ $itemProduct->inventory_real }}">
                                                 </td>
                                                 <td class="non-dis">
                                                     <span class="inventory_change">

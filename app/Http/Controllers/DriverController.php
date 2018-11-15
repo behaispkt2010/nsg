@@ -61,24 +61,20 @@ class DriverController extends Controller
             $name    = $request->get('name');
             $kho     = $request->get('kho');
             $type_trans = $request->get('type_trans');
-            // echo($name);
-            // echo "<br>";
-            // echo($kho);
-            // echo "<br>";
-            // echo($type_trans);
-            // dd(1);
             $driver1 = Driver::query();
             if(!empty($name) || !empty($kho) || !empty($type_trans)) {
-                if(Auth::user()->hasRole(\App\Util::$viewDriver))
+                if(Auth::user()->hasRole(\App\Util::$viewDriver)) {
                     $driver1 =  $driver1->leftjoin('transports','transports.id','=','driver.type_driver')
                                         ->selectRaw('driver.*')
                                         ->selectRaw('transports.name as transName')
-                                        ->where('driver.name_driver','LiKE','%'.$name.'%')
-                                        ->orwhere('driver.phone_driver','LiKE','%'.$name.'%')
+                                        ->where(function($q)use ($name) {
+                                            $q->where('driver.name_driver','LiKE','%'.$name.'%')
+                                            ->orWhere('driver.phone_driver','LiKE','%'.$name.'%');
+                                         })
                                         ->orwhere('driver.kho', $kho)
                                         ->orwhere('driver.type_driver', $type_trans)
                                         ->where('driver.deleted', 0);
-                else {
+                } else {
                     $driver1 =  $driver1->leftjoin('transports','transports.id','=','driver.type_driver')
                                         ->selectRaw('driver.*')
                                         ->selectRaw('transports.name as transName')
@@ -91,9 +87,8 @@ class DriverController extends Controller
                                         ->where('driver.type_driver', $type_trans);
                 }
             }
-            
             $driver = $driver1->paginate(9);
-            
+            // $driver = $driver1->toSql();
         }
         else if(Auth::user()->hasRole(\App\Util::$viewDriver)) {
             $driver = Driver::leftjoin('transports','transports.id','=','driver.type_driver')
